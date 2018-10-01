@@ -26,7 +26,7 @@
     </div>
 
     <div class="vcard-main-wrapper">
-        <div class="vcard-content-wrapper bg-img" style="background-image: url(img/bg-img/bgsss.jpg);">
+        <div class="vcard-content-wrapper bg-img" style="background-image: url(img/bg-img/bgssss.jpg);">
 
             <!-- Contact Button 
             <div class="horizontal-contact-btn">
@@ -62,21 +62,380 @@
                         <div class="container-fluid">
                             <div class="row align-items-end">
                                     <div class="about-me-text">
-                                        <h2>Stapler: 1</h2>
-                                        <h6>VM: https://www.vulnhub.com/entry/stapler-1,150/</h6>
+					<hr>
+                                        <p><h2>Stapler: 1</h2>
+                                        <h7>VM: https://www.vulnhub.com/entry/stapler-1,150/</h7></p>
+					<hr>
+					<br>
+					<br>
+					<br>
+					<br>
+					<p><h3>Information Gathering:</h3></p>
+					<hr>
+					<p>Let's fire up HaGashash (https://github.com/Gandosha/HaGashash).</p>
+					<pre style="background-color:black;color:white;">
+[GandoPC ~]# go run go/src/github.com/Gandosha/HaGashash/main.go -project=Stapler -subnet=true -interface=enp0s3
+
+<-=|HaGashash by Gandosha|=->
+
+[+] nmap executable is in '/usr/bin/nmap'
+[+] ifconfig executable is in '/usr/bin/ifconfig'
+[!] Dependencies check is completed successfully.
+
+
+[!] Starting to scan your subnet.
+
+ 
+[+] Alive hosts in 192.168.43.0/24 are:
+
+192.168.43.1
+
+192.168.43.2
+
+192.168.43.10
+
+192.168.43.3
+
+
+[+] Directory created at: /HaGashash_Projects/Stapler/192.168.43.1.
+
+
+[!] Starting to scan 192.168.43.1 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.1 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/Stapler/192.168.43.2.
+
+
+[!] Starting to scan 192.168.43.2 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.2 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/Stapler/192.168.43.10.
+
+
+[!] Starting to scan 192.168.43.10 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.10 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/Stapler/192.168.43.3.
+
+
+[!] Starting to scan 192.168.43.3 for UDP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.3 for TCP interesting stuff.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.3 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.3 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.10 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.1 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.2 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.10 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.1 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.2 is completed successfully.
+
+
+
+[+] Summary file for 192.168.43.10 is ready.
+
+
+
+[+] Summary file for 192.168.43.1 is ready.
+
+
+
+[+] Summary file for 192.168.43.3 is ready.
+
+
+
+[+] Summary file for 192.168.43.2 is ready.
+
+[gandosha@GandoPC ~]$ cat /HaGashash_Projects/Stapler/192.168.43.10/nmap_TCP_scan_output
+# Nmap 7.70 scan initiated Tue Sep 25 13:16:02 2018 as: nmap -sS -p- -A -T4 -Pn -vv -oN /HaGashash_Projects/Stapler/192.168.43.10/nmap_TCP_scan_output 192.168.43.10
+mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers
+Nmap scan report for 192.168.43.10
+Host is up, received arp-response (0.0063s latency).
+Scanned at 2018-09-25 13:16:04 IDT for 143s
+Not shown: 65523 filtered ports
+Reason: 65523 no-responses
+PORT      STATE  SERVICE     REASON         VERSION
+20/tcp    closed ftp-data    reset ttl 64
+21/tcp    open   ftp         syn-ack ttl 64 vsftpd 2.0.8 or later
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_Can't get directory listing: PASV failed: 550 Permission denied.
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to 192.168.43.3
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 1
+|      vsFTPd 3.0.3 - secure, fast, stable
+|_End of status
+22/tcp    open   ssh         syn-ack ttl 64 OpenSSH 7.2p2 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 81:21:ce:a1:1a:05:b1:69:4f:4d:ed:80:28:e8:99:05 (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDc/xrBbi5hixT2B19dQilbbrCaRllRyNhtJcOzE8x0BM1ow9I80RcU7DtajyqiXXEwHRavQdO+/cHZMyOiMFZG59OCuIouLRNoVO58C91gzDgDZ1fKH6BDg+FaSz+iYZbHg2lzaMPbRje6oqNamPR4QGISNUpxZeAsQTLIiPcRlb5agwurovTd3p0SXe0GknFhZwHHvAZWa2J6lHE2b9K5IsSsDzX2WHQ4vPb+1DzDHV0RTRVUGviFvUX1X5tVFvVZy0TTFc0minD75CYClxLrgc+wFLPcAmE2C030ER/Z+9umbhuhCnLkLN87hlzDSRDPwUjWr+sNA3+7vc/xuZul
+|   256 5b:a5:bb:67:91:1a:51:c2:d3:21:da:c0:ca:f0:db:9e (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNQB5n5kAZPIyHb9lVx1aU0fyOXMPUblpmB8DRjnP8tVIafLIWh54wmTFVd3nCMr1n5IRWiFeX1weTBDSjjz0IY=
+|   256 6d:01:b7:73:ac:b0:93:6f:fa:b9:89:e6:ae:3c:ab:d3 (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ9wvrF4tkFMApswOmWKpTymFjkaiIoie4QD0RWOYnny
+53/tcp    open   domain      syn-ack ttl 64 dnsmasq 2.75
+| dns-nsid: 
+|_  bind.version: dnsmasq-2.75
+80/tcp    open   http        syn-ack ttl 64 PHP cli server 5.5 or later
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-title: 404 Not Found
+123/tcp   closed ntp         reset ttl 64
+137/tcp   closed netbios-ns  reset ttl 64
+138/tcp   closed netbios-dgm reset ttl 64
+139/tcp   open   netbios-ssn syn-ack ttl 64 Samba smbd 4.3.9-Ubuntu (workgroup: WORKGROUP)
+666/tcp   open   doom?       syn-ack ttl 64
+| fingerprint-strings: 
+|   NULL: 
+|     message2.jpgUT 
+|     QWux
+|     "DL[E
+|     #;3[
+|     \xf6
+|     u([r
+|     qYQq
+|     Y_?n2
+|     3&M~{
+|     9-a)T
+|     L}AJ
+|_    .npy.9
+3306/tcp  open   mysql       syn-ack ttl 64 MySQL 5.7.12-0ubuntu1
+| mysql-info: 
+|   Protocol: 10
+|   Version: 5.7.12-0ubuntu1
+|   Thread ID: 7
+|   Capabilities flags: 63487
+|   Some Capabilities: Support41Auth, InteractiveClient, Speaks41ProtocolNew, SupportsLoadDataLocal, ODBCClient, SupportsCompression, SupportsTransactions, DontAllowDatabaseTableColumn, ConnectWithDatabase, LongPassword, IgnoreSigpipes, FoundRows, LongColumnFlag, IgnoreSpaceBeforeParenthesis, Speaks41ProtocolOld, SupportsMultipleResults, SupportsMultipleStatments, SupportsAuthPlugins
+|   Status: Autocommit
+|   Salt: :#x}t	]g\x14\x1A\x07OuH'S@){[
+|_  Auth Plugin Name: 88
+12380/tcp open   http        syn-ack ttl 64 Apache httpd 2.4.18 ((Ubuntu))
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: Tim, we need to-do better next year for Initech
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port666-TCP:V=7.70%I=7%D=9/25%Time=5BAA0B42%P=x86_64-unknown-linux-gnu%
+SF:r(NULL,1000,"PK\x03\x04\x14\0\x02\0\x08\0d\x80\xc3Hp\xdf\x15\x81\xaa,\0
+SF:\0\x152\0\0\x0c\0\x1c\0message2\.jpgUT\t\0\x03\+\x9cQWJ\x9cQWux\x0b\0\x
+SF:01\x04\xf5\x01\0\0\x04\x14\0\0\0\xadz\x0bT\x13\xe7\xbe\xefP\x94\x88\x88
+SF:A@\xa2\x20\x19\xabUT\xc4T\x11\xa9\x102>\x8a\xd4RDK\x15\x85Jj\xa9\"DL\[E
+SF:\xa2\x0c\x19\x140<\xc4\xb4\xb5\xca\xaen\x89\x8a\x8aV\x11\x91W\xc5H\x20\
+SF:x0f\xb2\xf7\xb6\x88\n\x82@%\x99d\xb7\xc8#;3\[\r_\xcddr\x87\xbd\xcf9\xf7
+SF:\xaeu\xeeY\xeb\xdc\xb3oX\xacY\xf92\xf3e\xfe\xdf\xff\xff\xff=2\x9f\xf3\x
+SF:99\xd3\x08y}\xb8a\xe3\x06\xc8\xc5\x05\x82>`\xfe\x20\xa7\x05:\xb4y\xaf\x
+SF:f8\xa0\xf8\xc0\^\xf1\x97sC\x97\xbd\x0b\xbd\xb7nc\xdc\xa4I\xd0\xc4\+j\xc
+SF:e\[\x87\xa0\xe5\x1b\xf7\xcc=,\xce\x9a\xbb\xeb\xeb\xdds\xbf\xde\xbd\xeb\
+SF:x8b\xf4\xfdis\x0f\xeeM\?\xb0\xf4\x1f\xa3\xcceY\xfb\xbe\x98\x9b\xb6\xfb\
+SF:xe0\xdc\]sS\xc5bQ\xfa\xee\xb7\xe7\xbc\x05AoA\x93\xfe9\xd3\x82\x7f\xcc\x
+SF:e4\xd5\x1dx\xa2O\x0e\xdd\x994\x9c\xe7\xfe\x871\xb0N\xea\x1c\x80\xd63w\x
+SF:f1\xaf\xbd&&q\xf9\x97'i\x85fL\x81\xe2\\\xf6\xb9\xba\xcc\x80\xde\x9a\xe1
+SF:\xe2:\xc3\xc5\xa9\x85`\x08r\x99\xfc\xcf\x13\xa0\x7f{\xb9\xbc\xe5:i\xb2\
+SF:x1bk\x8a\xfbT\x0f\xe6\x84\x06/\xe8-\x17W\xd7\xb7&\xb9N\x9e<\xb1\\\.\xb9
+SF:\xcc\xe7\xd0\xa4\x19\x93\xbd\xdf\^\xbe\xd6\xcdg\xcb\.\xd6\xbc\xaf\|W\x1
+SF:c\xfd\xf6\xe2\x94\xf9\xebj\xdbf~\xfc\x98x'\xf4\xf3\xaf\x8f\xb9O\xf5\xe3
+SF:\xcc\x9a\xed\xbf`a\xd0\xa2\xc5KV\x86\xad\n\x7fou\xc4\xfa\xf7\xa37\xc4\|
+SF:\xb0\xf1\xc3\x84O\xb6nK\xdc\xbe#\)\xf5\x8b\xdd{\xd2\xf6\xa6g\x1c8\x98u\
+SF:(\[r\xf8H~A\xe1qYQq\xc9w\xa7\xbe\?}\xa6\xfc\x0f\?\x9c\xbdTy\xf9\xca\xd5
+SF:\xaak\xd7\x7f\xbcSW\xdf\xd0\xd8\xf4\xd3\xddf\xb5F\xabk\xd7\xff\xe9\xcf\
+SF:x7fy\xd2\xd5\xfd\xb4\xa7\xf7Y_\?n2\xff\xf5\xd7\xdf\x86\^\x0c\x8f\x90\x7
+SF:f\x7f\xf9\xea\xb5m\x1c\xfc\xfef\"\.\x17\xc8\xf5\?B\xff\xbf\xc6\xc5,\x82
+SF:\xcb\[\x93&\xb9NbM\xc4\xe5\xf2V\xf6\xc4\t3&M~{\xb9\x9b\xf7\xda-\xac\]_\
+SF:xf9\xcc\[qt\x8a\xef\xbao/\xd6\xb6\xb9\xcf\x0f\xfd\x98\x98\xf9\xf9\xd7\x
+SF:8f\xa7\xfa\xbd\xb3\x12_@N\x84\xf6\x8f\xc8\xfe{\x81\x1d\xfb\x1fE\xf6\x1f
+SF:\x81\xfd\xef\xb8\xfa\xa1i\xae\.L\xf2\\g@\x08D\xbb\xbfp\xb5\xd4\xf4Ym\x0
+SF:bI\x96\x1e\xcb\x879-a\)T\x02\xc8\$\x14k\x08\xae\xfcZ\x90\xe6E\xcb<C\xca
+SF:p\x8f\xd0\x8f\x9fu\x01\x8dvT\xf0'\x9b\xe4ST%\x9f5\x95\xab\rSWb\xecN\xfb
+SF:&\xf4\xed\xe3v\x13O\xb73A#\xf0,\xd5\xc2\^\xe8\xfc\xc0\xa7\xaf\xab4\xcfC
+SF:\xcd\x88\x8e}\xac\x15\xf6~\xc4R\x8e`wT\x96\xa8KT\x1cam\xdb\x99f\xfb\n\x
+SF:bc\xbcL}AJ\xe5H\x912\x88\(O\0k\xc9\xa9\x1a\x93\xb8\x84\x8fdN\xbf\x17\xf
+SF:5\xf0\.npy\.9\x04\xcf\x14\x1d\x89Rr9\xe4\xd2\xae\x91#\xfbOg\xed\xf6\x15
+SF:\x04\xf6~\xf1\]V\xdcBGu\xeb\xaa=\x8e\xef\xa4HU\x1e\x8f\x9f\x9bI\xf4\xb6
+SF:GTQ\xf3\xe9\xe5\x8e\x0b\x14L\xb2\xda\x92\x12\xf3\x95\xa2\x1c\xb3\x13\*P
+SF:\x11\?\xfb\xf3\xda\xcaDfv\x89`\xa9\xe4k\xc4S\x0e\xd6P0");
+MAC Address: 08:00:27:C5:84:C5 (Oracle VirtualBox virtual NIC)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.9
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=9/25%OT=21%CT=20%CU=37276%PV=Y%DS=1%DC=D%G=Y%M=080027%
+OS:TM=5BAA0B73%P=x86_64-unknown-linux-gnu)SEQ(SP=108%GCD=1%ISR=10C%TI=Z%CI=
+OS:I%TS=8)OPS(O1=M5B4ST11NW7%O2=M5B4ST11NW7%O3=M5B4NNT11NW7%O4=M5B4ST11NW7%
+OS:O5=M5B4ST11NW7%O6=M5B4ST11)WIN(W1=7120%W2=7120%W3=7120%W4=7120%W5=7120%W
+OS:6=7120)ECN(R=Y%DF=Y%T=40%W=7210%O=M5B4NNSNW7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=
+OS:O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD
+OS:=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0
+OS:%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1
+OS:(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=N)
+
+Uptime guess: 0.003 days (since Tue Sep 25 13:13:44 2018)
+Network Distance: 1 hop
+TCP Sequence Prediction: Difficulty=264 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: Host: RED; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_clock-skew: mean: 2h39m58s, deviation: 34m37s, median: 2h59m57s
+| nbstat: NetBIOS name: RED, NetBIOS user: <unknown>, NetBIOS MAC: <unknown> (unknown)
+| Names:
+|   RED<00>              Flags: <unique><active>
+|   RED<03>              Flags: <unique><active>
+|   RED<20>              Flags: <unique><active>
+|   \x01\x02__MSBROWSE__\x02<01>  Flags: <group><active>
+|   WORKGROUP<00>        Flags: <group><active>
+|   WORKGROUP<1d>        Flags: <unique><active>
+|   WORKGROUP<1e>        Flags: <group><active>
+| Statistics:
+|   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+|   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+|_  00 00 00 00 00 00 00 00 00 00 00 00 00 00
+| p2p-conficker: 
+|   Checking for Conficker.C or higher...
+|   Check 1 (port 34093/tcp): CLEAN (Timeout)
+|   Check 2 (port 56485/tcp): CLEAN (Timeout)
+|   Check 3 (port 25126/udp): CLEAN (Timeout)
+|   Check 4 (port 2249/udp): CLEAN (Failed to receive data)
+|_  0/4 checks are positive: Host is CLEAN or ports are blocked
+| smb-os-discovery: 
+|   OS: Windows 6.1 (Samba 4.3.9-Ubuntu)
+|   Computer name: red
+|   NetBIOS computer name: RED\x00
+|   Domain name: \x00
+|   FQDN: red
+|_  System time: 2018-09-25T14:17:50+01:00
+| smb-security-mode: 
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2018-09-25 16:17:50
+|_  start_date: N/A
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   6.32 ms 192.168.43.10
+
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Tue Sep 25 13:18:27 2018 -- 1 IP address (1 host up) scanned in 146.83 seconds
+					</pre>
+				 	<hr>
+                                    </div>
+                                </div>
+					<br>
+					<br>
+					<p><h3>Port 21 check:</h3></p>
+					<hr>
+					<p>Successful attempt to access FTP with anonymous creds (U:anonymous,P:anonymous).</p>
+					<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.10]# ftp 192.168.43.10
+Connected to 192.168.43.10.
+220-
+220-|-----------------------------------------------------------------------------------------|
+220-| Harry, make sure to update the banner when you get a chance to show who has access here |
+220-|-----------------------------------------------------------------------------------------|
+220-
+220 
+Name (192.168.43.10:root): anonymous
+331 Please specify the password.
+Password: 
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> ls
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+-rw-r--r--    1 0        0             107 Jun 03  2016 note
+226 Directory send OK.
+ftp> get note
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for note (107 bytes).
+226 Transfer complete.
+107 bytes received in 0.00887 seconds (11.8 kbytes/s)
+ftp> quit
+221 Goodbye.
+[GandoPC 192.168.43.10]# cat note
+Elly, make sure you update the payload information. Leave it in your FTP account once your are done, John.
+[GandoPC 192.168.43.10]# printf 'Elly\nJohn\n' > potential_users
+</pre>
+<p>Got some usernames for future brute force attack. I always keep this option as a "last stand" if everything goes wrong.</p>
+				 	<hr>
+                                    </div>
+                                </div>
+<br>
+					<br>
+					<p><h3>Port 80 check:</h3></p>
+					<hr>
+					<p>Attempt to access via http port 80.</p> 
+					<img src="img/screenshots/port80/1.png" alt="Attempt to access via http port 80" style="border:1px solid black;"> 
+<br>
+<br>
+					<p>There's nothing here? Let's try to use some power in order to reveal some content:</p>
+					<img src="img/screenshots/port80/2.png" alt="Attempt to access via http port 80" style="border:1px solid black;">
+					<p>&#x1F612 Nada.</p>
+					<p>&#x1F612</p>
+					<p>Attempt to access via https port 80.</p>
+				 	<hr>
                                     </div>
                                 </div>
 
 		   <div class="about-me-area section-padding-100 clearfix">
                         <div class="container-fluid">
-                            
+ 
+                           
                                     
 
-		    <!-- ##### Walkthrough ##### -->
-                    <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/HVsySz-h9r4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
- 		    --><iframe width="560" height="315" src="https://www.youtube.com/embed/HVsySz-h9r4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen align="middle"></iframe>
- 
-
+		
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
