@@ -1,4 +1,1 @@
-git add -A
-git commit -m "commit3"
-git pull origin master
-git push origin master
+git add -A && git commit -m "commit5" && git pull origin master && git push origin master
