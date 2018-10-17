@@ -120,7 +120,7 @@ rpcinfo -p [IP_ADDRESS]	(rpcinfo: What services are running?)
 </pre>
 <p><font size="3.5" color="black">Is portmapper running? Is rlogin running? Or NFS or Mountd? - http://etutorials.org/Networking/network+security+assessment/Chapter+12.+Assessing+Unix+RPC+Services/12.2+RPC+Service+Vulnerabilities/</font></p>
 <pre style="background-color:black;color:white;">
-showmount -e [IP_ADDRESS]/[port]
+showmount -e [IP_ADDRESS]
 </pre>
 <p><font size="3.5" color="black">Can you mount the smb share locally?</font></p>
 <pre style="background-color:black;color:white;">
@@ -315,6 +315,7 @@ sc config [SERVICE_NAME] start= auto
 net start [SERVICE_NAME]
 </pre>
 <p><font size="3.5" color="black">Linux:</font></p>
+<p><font size="3.5" color="black">* Using NFS - https://haiderm.com/linux-privilege-escalation-using-weak-nfs-permissions/</font></p>
 <p><font size="3.5" color="black">LinEnum - 
 http://www.rebootuser.com/?p=1758
 This tool is great at running through a heap of things you should check on a Linux system in the post exploit process. This include file permissions, cron jobs if visible, weak credentials etc. The first thing I run on a newly compromised system.</font></p>
@@ -690,6 +691,7 @@ sort [WORDLIST_PATH] | uniq          (Outputs unique words in a wordlist that is
 sort [WORDLIST_PATH] | uniq | wc -l  (sorts number of unique words in a wordlist that is found)
 ip -4 addr show scope global    /*Determine interfaces ip address + prefix*/
 ip route show | grep default    /*Determine which interface is public*/
+finger -l [USER_NAME]@[IP_ADDRESS]	(Installation: yaourt -S netkit-bsd-finger)
 </pre>
 <hr>
 <p><h3>Other (quick) guides & Links</h3></p>
