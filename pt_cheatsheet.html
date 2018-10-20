@@ -121,6 +121,7 @@ rpcinfo -p [IP_ADDRESS]	(rpcinfo: What services are running?)
 <p><font size="3.5" color="black">Is portmapper running? Is rlogin running? Or NFS or Mountd? - http://etutorials.org/Networking/network+security+assessment/Chapter+12.+Assessing+Unix+RPC+Services/12.2+RPC+Service+Vulnerabilities/</font></p>
 <pre style="background-color:black;color:white;">
 showmount -e [IP_ADDRESS]
+mount [IP_ADDRESS]:[PATH] /mnt/[PATH]	#Mount it (linux)
 </pre>
 <p><font size="3.5" color="black">Can you mount the smb share locally?</font></p>
 <pre style="background-color:black;color:white;">
@@ -180,7 +181,7 @@ Then, use John on the unshadowed file using a wordlist or rules mangling : john 
 Identifying Hash: hash-identifier
 For other services, use Medusa or Hydra. Eg:</font></p>
 <pre style="background-color:black;color:white;">
-hydra -L [USERNAME_FILE] -P [PASSWORD_FILE] -v [IP_ADDRESS] ssh
+hydra -L [USERNAME_FILE] -P [PASSWORD_FILE] -v [IP_ADDRESS] ssh -t 4
 medusa -h [IP_ADDRESS] -U [USERNAME_FILE] -P PASSWORD_FILE] -M http -m DIR:/admin -T 30
 </pre>
 <p><font size="3.5" color="black">Using hashcat for cracking hashes:</font></p>
