@@ -55,15 +55,16 @@
 <div class="about-me-text">
 <hr>
 <p><h2>Stapler: 1</h2>
+<h8><b>Service discovery --> FTP with anonymous access --> Samba users and shares enumeration --> Web directories fuzzing --> Local File Inclusion --> Webshell upload via mysql --> Privilege Escalation (cronjob manipulation)</b></h8></p>
 <h7>VM: https://www.vulnhub.com/entry/stapler-1,150/</h7></p>
 <hr>
 <br>
 <br>
 <br>
 <br>
-<p><h3>Information Gathering:</h3></p>
+<p><h3>Service discovery:</h3></p>
 <hr>
-<p><font size="3.5" color="black">First, I fired up HaGashash in order to gain some information about which host to attack and what interesting ports are there. (https://github.com/Gandosha/HaGashash).</font></p>
+<p><font size="3.5" color="black">First, I fired up HaGashash in order to gain some information about which host to attack and what interesting services run there. (https://github.com/Gandosha/HaGashash).</font></p>
 <pre style="background-color:black;color:white;">
 [GandoPC ~]# go run go/src/github.com/Gandosha/HaGashash/main.go -project=Stapler -subnet=true -interface=enp0s3
 

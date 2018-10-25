@@ -55,15 +55,15 @@
 <div class="about-me-text">
 <hr>
 <p><h2>VulnOS: 2</h2>
+<h8><b>Service discovery --> Web directories fuzzing --> SQL injection (union-based) --> Privilege Escalation (kernel exploit)</b></h8></p>
 <h7>VM: https://www.vulnhub.com/entry/vulnos-2,147/</h7></p>
 <hr>
 <br>
 <br>
 <br>
 <br>
-<p><h3>Information Gathering:</h3></p>
-<hr>
-<p><font size="3.5" color="black">First, I fired up HaGashash in order to gain some information about which host to attack and what interesting ports are there. (https://github.com/Gandosha/HaGashash).</font></p>
+<p><h3>Service discovery:</h3></p>
+<p><font size="3.5" color="black">First, I fired up HaGashash in order to gain some information about which host to attack and what interesting services run there. (https://github.com/Gandosha/HaGashash).</font></p>
 <pre style="background-color:black;color:white;">
 [GandoPC ~]# go run go/src/github.com/Gandosha/HaGashash/main.go -interface=enp0s3 -project=VulnOsV2 -subnet=true
 
@@ -281,9 +281,8 @@ Web-search URL: https://vulners.com/search?query=bulletinFamily%3Aexploit+AND+Op
 <hr>
 <br>
 <br>
-<p><h3>SQL injection:</h3></p>
+<p><h3>SQL injection (union-based):</h3></p>
 <hr>
-<p><font size="3.5" color="black">I used burp suite repeater in order to perform this attack.</font></p>
 <p><font size="3.5" color="black">MySQL version:</font></p>
 <img src="img/vulnos_2/6.png" alt="MySQL version" style="border:1px solid black;">
 <br>
