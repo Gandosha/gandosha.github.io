@@ -370,6 +370,7 @@ This tool is great at running through a heap of things you should check on a Lin
 <p><font size="3.5" color="black">LinuxPrivChecker - 
 http://www.securitysift.com/download/linuxprivchecker.py
 This is a great tool for once again checking a lot of standard things like file permissions etc. The real gem of this script is the recommended privilege escalation exploits given at the conclusion of the script. This is a great starting point for escalation.</font></p>
+<p><font size="3.5" color="black">https://gtfobins.github.io/ - a curated list of Unix binaries that can be exploited by an attacker to bypass local security restrictions.</font></p>
 <p><font size="3.5" color="black">What's the distribution type? What version?</font></p>
 <pre style="background-color:black;color:white;">
 cat /etc/issue
@@ -735,6 +736,8 @@ chmod u+s /bin/nano    # installs the backdoor
 <hr>
 <p><h3>More</h3></p>
 <pre style="background-color:black;color:white;">
+python3 -m http.server [PORT]	(Simple HTTP request handler - very basic web server serving files relative to the current directory - In Arch)
+python -m SimpleHTTPServer [PORT] (In Kali)
 sort [WORDLIST_PATH] | uniq          (Outputs unique words in a wordlist that is found)
 sort [WORDLIST_PATH] | uniq | wc -l  (sorts number of unique words in a wordlist that is found)
 ip -4 addr show scope global    /*Determine interfaces ip address + prefix*/
