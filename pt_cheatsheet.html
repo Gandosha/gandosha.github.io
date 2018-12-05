@@ -160,6 +160,10 @@ net use \\[IP_ADDRESS]\$Share “” /u:””
 net view \\[IP_ADDRESS]
 </pre>
 <hr>
+<p><h3>SQL open ports?</h3></p>
+<pre style="background-color:black;color:white;">
+sqsh -S [IP_ADDRESS] -U [USERNAME] -P [PASSWORD]	#connect to the sqlserver (interacting with mssql example - https://www.youtube.com/watch?v=l-wzBhc9wFc)
+</pre>
 <p><h3>Any SMTP ports available?</h3></p>
 <p><font size="3.5" color="black">User enum (example: megabank.com mail server)</font></p>
 <pre style="background-color:black;color:white;">
@@ -218,6 +222,8 @@ If yes, is directory listing possible? Can a file be ‘get’ or ‘send’?</f
 <pre style="background-color:black;color:white;">
 ftp [IP_ADDRESS]
 ftp> mget *	#get all the files in current directory
+
+wget --mirror 'ftp://[FTP_USER]:[FTP_USER_PASSWORD]@[DOMAIN_NAME]'	#get all the content in that ftp server
 exiftool [FILE]	#extract file's metadata
 </pre>
 <hr>
@@ -531,7 +537,7 @@ SeLoadDriverPrivilege
 SeTakeOwnershipPrivilege
 SeDebugPrivilege
 
-#HTB Jeeves example - https://www.youtube.com/watch?v=EKGBskG8APc
+#HTB Tally example - https://www.youtube.com/watch?v=l-wzBhc9wFc&t=2400s
 #https://github.com/foxglovesec/RottenPotato		#rottenpotato.exe exploit
 #https://github.com/breenmachine/RottenPotatoNG		#Newer exploit	
 
@@ -960,6 +966,11 @@ getsploit [VERSION]
 <p><font size="3.5" color="black">- http://www.securityfocus.com</font></p>
 <p><font size="3.5" color="black">- http://www.google.com</font></p>
 <hr>
+<p><h3>AV evasion</h3></p>
+<pre style="background-color:black;color:white;">
+https://www.shellterproject.com/
+https://github.com/Genetic-Malware/Ebowla	#usage example - https://www.youtube.com/watch?v=l-wzBhc9wFc&t=2756s
+</pre>
 <p><h3>Backdooring</h3></p>
 <pre style="background-color:black;color:white;">
 setuid bit combina (root permissions required) - https://gist.github.com/dergachev/7916152
@@ -977,6 +988,9 @@ ip -4 addr show scope global    /*Determine interfaces ip address + prefix*/
 ip route show | grep default    /*Determine which interface is public*/
 finger -l [USER_NAME]@[IP_ADDRESS]	(Installation: yaourt -S netkit-bsd-finger)
 base64 -d [FILE] > [OUTPUT_FILE]	(decode in CLI)
+
+keepass2john [KEYPASS_FILE.kdbx]	#Convert the key to john the ripper format (take what starts with $keepass$ till the end in order to crack it - see also hashcat modules)
+Use this keepass file in order to discover what is inside using keepassx (on Kali) - for example: https://www.youtube.com/watch?v=l-wzBhc9wFc.
 </pre>
 <hr>
 <p><h3>Other (quick) guides & Links</h3></p>
