@@ -264,6 +264,7 @@ tcpdump -i tap0 host [IP_ADDRESS] tcp port 80 and not arp and not icmp -vv
 <p><font size="3.5" color="black">Modules with PowerShell - https://resources.infosecinstitute.com/powershell-for-pentesters-part-4-modules-with-powershell/#gref</font></p>
 <p><font size="3.5" color="black">PowerShell Security: PowerShell Attack Tools, Mitigation, & Detection - https://adsecurity.org/?p=2921</font></p>
 <p><font size="3.5" color="black">Kerberoast - https://pentestlab.blog/2018/06/12/kerberoast/</font></p>
+<p><font size="3.5" color="black">unicron.py POC - https://www.youtube.com/watch?v=RndxEdhY_tQ</font></p>
 <pre style="background-color:black;color:white;">
 #PowerShell Executables File System Locations on 64-bit Windows:	(try also %SystemRoot% --> C:\windows)
 %SystemRoot%\SysWOW64\WindowsPowerShell\v1.0\powershell.exe		#32-bit (x86) PowerShell executable
@@ -742,10 +743,26 @@ mknod backpipe p ; nc -l -p 8080 0 & < backpipe | tee -a inflow | nc localhost 8
 mknod backpipe p ; nc -l -p 8080 0 & < backpipe | tee -a inflow | nc localhost 80 | tee -a outflow & 1>backpipe    # Proxy monitor (Port 80 to 8080)
 </pre>
 <p><font size="3.5" color="black">Is tunnelling possible? Send commands locally, remotely</font></p>
-<p><font size="3.5" color="black">* For more info - https://chamibuddhika.wordpress.com/2012/03/21/ssh-tunnelling-explained/</font></p>
+<p><font size="3.5" color="black">Pivoting - https://gandosha.github.io/tunneling-pivoting-web-application-penetration-testing.pdf</font></p>
+<p><font size="3.5" color="black">Scenario - https://pentest.blog/explore-hidden-networks-with-double-pivoting/</font></p>
+<p><font size="3.5" color="black">ICMP Tunnelling - https://resources.infosecinstitute.com/icmp-attacks/#gref</font></p>
+<p><font size="3.5" color="black">DNS Tunnelling - https://resources.infosecinstitute.com/dns-tunnelling/#gref</font></p>
 <pre style="background-color:black;color:white;">
-ssh -D 127.0.0.1:9050 -N [username]@[ip]
-proxychains ifconfig
+ssh -L port:destination_host:destination_port username@pivot_host	#SSH Local Port Forwarding
+ssh -D address:port -f -N username@pivot_host				#SSH Dynamic Port Forwarding (Socks Proxy) **Do not forget to configure proxychains**
+
+#Example - HTB Inception
+user@pc# proxychains nmap -Pn -p 22 -sT --unprivileged 127.0.0.1		(/etc/proxychains.conf: http 10.10.10.67 3128)
+ProxyChains-3.1 (http://proxychains.sf.net)
+Starting Nmap 7.70 ( https://nmap.org ) at 2018-12-08 13:55 EST
+|S-chain|-<>-10.10.10.67:3128-<><>-127.0.0.1:22-<><>-OK
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.20s latency).
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap done: 1 IP address (1 host up) scanned in 0.25 seconds
 </pre>
 <p><font size="3.5" color="black">Who are you? Who is logged in? Who has been logged in? Who else is there? Who can do what?</font></p>
 <pre style="background-color:black;color:white;">
