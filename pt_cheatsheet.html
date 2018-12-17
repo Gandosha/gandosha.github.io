@@ -92,6 +92,7 @@ cewl -d 10 -m 1 -w cewl_out --with-numbers -a --meta_file cewl_metadata_out -e -
 <p><font size="3.5" color="black">Fuzz directories (HTTP/HTTPS) using ZAP  (/usr/share/secLists/Discovery folder that has some great wordlists for this)</font></p>
 <hr>
 <p><h3>Manual Poking for Web Pages</h3></p>
+<p><font size="3.5" color="black">- (HTTPS) Check the certificate issuer. Sometimes email addresses are exposed.</font></p>
 <p><font size="3.5" color="black">- Check the Page Source, Inspect elements, view cookies, tamper data, use curl/wget (Use ZAP ;) )</font></p>
 <p><font size="3.5" color="black">- Search repository online (like GitHub) if the application used is open source: this may assist in site enumeration and guessing versions etc.!</font></p>
 <p><font size="3.5" color="black">- Check HTTP Options</font></p>
@@ -107,6 +108,11 @@ NULL or null	(Possible error messages returned)
 <pre style="background-color:black;color:white;">
 wpscan --url [URL] --enumerate ap	(Enum plugins)
 wpscan --url [URL] --enumerate u	(Enum users)
+</pre>
+<p><font size="3.5" color="black">- Joomla?</font></p>
+<pre style="background-color:black;color:white;">
+#install https://github.com/rastating/joomlavs
+joomlavs.rb -u [TARGET_URL] --scan-all	(Check -h option for help)
 </pre>
 <hr>
 <p><h3>SQL Injection</h3></p>
@@ -144,9 +150,13 @@ enum4linux -a [IP_ADDRESS] (For more info - https://labs.portcullis.co.uk/tools/
 rpcclient [IP_ADDRESS] -U “” -N (For more info - https://attackerkb.com/Windows/rpcclient)
 rpcinfo -p [IP_ADDRESS]	(rpcinfo: What services are running?)
 </pre>
+<p><h3>NTLMv2 Discovered?</h3></p>
+<pre style="background-color:black;color:white;">
+Perform a SMB relay - https://cqureacademy.com/blog/penetration-testing/smb-relay-attack
+</pre>
 <p><font size="3.5" color="black">Is portmapper running? Is rlogin running? Or NFS or Mountd? - http://etutorials.org/Networking/network+security+assessment/Chapter+12.+Assessing+Unix+RPC+Services/12.2+RPC+Service+Vulnerabilities/</font></p>
 <pre style="background-color:black;color:white;">
-showmount -e [IP_ADDRESS]
+showmount -e [IP_ADDRESS]	#apt install nfs-common (installation on kali)
 mount [IP_ADDRESS]:[PATH] /mnt/[PATH]	#Mount it (linux)
 </pre>
 <p><font size="3.5" color="black">Can you mount the smb share locally?</font></p>
@@ -1008,6 +1018,14 @@ base64 -d [FILE] > [OUTPUT_FILE]	(decode in CLI)
 
 keepass2john [KEYPASS_FILE.kdbx]	#Convert the key to john the ripper format (take what starts with $keepass$ till the end in order to crack it - see also hashcat modules)
 Use this keepass file in order to discover what is inside using keepassx (on Kali) - for example: https://www.youtube.com/watch?v=l-wzBhc9wFc.
+
+#Command output redirection
+> file redirects stdout to file
+1> file redirects stdout to file
+2> file redirects stderr to file
+&> file redirects stdout and stderr to file
+
+/dev/null is the null device it takes any input you want and throws it away. It can be used to suppress any output.
 </pre>
 <hr>
 <p><h3>Other (quick) guides & Links</h3></p>
