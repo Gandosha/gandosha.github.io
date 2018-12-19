@@ -250,11 +250,79 @@ Example:
 GetADUsers.py -dc-ip 10.10.10.100 active.htb/svc_tgs
 
 #Bloodhound - https://www.youtube.com/watch?v=lxd2rerVsLo
-Run the ingestors from the compromised windows box.
+Run the ingestors from the compromised windows box or as the compromised user on a NOT a domain joined machine (in cmd - "runas /netonly /[COMPROMISED_USER]:[COMPROMISED_USER_PASSWORD] cmd" --> than run sharphound.exe -h from the cmd that just opened). 
+Run "neo4j start" before importing the created zip file.
 
 Examples:
 HTB Reel - https://www.youtube.com/watch?v=ob9SgtFm6_g&t=2122s
 HTB Active - https://www.youtube.com/watch?v=jUc1J31DNdw&t=1105s	
+</pre>
+<hr>
+<p><h3>Impacket</h3></p>
+<pre style="background-color:black;color:white;">
+#Remote Execution
+psexec.py: PSEXEC like functionality example using RemComSvc(https://github.com/kavika13/RemCom).
+smbexec.py: A similar approach to PSEXEC w/o using RemComSvc. The technique is described here. Our implementation goes one step further, instantiating a local smbserver to receive the output of the commands. This is useful in the situation where the target machine does NOT have a writeable share available.
+atexec.py: This example executes a command on the target machine through the Task Scheduler service and returns the output of the executed command.
+wmiexec.py: A semi-interactive shell, used through Windows Management Instrumentation. It does not require to install any service/agent at the target server. Runs as Administrator. Highly stealthy.
+dcomexec.py: A semi-interactive shell similar to wmiexec.py, but using different DCOM endpoints. Currently supports MMC20.Application, ShellWindows and ShellBrowserWindow objects.
+
+#Kerberos
+GetTGT.py: Given a password, hash or aesKey, this script will request a TGT and save it as ccache.
+GetST.py: Given a password, hash, aesKey or TGT in ccache, this script will request a Service Ticket and save it as ccache. If the account has constrained delegation (with protocol transition) privileges you will be able to use the -impersonate switch to request the ticket on behalf another user.
+GetPac.py: This script will get the PAC (Privilege Attribute Certificate) structure of the specified target user just having a normal authenticated user credentials. It does so by using a mix of [MS-SFU]'s S4USelf + User to User Kerberos Authentication.
+GetUserSPNs.py: This example will try to find and fetch Service Principal Names that are associated with normal user accounts. Output is compatible with JtR and HashCat.
+GetNPUsers.py: This example will attempt to list and get TGTs for those users that have the property 'Do not require Kerberos preauthentication' set (UF_DONT_REQUIRE_PREAUTH). Output is compatible with JtR.
+ticketer.py: This script will create Golden/Silver tickets from scratch or based on a template (legally requested from the KDC) allowing you to customize some of the parameters set inside the PAC_LOGON_INFO structure, in particular the groups, ExtraSids, duration, etc.
+raiseChild.py: This script implements a child-domain to forest privilege escalation by (ab)using the concept of Golden Tickets and ExtraSids.
+
+#Windows Secrets
+secretsdump.py: Performs various techniques to dump secrets from the remote machine without executing any agent there. For SAM and LSA Secrets (including cached creds) we try to read as much as we can from the registry and then we save the hives in the target system (%SYSTEMROOT%\Temp directory) and read the rest of the data from there. For DIT files, we dump NTLM hashes, Plaintext credentials (if available) and Kerberos keys using the DL_DRSGetNCChanges() method. It can also dump NTDS.dit via vssadmin executed with the smbexec/wmiexec approach. The script initiates the services required for its working if they are not available (e.g. Remote Registry, even if it is disabled). After the work is done, things are restored to the original state.
+mimikatz.py: Mini shell to control a remote mimikatz RPC server developed by @gentilkiwi.
+
+#Server Tools/MiTM Attacks
+ntlmrelayx.py: This script performs NTLM Relay Attacks, setting an SMB and HTTP Server and relaying credentials to many different protocols (SMB, HTTP, MSSQL, LDAP, IMAP, POP3, etc.). The script can be used with predefined attacks that can be triggered when a connection is relayed (e.g. create a user through LDAP) or can be executed in SOCKS mode. In this mode, for every connection relayed, it will be available to be used later on multiple times through a SOCKS proxy.
+karmaSMB.py: A SMB Server that answers specific file contents regardless of the SMB share and pathname specified.
+smbserver.py: A Python implementation of an SMB server. Allows to quickly set up shares and user accounts.
+
+#WMI
+wmiquery.py: It allows to issue WQL queries and get description of WMI objects at the target system (e.g. select name from win32_account).
+wmipersist.py: This script creates/removes a WMI Event Consumer/Filter and link between both to execute Visual Basic based on the WQL filter or timer specified.
+
+#Known Vulnerabilities
+goldenPac.py: Exploit for MS14-068. Saves the golden ticket and also launches a PSEXEC session at the target.
+sambaPipe.py: This script will exploit CVE-2017-7494, uploading and executing the shared library specified by the user through the -so parameter.
+smbrelayx.py: Exploit for CVE-2015-0005 using a SMB Relay Attack. If the target system is enforcing signing and a machine account was provided, the module will try to gather the SMB session key through NETLOGON.
+
+#SMB/MSRPC
+smbclient.py: A generic SMB client that will let you list shares and files, rename, upload and download files and create and delete directories, all using either username and password or username and hashes combination. It's an excellent example to see how to use impacket.smb in action.
+getArch.py: This script will connect against a target (or list of targets) machine/s and gather the OS architecture type installed by (ab)using a documented MSRPC feature.
+rpcdump.py: This script will dump the list of RPC endpoints and string bindings registered at the target. It will also try to match them with a list of well known endpoints.
+ifmap.py: This script will bind to the target's MGMT interface to get a list of interface IDs. It will used that list on top of another list of interface UUIDs seen in the wild trying to bind to each interface and reports whether the interface is listed and/or listening.
+opdump.py: This binds to the given hostname:port and MSRPC interface. Then, it tries to call each of the first 256 operation numbers in turn and reports the outcome of each call.
+samrdump.py: An application that communicates with the Security Account Manager Remote interface from the MSRPC suite. It lists system user accounts, available resource shares and other sensitive information exported through this service.
+services.py: This script can be used to manipulate Windows services through the [MS-SCMR] MSRPC Interface. It supports start, stop, delete, status, config, list, create and change.
+netview.py: Gets a list of the sessions opened at the remote hosts and keep track of them looping over the hosts found and keeping track of who logged in/out from remote servers
+reg.py: Remote registry manipulation tool through the [MS-RRP] MSRPC Interface. The idea is to provide similar functionality as the REG.EXE Windows utility.
+lookupsid.py: A Windows SID brute forcer example through [MS-LSAT] MSRPC Interface, aiming at finding remote users/groups.
+
+#MSSQL / TDS
+mssqlinstance.py: Retrieves the MSSQL instances names from the target host.
+mssqlclient.py: An MSSQL client, supporting SQL and Windows Authentications (hashes too). It also supports TLS.
+
+#File Formats
+esentutl.py: An Extensibe Storage Engine format implementation. Allows dumping catalog, pages and tables of ESE databases (e.g. NTDS.dit)
+ntfs-read.py: NTFS format implementation. This script provides a mini shell for browsing and extracting an NTFS volume, including hidden/locked contents.
+registry-read.py: A Windwows Registry file format implementation. It allows to parse offline registry hives.
+
+#Other
+GetADUsers.py: This script will gather data about the domain's users and their corresponding email addresses. It will also include some extra information about last logon and last password set attributes.
+mqtt_check.py: Simple MQTT example aimed at playing with different login options. Can be converted into a account/password brute forcer quite easily.
+rdp_check.py: [MS-RDPBCGR] and [MS-CREDSSP] partial implementation just to reach CredSSP auth. This example test whether an account is valid on the target host.
+sniff.py: Simple packet sniffer that uses the pcapy library to listen for packets in # transit over the specified interface.
+sniffer.py: Simple packet sniffer that uses a raw socket to listen for packets in transit corresponding to the specified protocols.
+ping.py: Simple ICMP ping that uses the ICMP echo and echo-reply packets to check the status of a host. If the remote host is up, it should reply to the echo probe with an echo-reply packet.
+ping6.py: Simple IPv6 ICMP ping that uses the ICMP echo and echo-reply packets to check the status of a host.
 </pre>
 <hr>
 <p><h3>Password Cracking / Brute Forcing</h3></p>
@@ -1021,6 +1089,11 @@ getsploit [VERSION]
 <p><font size="3.5" color="black">- http://www.securiteam.com</font></p>
 <p><font size="3.5" color="black">- http://www.securityfocus.com</font></p>
 <p><font size="3.5" color="black">- http://www.google.com</font></p>
+<hr>
+<p><h3>Cross-compilation</h3></p>
+<pre style="background-color:black;color:white;">
+Refer to - https://null-byte.wonderhowto.com/how-to/use-mingw-compile-windows-exploits-kali-linux-0179461/
+</pre>
 <hr>
 <p><h3>AV evasion</h3></p>
 <pre style="background-color:black;color:white;">
