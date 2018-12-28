@@ -75,7 +75,7 @@ func PortEr(data string, serviceName string) string {
 	
 }*/
 
-//This function takes a nmap grepable output and a service name. It returns a slice of ports of that service.
+/*This function takes a nmap grepable output and a service name. It returns a slice of ports of that service.
 func PortExtractor(data string, serviceName string) []string {
 	var (
 		portNumbers []string		
@@ -142,6 +142,7 @@ func PortExtractor(data string, serviceName string) []string {
 		fmt.Println("\n\ncommaIndex\n",commaIndex)
 		fmt.Println("\n\nportNumber extracted:\n",portNumber)
 		portNumbers = append(portNumbers,portNumber)
+		fmt.Printf("\n\n\n------------------------------------------------\n\n\n")
 	}
 	fmt.Println("\n\nportNumbers:\n",portNumbers)
 	/*switch {
@@ -151,14 +152,112 @@ func PortExtractor(data string, serviceName string) []string {
 		PortExtractor(data, serviceName)
 	case commaIndexes == nil:
 		fmt.Println("\n\nDone!\n\n")
-	}*/
+	}
 	return portNumbers
+}*/
+
+func PortExtractor(data string, serviceName string) (bool, string, string) {
+	var (
+		//portNumbers []string		
+		portsWord = "Ports:"
+		space = " "
+		spaceIndex int 
+		spaceIndexes []int
+		backSlash = "/"
+		backSlashIndex int
+		backSlashIndexes []int
+		comma = ","
+		commaIndex int
+		commaIndexes []int
+		serviceNameIndex int
+	)
+	portsWordIndex := strings.Index(data, portsWord)
+	if ( portsWordIndex != -1 ) {
+		data = data[portsWordIndex+6:]
+	}
+	//portsWordIndex := strings.Index(data, portsWord)
+	//data = data[portsWordIndex+6:]
+	fmt.Println("\n\nLength:\n",len(data))
+	fmt.Println("\n\ndata_1\n",data)
+	//Space,comma and backSlash mapper
+	for s1, v1 := range data {
+		switch {
+			case string(v1) == space:
+				spaceIndexes = append(spaceIndexes,s1)
+			case string(v1) == backSlash:
+				backSlashIndexes = append(backSlashIndexes,s1)
+			case string(v1) == comma:
+				commaIndexes = append(commaIndexes,s1)
+		}	
+	}
+	fmt.Println("\n\nspaceIndexes\n",spaceIndexes)
+	fmt.Println("\n\nbackSlashIndexes\n",backSlashIndexes)
+	fmt.Println("\n\ncommaIndexes\n",commaIndexes)
+	serviceNameIndex = strings.Index(data, serviceName)	//Find service's name index
+	//spaceIndex extractor
+	for s2, v2 := range spaceIndexes {
+		if ( v2 > serviceNameIndex ) {
+			spaceIndex = spaceIndexes[s2-1]
+			break
+		}	
+	}
+	//backSlashIndex extractor
+	for s3, v3 := range backSlashIndexes {
+		if ( v3 < serviceNameIndex && v3 > spaceIndex ) {
+			backSlashIndex = backSlashIndexes[s3]
+			break
+		}	
+	}
+	//commaIndex extractor
+	for s4, v4 := range commaIndexes {
+		if ( v4 > serviceNameIndex ) {
+			commaIndex = commaIndexes[s4]
+			break
+		}	
+	}
+	fmt.Println("\n\nserviceNameIndex\n",serviceNameIndex)
+	fmt.Println("\n\nspaceIndex\n",spaceIndex)
+	fmt.Println("\n\nbackSlashIndex\n",backSlashIndex)
+	fmt.Println("\n\ncommaIndex\n",commaIndex)
+	portNumber := data[spaceIndex:backSlashIndex]
+	fmt.Println("\n\nportNumber extracted:\n",portNumber)
+	data = data[commaIndex:]/*
+	if ( commaIndex != 0 ) {
+		data = data[commaIndex:]	//Cut the data
+	} else {
+		data = data[commaIndex+1:]	//Cut the data this way
+	}*/
+	serviceNameIndex = strings.Index(data, serviceName)	//Find service's name index
+	fmt.Println("\n\nLength:\n",len(data))
+	fmt.Println("\n\ndata_after_cut:\n",data)	
+	//portNumbers = append(portNumbers,portNumber)
+	//fmt.Println("\n\nportNumbers:\n",portNumbers)
+	if ( serviceNameIndex == -1 || len(commaIndexes) == 1) {
+		return false, portNumber, "nil"	//No more serviceName entries
+	}	
+	if ( len(data) > 0 && serviceNameIndex != -1 ) {
+		return true, portNumber, data	//There are more entries for that serviceName
+	}	
+	return false,"nil","nil"
 }
 
+
 func main() {
-	//var sliceOfPorts []string	//slice of ports per service
+	var (
+		sliceOfPorts []string	//slice of ports per service
+		service2scan string
+	)
+	service2scan = "http"
 	a := OpenFile2Read("/root/Desktop/Yes")
-	PortExtractor(a,"http")
+	answer, portnum, dat := PortExtractor(a,service2scan)
+	sliceOfPorts = append(sliceOfPorts,portnum)
+	/*fmt.Println("\n\nAnswer:\n",answer)
+	fmt.Println("\n\nportnum:\n",portnum)
+	fmt.Println("\n\ndat:\n",dat)*/
+	for answer {
+		answer, portnum, dat = PortExtractor(dat,service2scan)
+		sliceOfPorts = append(sliceOfPorts,portnum)
+	}
 	//p := PortExtractor(a,"http")
-	//fmt.Printf("\n\nPort Extarcted:\n",p)
+	fmt.Printf("\n\nsliceOfPorts:\n",sliceOfPorts)
 }
