@@ -219,7 +219,7 @@ func PortExtractor(data string, serviceName string) (bool, string, string) {
 	fmt.Println("\n\nspaceIndex\n",spaceIndex)
 	fmt.Println("\n\nbackSlashIndex\n",backSlashIndex)
 	fmt.Println("\n\ncommaIndex\n",commaIndex)
-	portNumber := data[spaceIndex:backSlashIndex]
+	portNumber := data[spaceIndex+1:backSlashIndex]
 	fmt.Println("\n\nportNumber extracted:\n",portNumber)
 	data = data[commaIndex:]/*
 	if ( commaIndex != 0 ) {
@@ -260,4 +260,6 @@ func main() {
 	}
 	//p := PortExtractor(a,"http")
 	fmt.Printf("\n\nsliceOfPorts:\n",sliceOfPorts)
+	fmt.Printf("\n\nsliceOfPorts[0]:\n",sliceOfPorts[0])
+	fmt.Printf("\n\nsliceOfPorts[1]:\n",sliceOfPorts[1])
 }
