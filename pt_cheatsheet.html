@@ -139,10 +139,16 @@ joomlavs.rb -u [TARGET_URL] --scan-all	(Check -h option for help)
 <hr>
 <p><h3>SQL Injection</h3></p>
 <pre style="background-color:black;color:white;">
-#Usage: 
+#Manual method: 
 Use "Fuzz" in zaproxy to do that (1 thread!).
 Use /usr/share/wordlists/wfuzz/stress/alphanum_case_extra.txt.
-Time Based SQL Injection - Follow the "Show Errors" tab. there will be the correct values (all the "Read timed out" when I used sleep(5)).
+
+1) Time Based SQL Injection - Follow the "Show Errors" tab. there will be the correct values (all the "Read timed out" when I used sleep(5)).
+https://www.ethicalhackx.com/time-based-blind-sql-injection-mysql-manually/
+http://www.anonhack.in/2018/07/time-based-blind-sql-injection-on-mysql-how-to-do-manually/
+
+2) Boolean Based SQL Injection
+http://www.anonhack.in/2018/07/boolean-based-blind-sql-injection-how-to-do-manually/
 </pre>
 <p><font size="3.5" color="black">Cheat Sheets:</font></p>
 <p><font size="3.5" color="black">* https://websec.ca/kb/sql_injection#MSSQL_Default_Databases</font></p>
