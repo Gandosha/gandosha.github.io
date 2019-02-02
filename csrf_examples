@@ -1,11 +1,10 @@
-Cross-site Request Forgery (CSRF)
-
+#Cross-site Request Forgery (CSRF)
 
 #Overview 
 
 Cross site request forgery may occcur when an attacker is able to run script into a users browser. To forge a legitimate request, the script creates and send the same parameters to the target website that would be sent if the user had submitted the legitimate form themselves. The target website knows the request has come from the users browser but cannot detect that the request was created and sent by a malicious script running in the users browser. As far as the target site can tell, the user submitted the request by using the web site in the expected way. 
 
-Discovery Methodology 
+#Discovery Methodology 
 
 Check the target website forms for enbedded tokens which when sent along with the other parameters on the form make each request unique. The token could be a random string, some form of CAPTCHA, random math problem, or other way to "sign" each form in order to be able to identify the form later. If these tokens exists, they provide a method by which the target website can detect a forged request (which would not contain the token issued by the target web site). If the tokens are missing, the request is likely vulnerable to cross site request forgery. 
 
