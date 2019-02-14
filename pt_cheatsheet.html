@@ -174,8 +174,11 @@ http://www.anonhack.in/2018/07/boolean-based-blind-sql-injection-how-to-do-manua
 <p><font size="3.5" color="black">* From MSSQL to RCE - https://www.tarlogic.com/en/blog/red-team-tales-0x01/</font></p>
 <hr>
 <p><h3>Cross Site Scripting (XSS)</h3></p>
-<p><font size="3.5" color="black">XSS Filter Evasion Cheat Sheet - https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Basic_XSS_Test_Without_Filter_Evasion</font></p>
-<p><font size="3.5" color="black">XSS Filter Evasion eval(String.fromCharCode() method - http://jdstiles.com/java/cct.html
+<pre style="background-color:black;color:white;">
+#Great read - https://excess-xss.com/
+#XSS Filter Evasion Cheat Sheet - https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Basic_XSS_Test_Without_Filter_Evasion
+#XSS Filter Evasion eval(String.fromCharCode() method - http://jdstiles.com/java/cct.html
+</pre>
 <hr>
 <p><h3>XML External Entity (XXE) Injection</h3></p>
 <pre style="background-color:black;color:white;">
@@ -305,7 +308,6 @@ ftp [IP_ADDRESS]
 ftp> mget *	#get all the files in current directory
 
 wget --mirror 'ftp://[FTP_USER]:[FTP_USER_PASSWORD]@[DOMAIN_NAME]'	#get all the content in that ftp server
-exiftool [FILE]	#extract file's metadata
 </pre>
 <hr>
 <p><h3>Active Directory stuff</h3></p>
@@ -1242,6 +1244,8 @@ chmod u+s /bin/nano    # installs the backdoor
 <hr>
 <p><h3>More</h3></p>
 <pre style="background-color:black;color:white;">
+exiftool [FILE]	#extract file's metadata
+binwalk #tool for searching binary images for embedded files and executable code
 sort [WORDLIST_PATH] | uniq          (Outputs unique words in a wordlist that is found)
 sort [WORDLIST_PATH] | uniq | wc -l  (sorts number of unique words in a wordlist that is found)
 ip -4 addr show scope global    /*Determine interfaces ip address + prefix*/
@@ -1276,6 +1280,7 @@ https://github.com/StefanoDeVuono/steghide
 <p><font size="3.5" color="black">Misc - http://insidetrust.blogspot.com/2011/04/quick-guide-to-linux-privilege.html</font></p>
 <p><font size="3.5" color="black">PT - https://highon.coffee/blog/penetration-testing-tools-cheat-sheet/</font></p>
 <p><font size="3.5" color="black">PT - https://github.com/chouaibhm/OSCP-Survival-Guide-1/blob/master/OSCP_Helpful_Links.md</font></p>
+<p><font size="3.5" color="black">shellshock bug - https://fedoramagazine.org/shellshock-how-does-it-actually-work/</font></p>
 <hr>
 </div>
 </div>
