@@ -310,6 +310,7 @@ ftp [IP_ADDRESS]
 ftp> mget *	#get all the files in current directory
 
 wget --mirror 'ftp://[FTP_USER]:[FTP_USER_PASSWORD]@[DOMAIN_NAME]'	#get all the content in that ftp server
+wget --no-passive 'ftp://[FTP_USER]:[FTP_USER_PASSWORD]@[IP_ADDRESS]'	#get all the content in that ftp server
 </pre>
 <hr>
 <p><h3>Active Directory stuff</h3></p>
@@ -752,6 +753,7 @@ php -S 127.0.0.1:8080	#HTTP request handler in php
 <p><font size="3.5" color="black">Basic enumeration:</font></p>
 <pre style="background-color:black;color:white;">
 whoami /priv	#user's privileges on the system
+cmdkey /list	#Will display a list of all user names and credentials that are stored in the computer	(HTB-Access example: https://www.youtube.com/watch?v=Rr6Oxrj2IjU&t=1558s)
 
 #list of privileges that can be abused by Rotten Potato.
 SeImpersonatePrivilege
@@ -768,7 +770,9 @@ SeDebugPrivilege
 #https://github.com/foxglovesec/RottenPotato		#rottenpotato.exe exploit
 #https://github.com/breenmachine/RottenPotatoNG		#Newer exploit	
 
-PowerUp.ps1 (add 'Invoke-AllChecks' at the end of the script and invoke it)	#Powersploit
+#Automation
+* JAWS - Just Another Windows (Enum) Script - https://github.com/411Hall/JAWS
+* PowerUp.ps1 (add 'Invoke-AllChecks' at the end of the script and invoke it)	#Powersploit
 sc query state= all type= all | findstr SERVICE_NAME	#enumerate services and drivers
 </pre>
 <p><font size="3.5" color="black">Search for license.rtf / eula.txt:</font></p>
@@ -1289,6 +1293,9 @@ base64 -d [FILE] > [OUTPUT_FILE]	(decode in CLI)
 
 keepass2john [KEYPASS_FILE.kdbx]	#Convert the key to john the ripper format (take what starts with $keepass$ till the end in order to crack it - see also hashcat modules)
 Use this keepass file in order to discover what is inside using keepassx (on Kali) - for example: https://www.youtube.com/watch?v=l-wzBhc9wFc.
+
+zip2john [zip_file_name].zip > [zip_file_name].hash 	#Convert the key to john the ripper format (and crack it)
+
 
 #Command output redirection
 > file redirects stdout to file
