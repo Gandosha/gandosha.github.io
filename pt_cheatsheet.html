@@ -443,6 +443,7 @@ hydra -l Admin -P /usr/share/wordlists/rockyou.txt 10.10.10.6 http-post-form "/t
 <p><font size="3.5" color="black">Using hashcat for cracking hashes:</font></p>
 <pre style="background-color:black;color:white;">
 # Go to - https://hashcat.net/wiki/doku.php?id=example_hashes to know what module to use in hashcat (Generic hash types)
+# Or "hashcat --example-hashes" in terminal for offline support
 hashcat -m [MODULE_NUMBER] -a 0 [HASH_FILE] [WORDLIST_FILE]
 </pre>
 <p><font size="3.5" color="black">Encrypted files:</font></p>
