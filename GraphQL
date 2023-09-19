@@ -4,13 +4,13 @@ GraphQL API Testing Checklist
 Reconnaissance
 
     Perform a port scan using Nmap to identify open web application ports.
-    Scan the web server for GraphQL endpoints by using Graphw00f’s detection mode.
-    Perform server fingerprinting with Graphw00f’s fingerprint mode.
+    Fuzz the web server for GraphQL endpoints. 
     Search for server-level vulnerabilities on MITRE’s CVE database.
     Search for server-level security features on GraphQL Threat Matrix.
-    Search for GraphQL IDEs such as GraphiQL Explorer or GraphQL Playground by using EyeWitness.
+    Search for GraphQL IDEs such as GraphiQL Explorer, GraphQL Playground.
     Send an introspection query and document all available queries, mutations, and subscriptions.
-    Visualize the introspection query response with GraphQL Voyager.
+    Obtain GraphQL API schema even if the introspection is disabled (https://github.com/nikitastupin/clairvoyance).
+    Visualize the introspection query response (GraphQL Voyager).
 
 Denial of Service
 
@@ -69,3 +69,8 @@ Hijacking Requests
     Identify whether the GraphQL server does the following:
         Supports subscriptions
         Validates the Origin header during a WebSocket handshake
+
+Resources:
+https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html
+https://learning.oreilly.com/library/view/black-hat-graphql
+
