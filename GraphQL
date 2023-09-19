@@ -1,0 +1,71 @@
+GraphQL API Testing Checklist
+
+
+Reconnaissance
+
+    Perform a port scan using Nmap to identify open web application ports.
+    Scan the web server for GraphQL endpoints by using Graphw00f’s detection mode.
+    Perform server fingerprinting with Graphw00f’s fingerprint mode.
+    Search for server-level vulnerabilities on MITRE’s CVE database.
+    Search for server-level security features on GraphQL Threat Matrix.
+    Search for GraphQL IDEs such as GraphiQL Explorer or GraphQL Playground by using EyeWitness.
+    Send an introspection query and document all available queries, mutations, and subscriptions.
+    Visualize the introspection query response with GraphQL Voyager.
+
+Denial of Service
+
+    Review the API’s SDL file for bidirectional relationships.
+    Test for the following:
+        Circular queries or mutations
+        Circular fragments
+        Field duplication
+        Alias overloading
+        Directive overloading
+        Array-based or alias-based query batching
+        Object limit overriding in API pagination arguments such as filter, max, limit, and total
+
+Information Disclosure
+
+    Extract the GraphQL schema by using field stuffing when introspection is disabled.
+    Identify debug errors in query responses by sending malformed queries.
+    Identify query tracing in GraphQL responses.
+    Test for any PII submitted using queries over the GET method.
+
+Authentication and Authorization
+
+    Test access to the following:
+        The API without authentication headers
+        Restricted fields by using alternate paths
+        The API by using both the GET and POST methods
+    Test signature validation in JSON Web Token (JWT).
+    Attempt to brute-force mutations or queries that accept secrets, such as tokens or passwords, using the following:
+        Alias-based query batching
+        Array-based query batching
+        CrackQL
+        Burp Suite
+
+Injection
+
+    Test for injection in the following:
+        Query arguments
+        Field arguments
+        Query directive arguments
+        Operation names
+    Test for SQLi automatically by using SQLmap.
+    Test for OS command injection automatically by using Commix.
+
+Forging Requests
+
+    Test for the following:
+        The existence of anti-CSRF tokens in HTTP headers or bodies
+        Possible anti-CSRF token bypasses
+        The availability of GET-based queries
+        Support for GET-based mutations
+    Perform state-changing mutations over GET.
+    Perform state-changing mutations over POST.
+
+Hijacking Requests
+
+    Identify whether the GraphQL server does the following:
+        Supports subscriptions
+        Validates the Origin header during a WebSocket handshake
